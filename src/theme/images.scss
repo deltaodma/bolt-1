@@ -1,7 +1,40 @@
 /* icons */
+@mixin img-background($img, $width, $heigth, $position) {
+  background: $img;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: $width;
+  height: $heigth;
+  position: $position;
+}
 
 .bolt-icon {
-  width: 215px;
-  height: 79px;
-  background: url('/assets/icon/bolt.svg');
+  @include img-background(url('/assets/icon/bolt.svg'), 215px, 79px, relative);
+}
+
+.brew-icon {
+  @include img-background(
+    url('/assets/icon/brewTech.svg'),
+    215px,
+    79px,
+    relative
+  );
+}
+.abinbev-icon {
+  @include img-background(
+    url('/assets/icon/abinbev.svg'),
+    145px,
+    27px,
+    relative
+  );
+}
+
+.analytics-icon {
+  @include img-background(
+    url('/assets/icon/analytics.svg'),
+    129px,
+    61px,
+    relative
+  );
 }

@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatButtonModule } from '@angular/material/button'
+import { MatGridListModule } from '@angular/material/grid-list'
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, SidebarComponent],
@@ -29,6 +30,7 @@ import { MatButtonModule } from '@angular/material/button'
     BrowserAnimationsModule,
     MatToolbarModule,
     MatExpansionModule,
+    MatGridListModule,
   ],
   exports: [FooterComponent, SidebarComponent, HeaderComponent],
 })

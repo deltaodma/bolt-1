@@ -27,17 +27,3 @@ mat-divider {
   margin: 20px auto !important;
   border-top-color: #212121 !important;
 }
-
-// sidebar
-.rounded {
-  width: 290px !important;
-  background: linear-gradient(90deg, #e3e3e3 0%, #dc1a5e 100%);
-  border-radius: 0 5px 5px 0;
-  color: #fff;
-  text-align: right !important;
-  padding-right: 0px !important;
-  transition: left 0.4s;
-  .icon {
-    transform: rotate(180deg);
-  }
-}

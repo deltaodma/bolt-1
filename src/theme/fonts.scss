@@ -10,3 +10,28 @@
   margin: 10px 0;
   text-align: left;
 }
+
+.footer {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  &__title {
+    font-size: 12px;
+    line-height: 14px;
+    width: fit-content;
+    margin: 5px auto;
+    border-bottom: 1px solid #e21d47;
+    padding-bottom: 5px;
+    @media (min-width: 1024px) {
+      margin: 5px 0;
+    }
+  }
+  &__text {
+    font-size: 10px;
+    line-height: 12px;
+
+    a {
+      color: #fff;
+    }
+  }
+}
