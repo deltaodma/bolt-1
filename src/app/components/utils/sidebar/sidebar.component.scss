@@ -1,4 +1,12 @@
 /* sidebar component styles */
+.flex-column {
+  width: 267px;
+  height: 85vh;
+  padding-top: 20px;
+  background-color: #e3e3e3;
+  transition: all 0.4s;
+}
+
 ::ng-deep .cdk-overlay-connected-position-bounding-box {
   transform: translateX(267px) translateY(-36px);
   left: 0 !important;
@@ -74,7 +82,22 @@ mat-accordion {
   box-shadow: none;
   color: #fff;
 }
+
+.mat-menu-item:hover:not([disabled]),
+.mat-menu-item.cdk-program-focused:not([disabled]),
+.mat-menu-item.cdk-keyboard-focused:not([disabled]),
+.mat-menu-item-highlighted:not([disabled]) {
+  background: transparent;
+}
+
 ::ng-deep .mat-menu-content button {
   color: #fff !important;
-  width: 100%;
+  width: 90%;
+}
+
+.no-padding ::ng-deep .mat-expansion-panel-body {
+  padding-left: 0 !important;
+  .row {
+    justify-content: center;
+  }
 }

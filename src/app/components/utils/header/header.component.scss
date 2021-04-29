@@ -46,3 +46,7 @@ mat-toolbar {
 ::ng-deep .mat-form-field-underline {
   display: none;
 }
+::ng-deep .cdk-overlay-connected-position-bounding-box {
+  transform: translateX(0px) translateY(0px);
+  left: 0 !important;
+}

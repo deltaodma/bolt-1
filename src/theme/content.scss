@@ -2,12 +2,7 @@
 .flex-column {
   display: flex;
   flex-direction: column;
-  width: 267px;
-  height: 85vh;
   padding: 0;
-  padding-top: 20px;
-  background-color: #e3e3e3;
-  transition: all 0.4s;
 }
 
 .row {
@@ -21,12 +16,7 @@
   flex: 1;
   align-items: center;
 }
-.no-padding ::ng-deep .mat-expansion-panel-body {
-  padding-left: 0 !important;
-}
-.no-padding .row {
-  justify-content: center;
-}
+
 .separator {
   flex: 1 1 auto;
 }
@@ -34,5 +24,20 @@
 /* divider styles */
 mat-divider {
   width: 85%;
-  margin: 20px auto;
+  margin: 20px auto !important;
+  border-top-color: #212121 !important;
+}
+
+// sidebar
+.rounded {
+  width: 290px !important;
+  background: linear-gradient(90deg, #e3e3e3 0%, #dc1a5e 100%);
+  border-radius: 0 5px 5px 0;
+  color: #fff;
+  text-align: right !important;
+  padding-right: 0px !important;
+  transition: left 0.4s;
+  .icon {
+    transform: rotate(180deg);
+  }
 }

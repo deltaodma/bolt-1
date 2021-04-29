@@ -5,15 +5,3 @@
   height: 79px;
   background: url('/assets/icon/bolt.svg');
 }
-.rounded {
-  width: 290px !important;
-  background: linear-gradient(90deg, #e3e3e3 0%, #dc1a5e 100%);
-  border-radius: 0 5px 5px 0;
-  color: #fff;
-  text-align: right !important;
-  padding-right: 0px;
-  transition: left 0.4s;
-}
-.rounded .icon {
-  transform: rotate(180deg);
-}
