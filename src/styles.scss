@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+/* Becks Theme */
+@import './theme/variables.scss';
+@import './theme/buttons.scss';
+@import './theme/content.scss';
+@import './theme/fonts.scss';
+@import './theme/inputs.scss';
+@import './theme/images.scss';

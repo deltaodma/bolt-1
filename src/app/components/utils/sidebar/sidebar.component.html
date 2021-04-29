@@ -1,0 +1,277 @@
+<!-- sidebar -->
+
+<section class="flex-column" id="sidebar">
+  <mat-accordion id="accordion1" multi="false">
+    <!-- fav section -->
+    <mat-expansion-panel
+      hideToggle
+      (opened)="arrowRotate(true, 'f')"
+      (closed)="arrowRotate(false, 'f')"
+      id="extf"
+      class="no-padding"
+    >
+      <mat-expansion-panel-header>
+        <i class="material-icons arrow" id="arrowEf">
+          arrow_forward_ios
+        </i>
+        <span class="material-icons icon menu-icon" id="iconEf">
+          star
+        </span>
+        Favoritos
+      </mat-expansion-panel-header>
+
+      <p *ngIf="favList.length == 0">Aun no tienes ningún favorito!</p>
+
+      <section disableRipple="true" class="row" *ngFor="let favItem of favList">
+        <button mat-button>
+          <div class="flex1">
+            <span class="material-icons icon">
+              auto_awesome
+            </span>
+            item
+          </div>
+        </button>
+        <input
+          class="star"
+          type="checkbox"
+          title="bookmark page"
+          (change)="updateFav($event)"
+        />
+      </section>
+    </mat-expansion-panel>
+    <!-- admin section -->
+    <mat-expansion-panel
+      *ngIf="role == 'admin'"
+      id="exta"
+      hideToggle
+      (opened)="arrowRotate(true, 'a')"
+      (closed)="arrowRotate(false, 'a')"
+    >
+      <mat-expansion-panel-header>
+        <i class="material-icons arrow" id="arrowEa">
+          arrow_forward_ios
+        </i>
+        <span class="material-icons icon menu-icon" id="iconEa">
+          manage_accounts
+        </span>
+        Administrador
+      </mat-expansion-panel-header>
+
+      <div class="left-line">
+        <div>
+          <div>
+            <button
+              id="projects"
+              mat-button
+              [matMenuTriggerFor]="menuProjects"
+              (menuOpened)="menuOpened('projects')"
+              (menuClosed)="menuClosed('projects')"
+              disableRipple="true"
+              class="colapsable-menu"
+            >
+              <span class="material-icons icon">
+                account_tree
+              </span>
+              Proyectos
+            </button>
+
+            <mat-menu
+              #menuProjects="matMenu"
+              xPosition="after"
+              yPosition="below"
+              direction="vertical"
+            >
+              <section mat-menu-item disableRipple="true" class="row">
+                <button mat-button>
+                  <div class="flex1">
+                    <span class="material-icons icon">
+                      post_add
+                    </span>
+                    crear o modificar un projecto
+                  </div>
+                </button>
+              </section>
+            </mat-menu>
+          </div>
+          <div>
+            <button
+              id="roles"
+              mat-button
+              [matMenuTriggerFor]="menuRoles"
+              (menuOpened)="menuOpened('roles')"
+              (menuClosed)="menuClosed('roles')"
+              disableRipple="true"
+              class="colapsable-menu"
+            >
+              <span class="material-icons icon">
+                people_alt
+              </span>
+              Roles
+            </button>
+
+            <mat-menu
+              #menuRoles="matMenu"
+              xPosition="after"
+              yPosition="below"
+              direction="vertical"
+            >
+              <section mat-menu-item disableRipple="true" class="row">
+                <button mat-button>
+                  <div class="flex1">
+                    <span class="material-icons icon">
+                      person_add
+                    </span>
+                    crear y modificar usuarios
+                  </div>
+                </button>
+              </section>
+              <section mat-menu-item disableRipple="true" class="row">
+                <button mat-button>
+                  <div class="flex1">
+                    <span class="material-icons icon">
+                      people_alt
+                    </span>
+                    Administrar roles
+                  </div>
+                </button>
+              </section>
+            </mat-menu>
+          </div>
+          <div>
+            <button
+              id="banner"
+              mat-button
+              [matMenuTriggerFor]="menuBanner"
+              (menuOpened)="menuOpened('banner')"
+              (menuClosed)="menuClosed('banner')"
+              disableRipple="true"
+              class="colapsable-menu"
+            >
+              <span class="material-icons icon">
+                photo
+              </span>
+              Banner
+            </button>
+
+            <mat-menu
+              #menuBanner="matMenu"
+              xPosition="after"
+              yPosition="below"
+              direction="vertical"
+            >
+              <section mat-menu-item disableRipple="true" class="row">
+                <button mat-button>
+                  <div class="flex1">
+                    <span class="material-icons icon">
+                      collections
+                    </span>
+                    Crear o modificar banners
+                  </div>
+                </button>
+              </section>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-divider></mat-divider>
+
+  <h2 class="sidebar-title" *ngIf="prop.length > 0">
+    Proyectos asignados
+  </h2>
+  <!-- projects section -->
+  <mat-accordion id="accordion2" multi="false">
+    <mat-expansion-panel
+      *ngFor="let project of prop; let id = index"
+      (opened)="arrowRotate(true, id)"
+      (closed)="arrowRotate(false, id)"
+      [id]="'panel' + id"
+      hideToggle
+    >
+      <mat-expansion-panel-header>
+        <i class="material-icons arrow" [id]="'arrowH' + id">
+          arrow_forward_ios
+        </i>
+        <span class="material-icons icon menu-icon" [id]="'iconH' + id">
+          pie_chart
+        </span>
+        {{ project.name }}
+      </mat-expansion-panel-header>
+      <div class="left-line">
+        <div *ngFor="let menuItem of project.menu">
+          <button
+            *ngIf="menuItem.prog.length == 0"
+            mat-button
+            disableRipple="true"
+          >
+            redireccion a: {{ menuItem.name }}
+          </button>
+
+          <div *ngIf="menuItem.prog.length > 0">
+            <button
+              [id]="menuItem.name"
+              mat-button
+              [matMenuTriggerFor]="menu"
+              (menuOpened)="menuOpened(menuItem.name)"
+              (menuClosed)="menuClosed(menuItem.name)"
+              disableRipple="true"
+              class="colapsable-menu"
+            >
+              {{ menuItem.name }}
+            </button>
+
+            <mat-menu
+              #menu="matMenu"
+              xPosition="after"
+              yPosition="below"
+              direction="vertical"
+            >
+              <section
+                mat-menu-item
+                disableRipple="true"
+                class="row"
+                *ngFor="let program of menuItem.prog"
+              >
+                <button mat-button>
+                  <div class="flex1">
+                    <i
+                      *ngIf="sideStatus"
+                      class="material-icons arrow"
+                      [id]="id"
+                    >
+                      arrow_forward_ios
+                    </i>
+                    {{ program.item }}
+                  </div>
+                </button>
+                <input
+                  class="star"
+                  type="checkbox"
+                  title="bookmark page"
+                  [(checked)]="program.fav"
+                  (change)="updateFav($event)"
+                />
+              </section>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <!-- separator -->
+  <span class="separator"></span>
+  <!-- hide/show sidebar button -->
+  <button
+    mat-button
+    disableRipple="true"
+    (click)="openSidebar()"
+    id="collapseSide"
+    class="rounded"
+  >
+    <span class="material-icons icon" id="arrowSide">
+      play_arrow
+    </span>
+  </button>
+</section>

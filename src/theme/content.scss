@@ -1,0 +1,38 @@
+/* flex styles */
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  width: 267px;
+  height: 85vh;
+  padding: 0;
+  padding-top: 20px;
+  background-color: #e3e3e3;
+  transition: all 0.4s;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex1 {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+.no-padding ::ng-deep .mat-expansion-panel-body {
+  padding-left: 0 !important;
+}
+.no-padding .row {
+  justify-content: center;
+}
+.separator {
+  flex: 1 1 auto;
+}
+
+/* divider styles */
+mat-divider {
+  width: 85%;
+  margin: 20px auto;
+}

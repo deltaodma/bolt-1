@@ -1,0 +1,24 @@
+<mat-toolbar class="back-nav">
+  <span class="bolt-icon"></span>
+  <span class="separator"></span>
+  <div class="back-nav__options">
+    <p class="greeting">
+      <span class="material-icons menu-icon">
+        bolt
+      </span>
+      hola {{ userName }}!
+    </p>
+    <mat-form-field>
+      <mat-select
+        disableRipple
+        disableOptionCentering
+        panelClass="myPanelClass"
+        (selectionChange)="changeLeng($event)"
+        value="Esp"
+      >
+        <mat-option value="Esp">Esp</mat-option>
+        <mat-option value="Eng">Eng</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-toolbar>

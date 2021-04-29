@@ -1,0 +1,80 @@
+/* sidebar component styles */
+::ng-deep .cdk-overlay-connected-position-bounding-box {
+  transform: translateX(267px) translateY(-36px);
+  left: 0 !important;
+}
+
+mat-accordion {
+  max-width: 267px;
+}
+.mat-expansion-panel {
+  max-width: 267px;
+  background: transparent;
+  border-radius: 0 !important;
+  color: #000;
+  box-shadow: none;
+}
+
+.bg-black-panel {
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0.91;
+  backdrop-filter: blur(4px);
+  color: #fff;
+}
+
+::ng-deep .mat-expansion-panel-header {
+  height: 40px !important;
+  flex-direction: row-reverse !important;
+}
+::ng-deep .mat-expansion-panel-header:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+::ng-deep .mat-expansion-panel-body {
+  padding-left: 50px !important;
+}
+
+::ng-deep .mat-expansion-panel-header.mat-expanded:focus,
+::ng-deep .mat-expansion-panel-header.mat-expanded:hover {
+  background: transparent !important;
+}
+
+::ng-deep .mat-expansion-indicator::after {
+  color: #fff !important;
+  height: 4px;
+  width: 4px;
+  transform: rotate(-45deg) !important;
+}
+
+.mat-expansion-panel-spacing {
+  margin: 0 !important;
+}
+
+.left-line {
+  border-left: 1px solid #fff;
+}
+
+.highlight-item {
+  border-left: 4px solid #fff;
+  border-radius: 0;
+  transform: translateX(-2.5px);
+}
+
+.colapsable-menu {
+  height: 30px;
+  line-height: 30px;
+  margin: 10px auto;
+}
+
+::ng-deep .mat-menu-panel {
+  width: 261px;
+  border-radius: 0 !important;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0.91;
+  backdrop-filter: blur(4px);
+  box-shadow: none;
+  color: #fff;
+}
+::ng-deep .mat-menu-content button {
+  color: #fff !important;
+  width: 100%;
+}
