@@ -1,23 +1,37 @@
-/* titles */
-.sidebar-title {
-  font-family: Roboto;
+@font-face {
+  font-family: 'Gotham';
+  src: url('../assets/fonts/GothamMedium.ttf');
+}
+@mixin title($ffamily, $fsize, $lineh, $color) {
+  font-family: $ffamily;
   font-style: normal;
+  font-weight: normal;
+  font-size: $fsize;
+  line-height: $lineh;
+  color: $color;
+}
+
+/* titles */
+.title-header {
+  @include title('Gotham', 22px, 26px, #fff);
   font-weight: bold;
-  font-size: 14px;
-  line-height: 16px;
-  color: #393939;
+  letter-spacing: 2px;
+}
+.select-font {
+  @include title('Gotham', 20px, 19px, #fff);
+}
+.sidebar-title {
+  @include title(Roboto, 14px, 16px, #393939);
+  font-weight: bold;
   padding: 0 24px;
   margin: 10px 0;
   text-align: left;
 }
 
 .footer {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
+  @include title('Roboto', 12px, 14px, #fff);
+
   &__title {
-    font-size: 12px;
-    line-height: 14px;
     width: fit-content;
     margin: 5px auto;
     border-bottom: 1px solid #e21d47;

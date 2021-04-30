@@ -25,20 +25,16 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {}
 
   openSidebar() {
-    let innerButton = document.querySelector('#collapseSide')
     let innerArrow = document.querySelector('#arrowSide')
     let sidebar = document.querySelector('#sidebar')
     this.sideStatus = !this.sideStatus
     if (this.sideStatus) {
       sidebar.setAttribute('style', 'transform: translateX(-267px)')
-      innerButton.setAttribute(
-        'style',
-        'transform: rotate(180deg) , border-radius: 5px 0 0 5px;',
-      )
+
       innerArrow.setAttribute('style', 'transform: rotate(0deg) ')
     } else {
       sidebar.setAttribute('style', 'transform: translateX(0px)')
-      innerButton.setAttribute('style', 'transform: rotate(0deg) ')
+
       innerArrow.setAttribute('style', 'transform: rotate(180deg) ')
     }
   }

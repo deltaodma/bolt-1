@@ -14,9 +14,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  changeLeng(event: MatSelectChange) {
-    let selectedData = event.value
-
+  changeLeng(event) {
+    let selectedData = event
     if (selectedData == 'Esp') {
       console.log('Espanol')
     } else {

@@ -27,3 +27,9 @@ mat-divider {
   margin: 20px auto !important;
   border-top-color: #212121 !important;
 }
+
+.box-shadow {
+  box-shadow: 1px 6px 4px rgba(0, 0, 0, 0.25) inset;
+  -webkit-box-shadow: 1px 6px 4px rgba(0, 0, 0, 0.25) inset;
+  -moz-box-shadow: 1px 6px 4px rgba(0, 0, 0, 0.25) inset;
+}
