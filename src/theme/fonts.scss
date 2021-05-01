@@ -17,9 +17,11 @@
   font-weight: bold;
   letter-spacing: 2px;
 }
+
 .select-font {
   @include title('Gotham', 20px, 19px, #fff);
 }
+// sidebar
 .sidebar-title {
   @include title(Roboto, 14px, 16px, #393939);
   font-weight: bold;
@@ -28,6 +30,39 @@
   text-align: left;
 }
 
+// home banner
+.banner {
+  &__text {
+    @include title('Gotham', 50px, 60px, #282828);
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 60px;
+    background-color: #fff;
+    text-transform: uppercase;
+  }
+  &__btn {
+    @include title('Gotham', 14px, 16px, #fff);
+  }
+}
+
+.favorites-banner-title {
+  @include title('Gotham', 36px, 43px, #212121);
+  font-weight: bold;
+  text-align: left;
+}
+
+.title-description {
+  @include title('Gotham', 14px, 13px, #e21c48);
+  font-weight: bold;
+  margin-bottom: 10px !important;
+}
+
+.text-muted {
+  @include title('Gotham', 10px, 10px, #5e5e5e);
+  text-transform: uppercase;
+}
+
+// footer
 .footer {
   @include title('Roboto', 12px, 14px, #fff);
 
