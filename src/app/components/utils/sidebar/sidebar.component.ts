@@ -12,14 +12,25 @@ export class SidebarComponent implements OnInit {
   public userName: string = 'Pedro'
   public arrowType: string = 'arrow_forward_ios'
   public checked: boolean = false
-  public favList: any = [1, 2, 3, 4]
+  public favList: any = []
   public role: string = 'user'
   public sideStatus: boolean = false
   public prop = MockProjects
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.prop.forEach((project) => {
+      project.menu.forEach((subM) => {
+        subM.app_list.forEach((item) => {
+          if (item.fav) {
+            this.favList.push(item)
+          }
+        })
+      })
+    })
+    console.log(this.favList)
+  }
 
   openSidebar() {
     let innerArrow = document.querySelector('#arrowSide')

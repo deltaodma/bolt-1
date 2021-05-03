@@ -24,16 +24,15 @@
       <section disableRipple="true" class="row" *ngFor="let favItem of favList">
         <button mat-button>
           <div class="flex1">
-            <span class="material-icons icon">
-              auto_awesome
-            </span>
-            item
+            <span class="icon {{ favItem.item_icon }}"></span>
+            {{ favItem.item_name }}
           </div>
         </button>
         <input
           class="star"
           type="checkbox"
           title="bookmark page"
+          checked="favItem.fav"
           (change)="updateFav($event)"
         />
       </section>
@@ -195,7 +194,7 @@
           arrow_forward_ios
         </i>
         <span class="material-icons icon menu-icon" [id]="'iconH' + id">
-          pie_chart
+          {{ project.icon }}
         </span>
         {{ project.name }}
       </mat-expansion-panel-header>

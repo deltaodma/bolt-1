@@ -48,7 +48,12 @@
 
 .favorites {
   padding: 93px 72px;
-
+  .title {
+    justify-content: flex-start;
+    .icon-lg {
+      margin-right: 20px;
+    }
+  }
   &__cards {
     margin: 11px 0;
     justify-content: flex-start;

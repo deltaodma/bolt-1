@@ -46,7 +46,12 @@
   <!-- favorite cards -->
 
   <div class="favorites">
-    <h2 class="favorites-banner-title">Favoritos</h2>
+    <div class="row title">
+      <span class="material-icons icon-lg menu-icon">
+        star
+      </span>
+      <h2 class="favorites-banner-title">Favoritos</h2>
+    </div>
     <div *ngFor="let card of [1, 2, 3, 4, 5, 6]" class="favorites__cards row">
       <mat-card class="favorites__cards__logo">logo</mat-card>
       <mat-card class="favorites__cards__content row">
