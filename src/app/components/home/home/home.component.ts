@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { MockProjects } from 'src/app/mocks/projects-mock'
+import { Banners } from 'src/app/mocks/banner-mock'
 
 @Component({
   selector: 'app-home',
@@ -7,8 +8,10 @@ import { MockProjects } from 'src/app/mocks/projects-mock'
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public date = new Date().toLocaleDateString()
   public prop = MockProjects
+  public bannerList: any = Banners
+
+  public date = new Date().toLocaleDateString()
   public favList: any = []
 
   constructor() {}
@@ -25,11 +28,13 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  redirectTo() {
+  redirectTo(exUrl: string) {
     console.log('redireccion externa')
+    window.open(exUrl)
   }
 
   openApp(dashboard) {
     console.log(dashboard)
+    // this.router.navigate(["home"], { queryParamsHandling: "preserve" });
   }
 }
