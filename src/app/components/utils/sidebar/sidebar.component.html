@@ -19,7 +19,9 @@
         Favoritos
       </mat-expansion-panel-header>
 
-      <p *ngIf="favList.length == 0">Aun no tienes ningún favorito!</p>
+      <p style="margin-left: 40px;" *ngIf="favList.length == 0">
+        Aun no tienes ningún favorito!
+      </p>
 
       <section disableRipple="true" class="row" *ngFor="let favItem of favList">
         <button mat-button>
