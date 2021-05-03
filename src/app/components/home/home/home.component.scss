@@ -48,14 +48,14 @@
 
 .favorites {
   padding: 93px 72px;
-  &-banner-title {
-  }
+
   &__cards {
     margin: 11px 0;
-    justify-content: space-around;
+    justify-content: flex-start;
     &__logo {
       width: 66px;
       height: 60px;
+      margin-right: 9px;
       background: #e6e6e6;
       border-radius: 15px;
       padding: 0;

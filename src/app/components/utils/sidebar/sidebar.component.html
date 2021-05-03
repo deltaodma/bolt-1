@@ -202,14 +202,14 @@
       <div class="left-line">
         <div *ngFor="let menuItem of project.menu">
           <button
-            *ngIf="menuItem.prog.length == 0"
+            *ngIf="menuItem.app_list.length == 0"
             mat-button
             disableRipple="true"
           >
             redireccion a: {{ menuItem.name }}
           </button>
 
-          <div *ngIf="menuItem.prog.length > 0">
+          <div *ngIf="menuItem.app_list.length > 0">
             <button
               [id]="menuItem.name"
               mat-button
@@ -232,7 +232,7 @@
                 mat-menu-item
                 disableRipple="true"
                 class="row"
-                *ngFor="let program of menuItem.prog"
+                *ngFor="let program of menuItem.app_list"
               >
                 <button mat-button>
                   <div class="flex1">
@@ -243,7 +243,7 @@
                     >
                       arrow_forward_ios
                     </i>
-                    {{ program.item }}
+                    {{ program.item_name }}
                   </div>
                 </button>
                 <input

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
-import { MatAccordion } from '@angular/material/expansion'
+import { Component, OnInit } from '@angular/core'
+
 import { MockProjects } from 'src/app/mocks/projects-mock'
 
 @Component({
@@ -8,9 +8,6 @@ import { MockProjects } from 'src/app/mocks/projects-mock'
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  @ViewChild(MatAccordion) accordion1: MatAccordion
-  @ViewChild(MatAccordion) accordion2: MatAccordion
-
   public default: string = 'Esp'
   public userName: string = 'Pedro'
   public arrowType: string = 'arrow_forward_ios'
