@@ -10,7 +10,7 @@
     </p>
 
     <div class="select">
-      <select name="slct" id="slct" class="select-font">
+      <select (change)="changeLang($event.target.value)" class="select-font">
         <option value="Esp" selected>Esp</option>
         <option value="Eng">Eng</option>
       </select>

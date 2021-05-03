@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  changeLeng(event) {
+  changeLang(event) {
     let selectedData = event
     if (selectedData == 'Esp') {
       console.log('Espanol')
