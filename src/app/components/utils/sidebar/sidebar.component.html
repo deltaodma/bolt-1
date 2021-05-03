@@ -24,7 +24,7 @@
       </p>
 
       <section disableRipple="true" class="row" *ngFor="let favItem of favList">
-        <button mat-button>
+        <button mat-button (click)="openApp(favItem.id)">
           <div class="flex1">
             <span class="icon {{ favItem.item_icon }}"></span>
             {{ favItem.item_name }}
@@ -39,6 +39,7 @@
         />
       </section>
     </mat-expansion-panel>
+
     <!-- admin section -->
     <mat-expansion-panel
       *ngIf="role == 'admin'"
@@ -235,7 +236,7 @@
                 class="row"
                 *ngFor="let program of menuItem.app_list"
               >
-                <button mat-button>
+                <button mat-button (click)="openApp(program.id)">
                   <div class="flex1">
                     <i
                       *ngIf="sideStatus"

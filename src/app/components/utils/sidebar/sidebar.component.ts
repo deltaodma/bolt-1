@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 
 import { MockProjects } from 'src/app/mocks/projects-mock'
 
@@ -17,7 +18,7 @@ export class SidebarComponent implements OnInit {
   public sideStatus: boolean = false
   public prop = MockProjects
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.prop.forEach((project) => {
@@ -95,5 +96,11 @@ export class SidebarComponent implements OnInit {
 
   updateFav(event) {
     console.log(event)
+  }
+
+  openApp(dashboard) {
+    this.router.navigate([`app-view/${dashboard}`], {
+      queryParamsHandling: 'preserve',
+    })
   }
 }
