@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel'
+import { MockProjects } from 'src/app/mocks/projects-mock'
 
 @Component({
   selector: 'app-home',
@@ -8,11 +8,28 @@ import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel'
 })
 export class HomeComponent implements OnInit {
   public date = new Date().toLocaleDateString()
+  public prop = MockProjects
+  public favList: any = []
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.prop.forEach((project) => {
+      project.menu.forEach((subM) => {
+        subM.app_list.forEach((item) => {
+          if (item.fav) {
+            this.favList.push(item)
+          }
+        })
+      })
+    })
+  }
 
   redirectTo() {
     console.log('redireccion externa')
+  }
+
+  openApp(dashboard) {
+    console.log(dashboard)
   }
 }
