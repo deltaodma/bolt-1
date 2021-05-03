@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { Banners } from 'src/app/mocks/banner-mock'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit {
   public date = new Date().toLocaleDateString()
   public favList: any = []
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.prop.forEach((project) => {
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
         })
       })
     })
+    console.log(this.favList)
   }
 
   redirectTo(exUrl: string) {
@@ -34,7 +36,8 @@ export class HomeComponent implements OnInit {
   }
 
   openApp(dashboard) {
-    console.log(dashboard)
-    // this.router.navigate(["home"], { queryParamsHandling: "preserve" });
+    this.router.navigate([`app-view/${dashboard}`], {
+      queryParamsHandling: 'preserve',
+    })
   }
 }

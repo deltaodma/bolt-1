@@ -9,9 +9,10 @@ import { HomeComponent } from './components/home/home/home.component'
 
 import { MatCarouselModule } from '@ngmodule/material-carousel'
 import { MatCardModule } from '@angular/material/card'
+import { EmbedViewComponent } from './components/embed-view/embed-view.component'
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, EmbedViewComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

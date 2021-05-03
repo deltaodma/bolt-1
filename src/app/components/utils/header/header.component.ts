@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { MatSelectChange } from '@angular/material/select'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ export class HeaderComponent implements OnInit {
   public default: string = 'Esp'
   public userName: string = 'Pedro'
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -22,5 +23,9 @@ export class HeaderComponent implements OnInit {
       this.default = 'Eng'
       console.log('ingles')
     }
+  }
+
+  routerHome() {
+    this.router.navigate([''])
   }
 }

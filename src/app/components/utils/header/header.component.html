@@ -1,5 +1,5 @@
 <mat-toolbar class="back-nav">
-  <span class="bolt-icon"></span>
+  <span class="bolt-icon" (click)="routerHome()"></span>
   <span class="separator"></span>
   <div class="back-nav__options">
     <p class="greeting title-header">
@@ -8,18 +8,7 @@
       </span>
       hola {{ userName }}!
     </p>
-    <!-- <mat-form-field>
-      <mat-select
-        disableRipple
-        disableOptionCentering
-        panelClass="myPanelClass"
-        (selectionChange)="changeLeng($event)"
-        value="Esp"
-      >
-        <mat-option value="Esp">Esp</mat-option>
-        <mat-option value="Eng">Eng</mat-option>
-      </mat-select>
-    </mat-form-field> -->
+
     <div class="select">
       <select name="slct" id="slct" class="select-font">
         <option value="Esp" selected>Esp</option>

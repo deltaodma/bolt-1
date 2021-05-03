@@ -6,7 +6,7 @@ export const Banners = [
     content_eng: ' english text test',
     btn_text_esp: 'Más Información',
     btn_text_eng: 'More information',
-    url_redirect: 'https://www.tapintoyourbeer.com/age_check.cfm',
+    url_redirect: '/assets/files/TERMINOSYCONDICIONESGENERALES.pdf',
   },
   {
     url_img:
@@ -19,7 +19,7 @@ export const Banners = [
   },
   {
     url_img:
-      'https://cdn.pixabay.com/photo/2020/07/08/04/12/work-5382501_960_720.jpghttps://www.tapintoyourbeer.com/age_check.cfm',
+      'https://cdn.pixabay.com/photo/2020/07/08/04/12/work-5382501_960_720.jpg',
     content_esp: ' texto de prueba espanol',
     content_eng: ' english text test',
     btn_text_esp: 'Más Información',

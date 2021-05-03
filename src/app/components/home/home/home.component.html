@@ -1,7 +1,7 @@
 <section class="main-content box-shadow">
   <mat-carousel
     timings="250ms ease-in"
-    [autoplay]="false"
+    [autoplay]="true"
     interval="5000"
     color="warn"
     maxWidth="auto"
@@ -50,7 +50,7 @@
     </div>
     <button
       *ngFor="let card of favList"
-      (click)="openApp(card.url)"
+      (click)="openApp(card.id)"
       class="favorites__cards row"
     >
       <mat-card class="favorites__cards__logo">
@@ -58,7 +58,7 @@
       </mat-card>
       <mat-card class="favorites__cards__content row card-pattern">
         <div class="description">
-          <h3 class="title-description">{{ card.item_name }}X</h3>
+          <h3 class="title-description">{{ card.item_name }}</h3>
           <p class="text-muted">dtc</p>
         </div>
         <div class="vertical-divider"></div>

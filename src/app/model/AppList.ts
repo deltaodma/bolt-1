@@ -1,5 +1,5 @@
 export class AppList {
-  // id: string
+  id: number
   item_icon: string
   item_name: string
   url: string
