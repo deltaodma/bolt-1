@@ -22,7 +22,8 @@ import { ModalRolFormComponent } from './modal-rol-form/modal-rol-form.component
 import { ModalAlertComponent } from './modal-alert/modal-alert.component'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input';
-import { LoadingComponent } from './loading/loading.component'
+import { LoadingComponent } from './loading/loading.component';
+import { SnackAlertComponent } from './snack-alert/snack-alert.component'
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { LoadingComponent } from './loading/loading.component'
     ModalRolFormComponent,
     ModalAlertComponent,
     LoadingComponent,
+    SnackAlertComponent,
   ],
   imports: [
     CommonModule,

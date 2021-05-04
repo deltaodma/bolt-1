@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home/home.component'
 
 import { MatCarouselModule } from '@ngmodule/material-carousel'
 import { MatCardModule } from '@angular/material/card'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 import { EmbedViewComponent } from './components/embed-view/embed-view.component'
 
@@ -21,6 +22,7 @@ import { EmbedViewComponent } from './components/embed-view/embed-view.component
     UtilsModule,
     MatCarouselModule.forRoot(),
     MatCardModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

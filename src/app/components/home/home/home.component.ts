@@ -12,7 +12,7 @@ import { UiService } from 'src/app/services/ui.service'
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public user = []
+  public user = ['']
   public prop = MockProjects
   public bannerList: any = Banners
 

@@ -113,3 +113,14 @@ mat-divider {
     overflow: hidden;
   }
 }
+
+.snack-alert {
+  width: 587px;
+  height: 75px;
+  max-width: 60vw !important;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px !important;
+  padding: 5px 16px !important;
+  border-left: 10px solid #dc1a5e;
+}

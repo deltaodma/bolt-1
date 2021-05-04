@@ -235,6 +235,7 @@
                 disableRipple="true"
                 class="row"
                 *ngFor="let program of menuItem.app_list"
+                (click)="$event.stopPropagation()"
               >
                 <button mat-button (click)="openApp(program.id)">
                   <div class="flex1">
@@ -249,11 +250,12 @@
                   </div>
                 </button>
                 <input
+                  [id]="program.id"
                   class="star"
                   type="checkbox"
                   title="bookmark page"
                   [(checked)]="program.fav"
-                  (change)="updateFav($event)"
+                  (change)="updateFav(program)"
                 />
               </section>
             </mat-menu>

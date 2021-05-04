@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { MockProjects } from 'src/app/mocks/projects-mock'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { SnackAlertComponent } from '../snack-alert/snack-alert.component'
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +20,7 @@ export class SidebarComponent implements OnInit {
   public sideStatus: boolean = false
   public prop = MockProjects
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.prop.forEach((project) => {
@@ -95,9 +97,21 @@ export class SidebarComponent implements OnInit {
   }
 
   updateFav(event) {
-    console.log(event)
+    if (this.favList.length < 6) {
+      this.favList.push(event)
+    } else {
+      console.log('limite de favoritos alcanzado')
+      this.openSnackBar('limite de favoritos alcanzado')
+    }
   }
-
+  openSnackBar(message: string) {
+    this._snackBar.open(message)
+    this._snackBar.openFromComponent(SnackAlertComponent, {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: 'snack-alert',
+    })
+  }
   openApp(dashboard) {
     this.router.navigate([`app-view/${dashboard}`], {
       queryParamsHandling: 'preserve',
