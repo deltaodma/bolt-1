@@ -1,0 +1,15 @@
+<div class="dialog-alert">
+  <span
+    mat-button
+    mat-dialog-close
+    class="x-icon"
+    (click)="closeModal()"
+  ></span>
+  <div class="icon-forbiden"></div>
+  <p class="dialog-alert__content">
+    No tiene un rol asignado
+    <br />
+    Debe solicitar un Rol en la aplicación.
+  </p>
+  <button mat-button class="alert-btn" (click)="openForm()">Solicitar</button>
+</div>

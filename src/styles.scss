@@ -9,6 +9,7 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 /* Becks Theme */
+@import './theme/material.scss';
 @import './theme/variables.scss';
 @import './theme/buttons.scss';
 @import './theme/content.scss';

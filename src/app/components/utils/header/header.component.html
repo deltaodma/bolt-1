@@ -11,8 +11,8 @@
 
     <div class="select">
       <select (change)="changeLang($event.target.value)" class="select-font">
-        <option value="Esp" selected>Esp</option>
-        <option value="Eng">Eng</option>
+        <option value="Esp" [selected]="defaultLang == 'Esp'">Esp</option>
+        <option value="Eng" [selected]="defaultLang == 'Eng'">Eng</option>
       </select>
     </div>
   </div>

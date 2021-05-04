@@ -15,9 +15,23 @@ import { MatExpansionModule } from '@angular/material/expansion'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatButtonModule } from '@angular/material/button'
 import { MatGridListModule } from '@angular/material/grid-list'
+import { MatDialogModule } from '@angular/material/dialog'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { ModalNotificationComponent } from './modal-notification/modal-notification.component'
+import { ModalRolFormComponent } from './modal-rol-form/modal-rol-form.component'
+import { ModalAlertComponent } from './modal-alert/modal-alert.component'
+import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input'
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SidebarComponent],
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    SidebarComponent,
+    ModalNotificationComponent,
+    ModalRolFormComponent,
+    ModalAlertComponent,
+  ],
   imports: [
     CommonModule,
     MatProgressSpinnerModule,
@@ -31,6 +45,10 @@ import { MatGridListModule } from '@angular/material/grid-list'
     MatToolbarModule,
     MatExpansionModule,
     MatGridListModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
   ],
   exports: [FooterComponent, SidebarComponent, HeaderComponent],
 })

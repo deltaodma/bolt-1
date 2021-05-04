@@ -1,0 +1,112 @@
+<div class="dialog-form">
+  <div mat-dialog-actions class="dialog-form__header">
+    <span
+      mat-button
+      mat-dialog-close
+      class="x-icon"
+      (click)="closeModal()"
+    ></span>
+  </div>
+
+  <h2 class="form-title">Solicitud asignación de rol</h2>
+
+  <form [formGroup]="userRolForm" class="form-section" autocomplete="off">
+    <mat-form-field
+      hideRequiredMarker="true"
+      appearance="outline"
+      floatLabel="auto"
+      class="fullInput input-bolt"
+    >
+      <mat-label>usuario</mat-label>
+      <span matPrefix class="material-icons">
+        person
+      </span>
+      <input
+        matInput
+        id="user"
+        formControlName="user"
+        type="text"
+        required
+        maxlength="15"
+      />
+
+      <mat-error *ngIf="userRolForm.controls.user.errors">
+        ingrese un usuario
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      hideRequiredMarker="true"
+      appearance="outline"
+      floatLabel="auto"
+      class="fullInput"
+    >
+      <mat-label>ID de red- VDI</mat-label>
+      <span matPrefix class="material-icons">
+        assignment_ind
+      </span>
+      <input
+        matInput
+        id="id"
+        formControlName="id"
+        type="text"
+        required
+        maxlength="30"
+      />
+
+      <mat-error *ngIf="userRolForm.controls.id.errors">
+        ingrese un ID
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      hideRequiredMarker="true"
+      floatLabel="auto"
+      class="fullInput"
+    >
+      <mat-label>Proyecto al que necesita acceso</mat-label>
+      <span matPrefix class="material-icons">
+        vpn_key
+      </span>
+      <mat-select [formControl]="userRolForm.controls.project">
+        <mat-option value="valid">valid</mat-option>
+        <mat-option value="invalid">invalid</mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="userRolForm.controls.project.errors">
+        seleccione un proyecto
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      hideRequiredMarker="true"
+      floatLabel="auto"
+      class="fullInput"
+    >
+      <mat-label>País</mat-label>
+      <span matPrefix class="material-icons">
+        public
+      </span>
+      <mat-select [formControl]="userRolForm.controls.country">
+        <mat-option value="option">Option</mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="userRolForm.controls.country.errors">
+        seleccione un país
+      </mat-error>
+    </mat-form-field>
+
+    <mat-error *ngIf="httpError">{{ httpError }}</mat-error>
+
+    <button
+      class="btn-submit-rol"
+      (click)="loginUser()"
+      block="block"
+      [ngClass]="{ 'button-disabled': userRolForm.invalid }"
+    >
+      <span>Enviar</span>
+    </button>
+  </form>
+</div>

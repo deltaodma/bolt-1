@@ -30,6 +30,16 @@
   text-align: left;
 }
 
+// pop ups
+.dialog-alert__content {
+  @include title('Gotham', 20px, 30px, #707782);
+}
+.form-title {
+  @include title('Gotham', 24px, 30px, #707782);
+  margin: 0 auto 10px 28px;
+  align-self: flex-start;
+  border-bottom: 2px solid #e21d47;
+}
 // home banner
 .banner {
   &__text {
@@ -58,7 +68,7 @@
 }
 
 .text-muted {
-  @include title('Gotham', 10px, 10px, #5e5e5e);
+  @include title('Gotham', 10px, 10px, #707782);
   text-transform: uppercase;
 }
 

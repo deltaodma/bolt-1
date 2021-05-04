@@ -48,25 +48,32 @@
       </span>
       <h2 class="favorites-banner-title">Favoritos</h2>
     </div>
-    <button
-      *ngFor="let card of favList"
-      (click)="openApp(card.id)"
-      class="favorites__cards row"
-    >
-      <mat-card class="favorites__cards__logo">
-        <span class="{{ card.item_icon + '-big' }} icon-md"></span>
-      </mat-card>
-      <mat-card class="favorites__cards__content row card-pattern">
-        <div class="description">
-          <h3 class="title-description">{{ card.item_name }}</h3>
-          <p class="text-muted">dtc</p>
-        </div>
-        <div class="vertical-divider"></div>
-        <div class="last-seen">
-          <h4>Última visita</h4>
-          <p class="text-muted">{{ date }}</p>
-        </div>
-      </mat-card>
-    </button>
+    <div *ngIf="favList.length > 0">
+      <button
+        *ngFor="let card of favList"
+        (click)="openApp(card.id)"
+        class="favorites__cards row"
+      >
+        <mat-card class="favorites__cards__logo">
+          <span class="{{ card.item_icon + '-big' }} icon-md"></span>
+        </mat-card>
+        <mat-card class="favorites__cards__content row card-pattern">
+          <div class="description">
+            <h3 class="title-description">{{ card.item_name }}</h3>
+            <p class="text-muted">dtc</p>
+          </div>
+          <div class="vertical-divider"></div>
+          <div class="last-seen">
+            <h4>Última visita</h4>
+            <p class="text-muted">{{ date }}</p>
+          </div>
+        </mat-card>
+      </button>
+    </div>
+
+    <div class="empty-card col" *ngIf="favList.length == 0">
+      <div class="empty-fav"></div>
+      <p class="text-muted">No tiene favoritos añadidos</p>
+    </div>
   </div>
 </section>

@@ -8,21 +8,19 @@ import { Router } from '@angular/router'
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  public default: string = 'Esp'
+  public defaultLang: string
   public userName: string = 'Pedro'
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.defaultLang = localStorage.getItem('lang') || 'Esp'
+  }
 
   changeLang(event) {
-    let selectedData = event
-    if (selectedData == 'Esp') {
-      console.log('Espanol')
-    } else {
-      this.default = 'Eng'
-      console.log('ingles')
-    }
+    // read the local storage to set a language
+    localStorage.setItem('lang', event)
+    window.location.reload()
   }
 
   routerHome() {

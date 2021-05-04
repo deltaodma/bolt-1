@@ -184,7 +184,7 @@
   </h2>
 
   <!-- projects section -->
-  <mat-accordion id="accordion2" multi="false">
+  <mat-accordion *ngIf="prop.length > 0" multi="false">
     <mat-expansion-panel
       *ngFor="let project of prop; let id = index"
       (opened)="arrowRotate(true, id)"
