@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
+import { UiService } from 'src/app/services/ui.service'
 
 @Component({
   selector: 'app-modal-notification',
@@ -7,13 +8,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog'
   styleUrls: ['./modal-notification.component.scss'],
 })
 export class ModalNotificationComponent implements OnInit {
-  constructor(
-    public dialogAlert: MatDialogRef<ModalNotificationComponent>,
-    public dialog: MatDialog,
-  ) {}
+  constructor(public ui: UiService) {}
 
   ngOnInit(): void {}
   closeModal() {
-    this.dialogAlert.close()
+    this.ui.dismissModal(ModalNotificationComponent)
   }
 }

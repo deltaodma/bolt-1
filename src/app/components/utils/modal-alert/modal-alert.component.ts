@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { MatDialog, MatDialogRef } from '@angular/material/dialog'
+import { UiService } from 'src/app/services/ui.service'
 import { ModalRolFormComponent } from '../modal-rol-form/modal-rol-form.component'
 
 @Component({
@@ -8,22 +8,15 @@ import { ModalRolFormComponent } from '../modal-rol-form/modal-rol-form.componen
   styleUrls: ['./modal-alert.component.scss'],
 })
 export class ModalAlertComponent implements OnInit {
-  constructor(
-    public dialogAlert: MatDialogRef<ModalAlertComponent>,
-    public dialog: MatDialog,
-  ) {}
+  constructor(public ui: UiService) {}
 
   ngOnInit(): void {}
 
   closeModal() {
-    this.dialogAlert.close()
+    this.ui.dismissModal(ModalAlertComponent)
   }
   openForm() {
     this.closeModal()
-    this.dialog.open(ModalRolFormComponent, {
-      disableClose: true,
-      width: '500px',
-      height: 'auto',
-    })
+    this.ui.showModal(ModalRolFormComponent)
   }
 }

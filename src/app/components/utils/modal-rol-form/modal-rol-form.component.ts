@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatDialog, MatDialogRef } from '@angular/material/dialog'
+import { UiService } from 'src/app/services/ui.service'
 import { ModalNotificationComponent } from '../modal-notification/modal-notification.component'
 
 @Component({
@@ -15,11 +15,7 @@ export class ModalRolFormComponent implements OnInit {
   public httpError: string
   public hide: boolean
   public password: string
-  constructor(
-    public dialogForm: MatDialogRef<ModalRolFormComponent>,
-    public dialog: MatDialog,
-    private formBuilder: FormBuilder,
-  ) {}
+  constructor(private formBuilder: FormBuilder, public ui: UiService) {}
 
   ngOnInit(): void {
     this.initforms()
@@ -39,18 +35,13 @@ export class ModalRolFormComponent implements OnInit {
   }
   loginUser(): void {
     if (this.userRolForm.invalid) {
-      // this.showError = true
       ;(<any>Object).values(this.userRolForm.controls).forEach((control) => {
         control.markAsTouched()
       })
       return
     }
     this.closeModal()
-    this.dialog.open(ModalNotificationComponent, {
-      disableClose: true,
-      width: '500px',
-      height: '240px',
-    })
+    this.ui.showModal(ModalNotificationComponent)
   }
 
   public getMessageform(item: any): string {
@@ -69,6 +60,6 @@ export class ModalRolFormComponent implements OnInit {
   }
 
   closeModal() {
-    this.dialogForm.close()
+    this.ui.dismissModal(ModalRolFormComponent)
   }
 }

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { Banners } from 'src/app/mocks/banner-mock'
 import { Router } from '@angular/router'
-import { MatDialog } from '@angular/material/dialog'
 
 import { ModalAlertComponent } from '../../utils/modal-alert/modal-alert.component'
+import { UiService } from 'src/app/services/ui.service'
 
 @Component({
   selector: 'app-home',
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   public date = new Date().toLocaleDateString()
   public favList: any = []
 
-  constructor(private router: Router, public dialogAlert: MatDialog) {}
+  constructor(private router: Router, public ui: UiService) {}
 
   ngOnInit(): void {
     if (this.user && this.user.length > 0) {
@@ -38,14 +38,8 @@ export class HomeComponent implements OnInit {
   }
 
   openAlert() {
-    this.dialogAlert.open(ModalAlertComponent, {
-      disableClose: true,
-      width: '500px',
-      height: 'auto',
-    })
+    this.ui.showModal(ModalAlertComponent)
   }
-
-  openForm() {}
 
   redirectTo(exUrl: string) {
     console.log('redireccion externa')
