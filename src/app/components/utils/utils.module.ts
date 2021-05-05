@@ -21,9 +21,8 @@ import { ModalNotificationComponent } from './modal-notification/modal-notificat
 import { ModalRolFormComponent } from './modal-rol-form/modal-rol-form.component'
 import { ModalAlertComponent } from './modal-alert/modal-alert.component'
 import { MatIconModule } from '@angular/material/icon'
-import { MatInputModule } from '@angular/material/input';
-import { LoadingComponent } from './loading/loading.component';
-import { SnackAlertComponent } from './snack-alert/snack-alert.component'
+import { MatInputModule } from '@angular/material/input'
+import { LoadingComponent } from './loading/loading.component'
 
 @NgModule({
   declarations: [
@@ -34,7 +33,6 @@ import { SnackAlertComponent } from './snack-alert/snack-alert.component'
     ModalRolFormComponent,
     ModalAlertComponent,
     LoadingComponent,
-    SnackAlertComponent,
   ],
   imports: [
     CommonModule,
@@ -54,6 +52,14 @@ import { SnackAlertComponent } from './snack-alert/snack-alert.component'
     MatIconModule,
     MatInputModule,
   ],
-  exports: [FooterComponent, SidebarComponent, HeaderComponent],
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    SidebarComponent,
+    ModalNotificationComponent,
+    ModalRolFormComponent,
+    ModalAlertComponent,
+    LoadingComponent,
+  ],
 })
 export class UtilsModule {}

@@ -35,7 +35,7 @@
           type="checkbox"
           title="bookmark page"
           checked="favItem.fav"
-          (change)="updateFav($event)"
+          (change)="updateFav($event.target.checked, program)"
         />
       </section>
     </mat-expansion-panel>
@@ -255,7 +255,7 @@
                   type="checkbox"
                   title="bookmark page"
                   [(checked)]="program.fav"
-                  (change)="updateFav(program)"
+                  (change)="updateFav($event.target.checked, program)"
                 />
               </section>
             </mat-menu>

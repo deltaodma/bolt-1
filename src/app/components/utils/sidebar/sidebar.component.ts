@@ -3,7 +3,6 @@ import { Router } from '@angular/router'
 
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { SnackAlertComponent } from '../snack-alert/snack-alert.component'
 
 @Component({
   selector: 'app-sidebar',
@@ -96,21 +95,34 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  updateFav(event) {
+  updateFav(event, element) {
+    console.log(event)
+
     if (this.favList.length < 6) {
-      this.favList.push(event)
+      if (event) {
+        this.favList.push(element)
+        // TO DO http request to update list
+        return
+      } else {
+        this.favList.splice(element, 1)
+        return
+      }
     } else {
-      console.log('limite de favoritos alcanzado')
-      this.openSnackBar('limite de favoritos alcanzado')
+      if (event) {
+        this.openSnackBar(
+          'Excedió el número de favoritos para poder asignar un nuevo tablero debe eliminar uno de los que tienes en la sección ',
+          'x',
+          {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: 'snack-alert',
+          },
+        )
+      }
     }
   }
-  openSnackBar(message: string) {
-    this._snackBar.open(message)
-    this._snackBar.openFromComponent(SnackAlertComponent, {
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      panelClass: 'snack-alert',
-    })
+  openSnackBar(message: string, action: string, config: object) {
+    this._snackBar.open(message, action, config)
   }
   openApp(dashboard) {
     this.router.navigate([`app-view/${dashboard}`], {
