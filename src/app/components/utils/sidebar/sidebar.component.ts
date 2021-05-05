@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { UiService } from 'src/app/services/ui.service'
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +20,11 @@ export class SidebarComponent implements OnInit {
   public sideStatus: boolean = false
   public prop = MockProjects
 
-  constructor(private router: Router, private _snackBar: MatSnackBar) {}
+  constructor(
+    private router: Router,
+    private _snackBar: MatSnackBar,
+    private ui: UiService,
+  ) {}
 
   ngOnInit(): void {
     this.prop.forEach((project) => {
@@ -101,15 +106,18 @@ export class SidebarComponent implements OnInit {
     if (this.favList.length < 6) {
       if (event) {
         this.favList.push(element)
-        // TO DO http request to update list
+        // TO DO
+        // http request to insert a new element in the list
         return
       } else {
         this.favList.splice(element, 1)
+        // TO DO
+        // http request to remove the element in the list
         return
       }
     } else {
       if (event) {
-        this.openSnackBar(
+        this.ui.createSnackbar(
           'Excedió el número de favoritos para poder asignar un nuevo tablero debe eliminar uno de los que tienes en la sección ',
           'x',
           {
@@ -121,9 +129,7 @@ export class SidebarComponent implements OnInit {
       }
     }
   }
-  openSnackBar(message: string, action: string, config: object) {
-    this._snackBar.open(message, action, config)
-  }
+
   openApp(dashboard) {
     this.router.navigate([`app-view/${dashboard}`], {
       queryParamsHandling: 'preserve',

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { LoadingComponent } from '../components/utils/loading/loading.component'
 
 @Injectable({
@@ -7,7 +8,7 @@ import { LoadingComponent } from '../components/utils/loading/loading.component'
 })
 export class UiService {
   public loading: any
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   showLoading() {
     try {
@@ -53,5 +54,9 @@ export class UiService {
     } catch (e) {
       console.error('dismissModal', e)
     }
+  }
+
+  createSnackbar(message: string, action: string, config: object) {
+    this.snackBar.open(message, action, config)
   }
 }
