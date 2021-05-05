@@ -5,6 +5,7 @@ import { Router } from '@angular/router'
 
 import { ModalAlertComponent } from '../../utils/modal-alert/modal-alert.component'
 import { UiService } from 'src/app/services/ui.service'
+import { TutorialComponent } from '../../utils/tutorial/tutorial.component'
 
 @Component({
   selector: 'app-home',
@@ -35,10 +36,22 @@ export class HomeComponent implements OnInit {
     } else {
       this.openAlert()
     }
+    if (!localStorage.getItem('tutorial')) {
+      this.openTutorial()
+    }
   }
 
   openAlert() {
-    this.ui.showModal(ModalAlertComponent)
+    this.ui.showModal(ModalAlertComponent, '500px', 'auto', '', 'backdrop')
+  }
+  openTutorial() {
+    this.ui.showModal(
+      TutorialComponent,
+      '100%',
+      'auto',
+      'tutorial',
+      'no-backdrop',
+    )
   }
 
   redirectTo(exUrl: string) {

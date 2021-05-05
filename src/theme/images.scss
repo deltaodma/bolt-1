@@ -129,6 +129,35 @@
     relative
   );
 }
+//riase-hand icon
+.raise-hand {
+  @include img-background(
+    url('/assets/icon/hand-sparkles.svg'),
+    60px,
+    48px,
+    relative
+  );
+}
+// next step icon for button
+.next-step {
+  @include img-background(
+    url('/assets/icon/arrow-alt-circle-right.svg'),
+    23px,
+    28px,
+    absolute
+  );
+  top: 2px;
+  right: 20px;
+}
+// arrow pointer icon
+.arrow-pointer {
+  @include img-background(
+    url('/assets/icon/arrow-pointer.svg'),
+    35px,
+    47px,
+    absolute
+  );
+}
 
 // footer
 .bolt-icon {

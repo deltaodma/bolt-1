@@ -31,18 +31,19 @@ export class UiService {
     }
   }
 
-  showModal(refComponent, refClass?) {
+  showModal(refComponent, width, height, refClass?, backdropClass?) {
     try {
       this.dialog.open(refComponent, {
         id: refComponent,
         disableClose: true,
         hasBackdrop: true,
+        backdropClass: backdropClass,
         panelClass: refClass,
-        width: '500px',
-        height: 'auto',
+        width: width,
+        height: height,
       })
     } catch (e) {
-      console.error('showLoading', e)
+      console.error('showModal', e)
     }
   }
 

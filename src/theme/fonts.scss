@@ -94,3 +94,10 @@
     }
   }
 }
+
+.tutorial {
+  &__content {
+    @include title('Gotham', 20px, 30px, #707782);
+    text-align: center;
+  }
+}

@@ -41,7 +41,13 @@ export class ModalRolFormComponent implements OnInit {
       return
     }
     this.closeModal()
-    this.ui.showModal(ModalNotificationComponent)
+    this.ui.showModal(
+      ModalNotificationComponent,
+      '500px',
+      'auto',
+      '',
+      'backdrop',
+    )
   }
 
   public getMessageform(item: any): string {

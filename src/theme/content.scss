@@ -47,11 +47,14 @@ mat-divider {
   border-radius: 10px !important;
 }
 
-.cdk-overlay-dark-backdrop {
+.backdrop {
   background: rgba(0, 0, 0, 0.32);
   @supports (backdrop-filter: blur(20px)) {
     backdrop-filter: blur(20px);
   }
+}
+.no-backdrop {
+  background: rgba(0, 0, 0, 0.32);
 }
 @mixin dialog($width, $height, $bgColor, $color) {
   width: $width;

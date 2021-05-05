@@ -17,6 +17,6 @@ export class ModalAlertComponent implements OnInit {
   }
   openForm() {
     this.closeModal()
-    this.ui.showModal(ModalRolFormComponent)
+    this.ui.showModal(ModalRolFormComponent, '500px', 'auto', '', 'backdrop')
   }
 }
