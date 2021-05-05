@@ -1,5 +1,5 @@
 <!-- sidebar -->
-<aside class="flex-column box-shadow" id="sidebar">
+<aside class="flex-column box-shadow" id="sidebar" [ngSwitch]="lang">
   <mat-accordion id="accordion1" multi="false">
     <!-- fav section -->
     <mat-expansion-panel
@@ -16,7 +16,12 @@
         <span class="material-icons icon menu-icon" id="iconEf">
           star
         </span>
-        Favoritos
+        <div *ngSwitchCase="'Esp'">
+          Favoritos
+        </div>
+        <div *ngSwitchCase="'Eng'">
+          Favorites
+        </div>
       </mat-expansion-panel-header>
 
       <p style="margin-left: 40px;" *ngIf="favList.length == 0">
@@ -55,7 +60,12 @@
         <span class="material-icons icon menu-icon" id="iconEa">
           manage_accounts
         </span>
-        Administrador
+        <div *ngSwitchCase="'Esp'">
+          Administrador
+        </div>
+        <div *ngSwitchCase="'Eng'">
+          Manager
+        </div>
       </mat-expansion-panel-header>
 
       <div class="left-line">
@@ -73,7 +83,12 @@
               <span class="material-icons icon">
                 account_tree
               </span>
-              Proyectos
+              <span *ngSwitchCase="'Esp'">
+                Proyectos
+              </span>
+              <span *ngSwitchCase="'Eng'">
+                Projects
+              </span>
             </button>
 
             <mat-menu
@@ -88,7 +103,12 @@
                     <span class="material-icons icon">
                       post_add
                     </span>
-                    crear o modificar un projecto
+                    <div *ngSwitchCase="'Esp'">
+                      crear o modificar un projecto
+                    </div>
+                    <div *ngSwitchCase="'Eng'">
+                      create or modify projects
+                    </div>
                   </div>
                 </button>
               </section>
@@ -122,7 +142,12 @@
                     <span class="material-icons icon">
                       person_add
                     </span>
-                    crear y modificar usuarios
+                    <div *ngSwitchCase="'Esp'">
+                      crear y modificar usuarios
+                    </div>
+                    <div *ngSwitchCase="'Eng'">
+                      create and modify users
+                    </div>
                   </div>
                 </button>
               </section>
@@ -132,7 +157,13 @@
                     <span class="material-icons icon">
                       people_alt
                     </span>
-                    Administrar roles
+
+                    <div *ngSwitchCase="'Esp'">
+                      Administrar roles
+                    </div>
+                    <div *ngSwitchCase="'Eng'">
+                      Manages roles
+                    </div>
                   </div>
                 </button>
               </section>
@@ -166,7 +197,13 @@
                     <span class="material-icons icon">
                       collections
                     </span>
-                    Crear o modificar banners
+
+                    <div *ngSwitchCase="'Esp'">
+                      Crear o modificar banners
+                    </div>
+                    <div *ngSwitchCase="'Eng'">
+                      Create or modify banners
+                    </div>
                   </div>
                 </button>
               </section>
@@ -180,7 +217,12 @@
   <mat-divider></mat-divider>
 
   <h2 class="sidebar-title" *ngIf="prop.length > 0">
-    Proyectos asignados
+    <div *ngSwitchCase="'Esp'">
+      Proyectos asignados
+    </div>
+    <div *ngSwitchCase="'Eng'">
+      Assigned projects
+    </div>
   </h2>
 
   <!-- projects section -->

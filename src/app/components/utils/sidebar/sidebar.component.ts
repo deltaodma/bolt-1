@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { MockProjects } from 'src/app/mocks/projects-mock'
-import { MatSnackBar } from '@angular/material/snack-bar'
 import { UiService } from 'src/app/services/ui.service'
 
 @Component({
@@ -11,22 +10,19 @@ import { UiService } from 'src/app/services/ui.service'
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  public default: string = 'Esp'
+  public lang: string
   public userName: string = 'Pedro'
   public arrowType: string = 'arrow_forward_ios'
   public checked: boolean = false
   public favList: any = []
-  public role: string = 'user'
+  public role: string = 'admin'
   public sideStatus: boolean = false
   public prop = MockProjects
 
-  constructor(
-    private router: Router,
-    private _snackBar: MatSnackBar,
-    private ui: UiService,
-  ) {}
+  constructor(private router: Router, private ui: UiService) {}
 
   ngOnInit(): void {
+    this.lang = localStorage.getItem('lang') || 'Esp'
     this.prop.forEach((project) => {
       project.menu.forEach((subM) => {
         subM.app_list.forEach((item) => {

@@ -16,13 +16,16 @@ export class HomeComponent implements OnInit {
   public user = ['']
   public prop = MockProjects
   public bannerList: any = Banners
-
+  public lang: string
   public date = new Date().toLocaleDateString()
   public favList: any = []
 
   constructor(private router: Router, public ui: UiService) {}
 
   ngOnInit(): void {
+    this.lang = localStorage.getItem('lang') || 'Esp'
+    console.log(this.lang)
+
     if (this.user && this.user.length > 0) {
       this.prop.forEach((project) => {
         project.menu.forEach((subM) => {

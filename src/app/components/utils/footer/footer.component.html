@@ -1,18 +1,29 @@
-<footer class="footer">
+<footer [ngSwitch]="lang" class="footer">
   <div class="row">
     <div class="custom-col">
       <div class="brew-icon"></div>
     </div>
     <div class="custom-col">
-      <p class="footer__title">Solicitud acceso nuevo proyecto</p>
+      <p *ngSwitchCase="'Esp'" class="footer__title">
+        Solicitud acceso nuevo proyecto
+      </p>
+      <p *ngSwitchCase="'Eng'" class="footer__title">
+        Request new project access
+      </p>
       <ul>
         <li class="footer__text">
-          <a href="#" rel="noreferrer noopener">Generar solicitud</a>
+          <a *ngSwitchCase="'Esp'" href="#" rel="noreferrer noopener">
+            Generar solicitud
+          </a>
+          <a *ngSwitchCase="'Eng'" href="#" rel="noreferrer noopener">
+            Generate request
+          </a>
         </li>
       </ul>
     </div>
     <div class="custom-col">
-      <p class="footer__title">Contacto soporte</p>
+      <p *ngSwitchCase="'Esp'" class="footer__title">Contacto soporte</p>
+      <p *ngSwitchCase="'Eng'" class="footer__title">Support contact</p>
       <ul>
         <li>
           <span class="material-icons icon">

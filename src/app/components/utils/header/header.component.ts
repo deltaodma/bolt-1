@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { MatSelectChange } from '@angular/material/select'
 import { Router } from '@angular/router'
 
 @Component({
@@ -8,13 +7,13 @@ import { Router } from '@angular/router'
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  public defaultLang: string
+  public lang: string
   public userName: string = 'Pedro'
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.defaultLang = localStorage.getItem('lang') || 'Esp'
+    this.lang = localStorage.getItem('lang') || 'Esp'
   }
 
   changeLang(event) {

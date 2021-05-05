@@ -1,18 +1,24 @@
-<mat-toolbar class="back-nav">
+<mat-toolbar class="back-nav" [ngSwitch]="lang">
   <span class="bolt-icon" (click)="routerHome()"></span>
   <span class="separator"></span>
   <div class="back-nav__options">
-    <p class="greeting title-header">
+    <p *ngSwitchCase="'Esp'" class="greeting title-header">
       <span class="material-icons menu-icon">
         bolt
       </span>
-      hola {{ userName }}!
+      Hola {{ userName }}!
+    </p>
+    <p *ngSwitchCase="'Eng'" class="greeting title-header">
+      <span class="material-icons menu-icon">
+        bolt
+      </span>
+      Hi {{ userName }}!
     </p>
 
     <div class="select">
       <select (change)="changeLang($event.target.value)" class="select-font">
-        <option value="Esp" [selected]="defaultLang == 'Esp'">Esp</option>
-        <option value="Eng" [selected]="defaultLang == 'Eng'">Eng</option>
+        <option value="Esp" [selected]="lang == 'Esp'">Esp</option>
+        <option value="Eng" [selected]="lang == 'Eng'">Eng</option>
       </select>
     </div>
   </div>
