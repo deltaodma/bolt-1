@@ -44,7 +44,7 @@
 }
 
 // brand icons  for menu
-.dash {
+.tableau {
   @include img-background(url('/assets/icon/dash.svg'), 20px, 20px, relative);
 }
 
@@ -56,7 +56,7 @@
   @include img-background(url('/assets/icon/shiny.svg'), 20px, 20px, relative);
 }
 // fav item icons big
-.dash-big {
+.tableau-big {
   @include img-background(
     url('/assets/icon/dash-big.svg'),
     33px,

@@ -22,7 +22,7 @@ export const MockProjects = [
           },
           {
             id: '2',
-            item_icon: 'dash',
+            item_icon: 'tableau',
             item_name: 'Follow-up Traking CO',
             url: '1',
             fav: true,
@@ -74,7 +74,7 @@ export const MockProjects = [
           },
           {
             id: '8',
-            item_icon: 'dash',
+            item_icon: 'tableau',
             item_name: 'Follow-up Traking CO',
             url: 'https://powerbi.microsoft.com/es-es/',
             fav: false,
@@ -111,7 +111,7 @@ export const MockProjects = [
         app_list: [
           {
             id: '11',
-            item_icon: 'dash',
+            item_icon: 'tableau',
             item_name: 'Follow-up Traking CO',
             url: 'https://powerbi.microsoft.com/es-es/',
             fav: false,
@@ -148,7 +148,7 @@ export const MockProjects = [
           },
           {
             id: '14',
-            item_icon: 'dash',
+            item_icon: 'tableau',
             item_name: 'Follow-up Traking CO',
             url: 'https://powerbi.microsoft.com/es-es/',
             fav: false,
@@ -172,7 +172,7 @@ export const MockProjects = [
         app_list: [
           {
             id: '16',
-            item_icon: 'dash',
+            item_icon: 'tableau',
             item_name: 'Follow-up Traking CO',
             url: 'https://powerbi.microsoft.com/es-es/',
             fav: false,
