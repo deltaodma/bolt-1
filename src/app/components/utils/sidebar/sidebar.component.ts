@@ -97,8 +97,6 @@ export class SidebarComponent implements OnInit {
   }
 
   updateFav(event, element) {
-    console.log(event)
-
     if (this.favList.length < 6) {
       if (event) {
         this.favList.push(element)

@@ -101,6 +101,19 @@
     }
   }
   &-7 {
+    @include step-container(355px, auto);
+    top: 220px;
+    left: 330px;
+    .tutorial__content {
+      font-size: 18px;
+      line-height: 23px;
+    }
+    .arrow-pointer {
+      left: -50px;
+      top: 33%;
+    }
+  }
+  &-8 {
     @include step-container(362px, auto);
     top: 40%;
     left: 15%;
