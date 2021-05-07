@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, public ui: UiService) {}
 
   ngOnInit(): void {
+    this.ui.dismissLoading()
     this.lang = localStorage.getItem('lang') || 'Esp'
-    console.log(this.lang)
 
     if (this.user && this.user.length > 0) {
       this.prop.forEach((project) => {
@@ -36,11 +36,11 @@ export class HomeComponent implements OnInit {
           })
         })
       })
+      if (!localStorage.getItem('tutorial')) {
+        this.openTutorial()
+      }
     } else {
       this.openAlert()
-    }
-    if (!localStorage.getItem('tutorial')) {
-      this.openTutorial()
     }
   }
 

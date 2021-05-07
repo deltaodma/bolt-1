@@ -1,4 +1,4 @@
-<div class="dialog-notification">
+<div class="dialog-notification" [ngSwitch]="lang">
   <span
     mat-button
     mat-dialog-close
@@ -6,8 +6,12 @@
     (click)="closeModal()"
   ></span>
   <div class="check-icon"></div>
-  <p class="dialog-alert__content">
+  <p class="dialog-alert__content" *ngSwitchCase="'Esp'">
     Su solicitud fue enviada con éxito en el momento en el que se genere el rol
     será notificado por medio de su correo
+  </p>
+  <p class="dialog-alert__content" *ngSwitchCase="'Eng'">
+    Your request was sent successfully at the time the role is generated will be
+    notified by mail
   </p>
 </div>

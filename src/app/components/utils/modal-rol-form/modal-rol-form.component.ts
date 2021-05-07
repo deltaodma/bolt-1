@@ -15,12 +15,15 @@ export class ModalRolFormComponent implements OnInit {
   public httpError: string
   public hide: boolean
   public password: string
+  public lang: string
+
   constructor(private formBuilder: FormBuilder, public ui: UiService) {}
 
   ngOnInit(): void {
     this.initforms()
   }
   initforms() {
+    this.lang = localStorage.getItem('lang') || 'Esp'
     this.userRolForm = this.formBuilder.group({
       user: new FormControl('', [
         Validators.required,
@@ -51,17 +54,32 @@ export class ModalRolFormComponent implements OnInit {
   }
 
   public getMessageform(item: any): string {
-    if (item.hasError('user')) {
-      return 'usuario inválido'
-    }
-    if (item.hasError('id')) {
-      return 'id inválido'
-    }
-    if (item.hasError('project')) {
-      return 'Seleccione un projecto'
-    }
-    if (item.hasError('country')) {
-      return 'Seleccione un país'
+    if (this.lang == 'Esp') {
+      if (item.hasError('user')) {
+        return 'usuario inválido'
+      }
+      if (item.hasError('id')) {
+        return 'id inválido'
+      }
+      if (item.hasError('project')) {
+        return 'Seleccione un proyecto'
+      }
+      if (item.hasError('country')) {
+        return 'Seleccione un país'
+      }
+    } else {
+      if (item.hasError('user')) {
+        return 'invalid user'
+      }
+      if (item.hasError('id')) {
+        return 'invalid id'
+      }
+      if (item.hasError('project')) {
+        return 'Selecct a project'
+      }
+      if (item.hasError('country')) {
+        return 'select  a country'
+      }
     }
   }
 

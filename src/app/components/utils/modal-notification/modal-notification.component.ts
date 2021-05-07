@@ -8,9 +8,12 @@ import { UiService } from 'src/app/services/ui.service'
   styleUrls: ['./modal-notification.component.scss'],
 })
 export class ModalNotificationComponent implements OnInit {
+  public lang: string
   constructor(public ui: UiService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.lang = localStorage.getItem('lang') || 'Esp'
+  }
   closeModal() {
     this.ui.dismissModal(ModalNotificationComponent)
   }

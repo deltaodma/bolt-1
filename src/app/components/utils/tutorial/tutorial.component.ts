@@ -9,10 +9,12 @@ import { UiService } from 'src/app/services/ui.service'
 export class TutorialComponent implements OnInit {
   public step: number = 1
   public admin: boolean = false
-
+  public lang: string
   constructor(private ui: UiService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.lang = localStorage.getItem('lang') || 'Esp'
+  }
 
   closeTutorial() {
     this.ui.dismissModal(TutorialComponent)

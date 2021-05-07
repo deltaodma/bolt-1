@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { MsalService } from '@azure/msal-angular'
 
 @Component({
   selector: 'app-header',
@@ -8,14 +10,22 @@ import { Router } from '@angular/router'
 })
 export class HeaderComponent implements OnInit {
   public lang: string
-  public userName: string = 'Pedro'
+  public userName: any
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private msalService: MsalService,
+  ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
+    this.getProfile()
   }
-
+  getProfile(): string {
+    this.userName = JSON.parse(localStorage.getItem('msal-response'))
+    return this.userName.account.name
+  }
   changeLang(event) {
     // read the local storage to set a language
     localStorage.setItem('lang', event)
@@ -23,6 +33,6 @@ export class HeaderComponent implements OnInit {
   }
 
   routerHome() {
-    this.router.navigate([''])
+    this.router.navigate(['home'])
   }
 }

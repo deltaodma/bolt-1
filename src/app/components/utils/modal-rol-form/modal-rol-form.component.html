@@ -1,4 +1,4 @@
-<div class="dialog-form">
+<div class="dialog-form" [ngSwitch]="lang">
   <div mat-dialog-actions class="dialog-form__header">
     <span
       mat-button
@@ -8,7 +8,8 @@
     ></span>
   </div>
 
-  <h2 class="form-title">Solicitud asignación de rol</h2>
+  <h2 class="form-title" *ngSwitchCase="'Esp'">Solicitud asignación de rol</h2>
+  <h2 class="form-title" *ngSwitchCase="'Eng'">Role assignment request</h2>
 
   <form [formGroup]="userRolForm" class="form-section" autocomplete="off">
     <mat-form-field
@@ -17,7 +18,9 @@
       floatLabel="auto"
       class="fullInput input-bolt"
     >
-      <mat-label>usuario</mat-label>
+      <mat-label *ngSwitchCase="'Esp'">usuario</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">user</mat-label>
+
       <span matPrefix class="material-icons">
         person
       </span>
@@ -41,7 +44,9 @@
       floatLabel="auto"
       class="fullInput"
     >
-      <mat-label>ID de red- VDI</mat-label>
+      <mat-label *ngSwitchCase="'Esp'">ID de red- VDI</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">network ID- VDI</mat-label>
+
       <span matPrefix class="material-icons">
         assignment_ind
       </span>
@@ -65,7 +70,11 @@
       floatLabel="auto"
       class="fullInput"
     >
-      <mat-label>Proyecto al que necesita acceso</mat-label>
+      <mat-label *ngSwitchCase="'Esp'">
+        Proyecto al que necesita acceso
+      </mat-label>
+      <mat-label *ngSwitchCase="'Eng'">Project you need access to</mat-label>
+
       <span matPrefix class="material-icons">
         vpn_key
       </span>
@@ -85,7 +94,9 @@
       floatLabel="auto"
       class="fullInput"
     >
-      <mat-label>País</mat-label>
+      <mat-label *ngSwitchCase="'Esp'">País</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">country</mat-label>
+
       <span matPrefix class="material-icons">
         public
       </span>
@@ -106,7 +117,8 @@
       block="block"
       [ngClass]="{ 'button-disabled': userRolForm.invalid }"
     >
-      <span>Enviar</span>
+      <span *ngSwitchCase="'Esp'">Enviar</span>
+      <span *ngSwitchCase="'Eng'">Send</span>
     </button>
   </form>
 </div>

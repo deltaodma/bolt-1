@@ -23,7 +23,8 @@ import { ModalAlertComponent } from './modal-alert/modal-alert.component'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { LoadingComponent } from './loading/loading.component';
-import { TutorialComponent } from './tutorial/tutorial.component'
+import { TutorialComponent } from './tutorial/tutorial.component';
+import { LoginComponent } from './login/login.component'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TutorialComponent } from './tutorial/tutorial.component'
     ModalAlertComponent,
     LoadingComponent,
     TutorialComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,

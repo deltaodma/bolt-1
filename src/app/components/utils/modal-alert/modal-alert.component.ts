@@ -8,9 +8,12 @@ import { ModalRolFormComponent } from '../modal-rol-form/modal-rol-form.componen
   styleUrls: ['./modal-alert.component.scss'],
 })
 export class ModalAlertComponent implements OnInit {
+  public lang: string
   constructor(public ui: UiService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.lang = localStorage.getItem('lang') || 'Esp'
+  }
 
   closeModal() {
     this.ui.dismissModal(ModalAlertComponent)
