@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-import { EmbedViewComponent } from './components/embed-view/embed-view.component'
+import { EmbedViewComponent } from './components/home/embed-view/embed-view.component'
 import { HomeComponent } from './components/home/home/home.component'
 import { LoginComponent } from './components/utils/login/login.component'
 import { MsalGuard } from './services/msal.guard'

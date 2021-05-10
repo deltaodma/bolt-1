@@ -11,7 +11,6 @@ import { MatCarouselModule } from '@ngmodule/material-carousel'
 import { MatCardModule } from '@angular/material/card'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 
-import { EmbedViewComponent } from './components/embed-view/embed-view.component'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { HttpService } from './services/http.service'
 import { AuthService } from './services/auth.service'
@@ -32,6 +31,7 @@ import {
   MSAL_INSTANCE,
   MSAL_INTERCEPTOR_CONFIG,
 } from '@azure/msal-angular'
+import { EmbedViewComponent } from './components/home/embed-view/embed-view.component'
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
