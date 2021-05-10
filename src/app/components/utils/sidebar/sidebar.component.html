@@ -98,7 +98,7 @@
               direction="vertical"
             >
               <section mat-menu-item disableRipple="true" class="row">
-                <button mat-button>
+                <button mat-button (click)="adminRedirect('projects')">
                   <div class="flex1">
                     <span class="material-icons icon">
                       post_add
@@ -137,7 +137,7 @@
               direction="vertical"
             >
               <section mat-menu-item disableRipple="true" class="row">
-                <button mat-button>
+                <button mat-button (click)="adminRedirect('roles')">
                   <div class="flex1">
                     <span class="material-icons icon">
                       person_add
@@ -152,7 +152,7 @@
                 </button>
               </section>
               <section mat-menu-item disableRipple="true" class="row">
-                <button mat-button>
+                <button mat-button (click)="adminRedirect('roles')">
                   <div class="flex1">
                     <span class="material-icons icon">
                       people_alt
@@ -192,7 +192,7 @@
               direction="vertical"
             >
               <section mat-menu-item disableRipple="true" class="row">
-                <button mat-button>
+                <button mat-button (click)="adminRedirect('banners')">
                   <div class="flex1">
                     <span class="material-icons icon">
                       collections

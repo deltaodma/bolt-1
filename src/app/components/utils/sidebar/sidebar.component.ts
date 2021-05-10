@@ -124,8 +124,13 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  openApp(dashboard) {
+  openApp(dashboard: string) {
     this.router.navigate([`app-view/${dashboard}`], {
+      queryParamsHandling: 'preserve',
+    })
+  }
+  adminRedirect(route: string) {
+    this.router.navigate([`admin/${route}`], {
       queryParamsHandling: 'preserve',
     })
   }

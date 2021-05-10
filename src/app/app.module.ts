@@ -31,7 +31,10 @@ import {
   MSAL_INSTANCE,
   MSAL_INTERCEPTOR_CONFIG,
 } from '@azure/msal-angular'
-import { EmbedViewComponent } from './components/home/embed-view/embed-view.component'
+import { EmbedViewComponent } from './components/home/embed-view/embed-view.component';
+import { ProjectsComponent } from './components/admin/projects/projects.component';
+import { RolesComponent } from './components/admin/roles/roles.component';
+import { BannersComponent } from './components/admin/banners/banners.component'
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -67,7 +70,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 }
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, EmbedViewComponent],
+  declarations: [AppComponent, HomeComponent, EmbedViewComponent, ProjectsComponent, RolesComponent, BannersComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
