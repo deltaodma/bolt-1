@@ -20,6 +20,7 @@ import {
   IPublicClientApplication,
   PublicClientApplication,
 } from '@azure/msal-browser'
+
 import {
   MsalBroadcastService,
   MsalGuard,
@@ -86,16 +87,16 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
       multi: true,
     },
     {
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MSALInterceptorConfigFactory,
+    },
+    {
       provide: MSAL_INSTANCE,
       useFactory: MSALInstanceFactory,
     },
     {
       provide: MSAL_GUARD_CONFIG,
       useFactory: MSALGuardConfigFactory,
-    },
-    {
-      provide: MSAL_INTERCEPTOR_CONFIG,
-      useFactory: MSALInterceptorConfigFactory,
     },
     MsalService,
     MsalGuard,

@@ -2,6 +2,14 @@ import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { MsalService } from '@azure/msal-angular'
+const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me'
+
+type ProfileType = {
+  givenName?: string
+  surname?: string
+  userPrincipalName?: string
+  id?: string
+}
 
 @Component({
   selector: 'app-header',
@@ -10,8 +18,8 @@ import { MsalService } from '@azure/msal-angular'
 })
 export class HeaderComponent implements OnInit {
   public lang: string
-  public userName: any
-
+  profile!: ProfileType
+  public userName: string
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -20,12 +28,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.getProfile()
+    this.userName = JSON.parse(sessionStorage.getItem('user')).givenName
+
+    // this.getProfile()
+    this.callProfile()
   }
-  getProfile(): string {
-    this.userName = JSON.parse(localStorage.getItem('msal-response'))
-    return this.userName.account.name
-  }
+
   changeLang(event) {
     // read the local storage to set a language
     localStorage.setItem('lang', event)
@@ -34,5 +42,12 @@ export class HeaderComponent implements OnInit {
 
   routerHome() {
     this.router.navigate(['home'])
+  }
+
+  callProfile() {
+    this.http.get(GRAPH_ENDPOINT).subscribe((profile) => {
+      this.profile = profile
+      sessionStorage.setItem('user', JSON.stringify(profile))
+    })
   }
 }

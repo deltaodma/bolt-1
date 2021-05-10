@@ -6,13 +6,13 @@
       <span class="material-icons menu-icon">
         bolt
       </span>
-      Hola {{ getProfile() }}!
+      Hola {{ profile?.givenName || this.userName }}!
     </p>
     <p *ngSwitchCase="'Eng'" class="greeting title-header">
       <span class="material-icons menu-icon">
         bolt
       </span>
-      Hi {{ getProfile() }}!
+      Hi {{ profile?.givenName || this.userName }}!
     </p>
 
     <div class="select">
