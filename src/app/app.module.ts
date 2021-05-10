@@ -10,6 +10,10 @@ import { HomeComponent } from './components/home/home/home.component'
 import { MatCarouselModule } from '@ngmodule/material-carousel'
 import { MatCardModule } from '@angular/material/card'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatTabsModule } from '@angular/material/tabs'
+import { MatExpansionModule } from '@angular/material/expansion'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatButtonModule } from '@angular/material/button'
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { HttpService } from './services/http.service'
@@ -31,9 +35,10 @@ import {
   MSAL_INSTANCE,
   MSAL_INTERCEPTOR_CONFIG,
 } from '@azure/msal-angular'
-import { EmbedViewComponent } from './components/home/embed-view/embed-view.component';
-import { ProjectsComponent } from './components/admin/projects/projects.component';
-import { RolesComponent } from './components/admin/roles/roles.component';
+
+import { EmbedViewComponent } from './components/home/embed-view/embed-view.component'
+import { ProjectsComponent } from './components/admin/projects/projects.component'
+import { RolesComponent } from './components/admin/roles/roles.component'
 import { BannersComponent } from './components/admin/banners/banners.component'
 
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -70,16 +75,27 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 }
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, EmbedViewComponent, ProjectsComponent, RolesComponent, BannersComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    EmbedViewComponent,
+    ProjectsComponent,
+    RolesComponent,
+    BannersComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     UtilsModule,
     MatCarouselModule.forRoot(),
     MatCardModule,
     MatSnackBarModule,
-    HttpClientModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatSlideToggleModule,
+    MatButtonModule,
   ],
   providers: [
     HttpService,

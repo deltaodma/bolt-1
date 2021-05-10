@@ -1,6 +1,207 @@
 <app-header></app-header>
 <app-sidebar></app-sidebar>
-<div class="container">
-  <p>projects works!</p>
+<div class="container" [ngSwitch]="lang">
+  <div class="tabs">
+    <h1 class="project-title" *ngSwitchCase="'Esp'">proyectos</h1>
+    <h1 class="project-title" *ngSwitchCase="'Eng'">projects</h1>
+    <button class="bolt-btn-filled" *ngSwitchCase="'Esp'">
+      Crear nuevo proyecto
+    </button>
+    <button class="bolt-btn-filled" *ngSwitchCase="'Eng'">
+      Create new project
+    </button>
+
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="material-icons icon">
+            check_circle
+          </span>
+          First
+        </ng-template>
+        <div class="grid">
+          <div class="grid-header">
+            <div class="grid-header__title">Proyecto</div>
+            <div class="grid-header__title">Descripción</div>
+            <div class="grid-header__title">icono</div>
+            <div class="grid-header__title">Acciones</div>
+          </div>
+
+          <div
+            class="background-transparent"
+            *ngFor="let activeItem of activeProjects; let id = index"
+            [id]="'submenu' + id"
+          >
+            <div class="grid-content">
+              <button
+                mat-button
+                class="project-btn row"
+                (click)="openPanel(id)"
+                disableRipple="true"
+              >
+                <span class="material-icons arrow" [id]="'arrowProject' + id">
+                  arrow_forward_ios
+                </span>
+                <span class="grid-content__name">{{ activeItem.name }}</span>
+              </button>
+              <p class="grid-content__description">
+                {{ activeItem.description }}
+              </p>
+              <div class="grid-content__icon">
+                <span class="material-icons menu-icon">
+                  {{ activeItem.icon }}
+                </span>
+              </div>
+              <div class="grid-content__action">
+                <div class="col">
+                  <mat-slide-toggle class="enable-toogle"></mat-slide-toggle>
+                  <p>Desactivar</p>
+                </div>
+                <button mat-button class="action-btn">
+                  <span class="material-icons menu-icon">
+                    edit
+                  </span>
+                  editar
+                </button>
+                <button mat-button class="action-btn">
+                  <span class="plus-icon"></span>
+                  Añadir sub menú
+                </button>
+              </div>
+            </div>
+            <div class="col project-submenus" [id]="'box' + id">
+              <div class="col">
+                <mat-slide-toggle
+                  *ngFor="let submenu of activeItem.menu"
+                  class="sub-toogle"
+                  [checked]="open"
+                >
+                  {{ submenu.name }}
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="paginator row">
+          <button mat-button class="paginator-button">
+            <span style="transform: rotate(180deg);" class="material-icons">
+              double_arrow
+            </span>
+          </button>
+          <button mat-button class="paginator-button">
+            <span style="transform: rotate(180deg);" class="material-icons">
+              play_arrow
+            </span>
+          </button>
+          <p>mostrando 6 de {{ pages }} resultados</p>
+          <button mat-button class="paginator-button">
+            <span class="material-icons">
+              play_arrow
+            </span>
+          </button>
+          <button mat-button class="paginator-button">
+            <span class="material-icons">
+              double_arrow
+            </span>
+          </button>
+        </div>
+      </mat-tab>
+      <!-- inactive projects -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="material-icons icon">
+            check_circle
+          </span>
+          First
+        </ng-template>
+        <div class="grid">
+          <div class="grid-header">
+            <div class="grid-header__title">Proyecto</div>
+            <div class="grid-header__title">Descripción</div>
+            <div class="grid-header__title">icono</div>
+            <div class="grid-header__title">Acciones</div>
+          </div>
+
+          <div
+            class="background-transparent"
+            *ngFor="let inactiveItem of inactiveProjects; let id = index"
+            [id]="'submenu' + id"
+          >
+            <div class="grid-content">
+              <button
+                mat-button
+                class="project-btn row"
+                (click)="openPanel(id)"
+                disableRipple="true"
+              >
+                <span class="material-icons arrow" [id]="'arrowProject' + id">
+                  arrow_forward_ios
+                </span>
+                <span class="grid-content__name">{{ inactiveItem.name }}</span>
+              </button>
+              <p class="grid-content__description">
+                {{ inactiveItem.description }}
+              </p>
+              <div class="grid-content__icon">
+                <span class="material-icons menu-icon">
+                  {{ inactiveItem.icon }}
+                </span>
+              </div>
+              <div class="grid-content__action">
+                <div class="col">
+                  <mat-slide-toggle class="enable-toogle"></mat-slide-toggle>
+                  <p>Desactivar</p>
+                </div>
+                <button mat-button class="action-btn">
+                  <span class="material-icons menu-icon">
+                    edit
+                  </span>
+                  editar
+                </button>
+                <button mat-button class="action-btn">
+                  <span class="plus-icon"></span>
+                  Añadir sub menú
+                </button>
+              </div>
+            </div>
+            <div class="col project-submenus" [id]="'box' + id">
+              <div class="col">
+                <mat-slide-toggle
+                  *ngFor="let submenu of inactiveItem.menu"
+                  class="sub-toogle"
+                  [checked]="open"
+                >
+                  {{ submenu.name }}
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="paginator row">
+          <button mat-button class="paginator-button">
+            <span style="transform: rotate(180deg);" class="material-icons">
+              double_arrow
+            </span>
+          </button>
+          <button mat-button class="paginator-button">
+            <span style="transform: rotate(180deg);" class="material-icons">
+              play_arrow
+            </span>
+          </button>
+          <p>mostrando 6 de {{ pages }} resultados</p>
+          <button mat-button class="paginator-button">
+            <span class="material-icons">
+              play_arrow
+            </span>
+          </button>
+          <button mat-button class="paginator-button">
+            <span class="material-icons">
+              double_arrow
+            </span>
+          </button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
 <app-footer></app-footer>

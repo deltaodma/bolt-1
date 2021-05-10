@@ -120,7 +120,7 @@
     absolute
   );
 }
-// ckeck icon
+// check icon
 .check-icon {
   @include img-background(
     url('/assets/icon/check-circle.svg'),
@@ -186,6 +186,17 @@
     url('/assets/icon/analytics.svg'),
     129px,
     61px,
+    relative
+  );
+}
+
+/* admin icon styles*/
+//projects
+.plus-icon {
+  @include img-background(
+    url('/assets/icon/plus-circle.svg'),
+    18px,
+    18px,
     relative
   );
 }

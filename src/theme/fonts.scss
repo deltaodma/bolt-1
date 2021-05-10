@@ -101,3 +101,39 @@
     text-align: center;
   }
 }
+
+/* admin styles */
+// projects
+.project-title {
+  @include title('Gotham', 30px, 35px, #707782);
+  text-transform: capitalize;
+  border-bottom: 2px solid #e21d47;
+  width: fit-content;
+}
+.grid {
+  &-header {
+    &__title {
+      @include title('Gotham', 14px, 30px, #474747);
+      text-align: center;
+    }
+  }
+
+  &-content {
+    @include title('Roboto', 14px, 16px, #333333);
+    text-align: center;
+    &__name {
+      @include title('Roboto', 14px, 16px, #333333);
+      text-align: center;
+    }
+    &__description {
+      text-align: left;
+    }
+    &__icon,
+    &__action {
+      .action-btn {
+        @include title('Gotham', 10px, 15px, #e21d47);
+        text-transform: capitalize;
+      }
+    }
+  }
+}

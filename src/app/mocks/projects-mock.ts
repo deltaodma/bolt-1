@@ -1,7 +1,10 @@
 export const MockProjects = [
   {
     name: 'bolt',
+    active: true,
     icon: 'emoji_objects',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit amet',
     menu: [
       {
         name: 'user',
@@ -85,7 +88,10 @@ export const MockProjects = [
   },
   {
     name: 'becks',
+    active: true,
     icon: 'assessment',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit amet',
     menu: [
       {
         name: 'user2',
@@ -134,7 +140,10 @@ export const MockProjects = [
   },
   {
     name: 'pony malta',
+    active: false,
     icon: 'pie_chart',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit amet',
     menu: [
       {
         name: 'user3',
