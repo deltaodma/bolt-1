@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { Component, OnInit } from '@angular/core'
+import { AfterContentChecked, Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { MsalService } from '@azure/msal-angular'
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me'
@@ -16,10 +16,10 @@ type ProfileType = {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterContentChecked {
   public lang: string
   profile!: ProfileType
-  public userName: string
+  public userName: string = ''
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -28,12 +28,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.userName = JSON.parse(sessionStorage.getItem('user')).givenName
-
     // this.getProfile()
     this.callProfile()
   }
-
+  ngAfterContentChecked() {
+    this.userName = JSON.parse(sessionStorage.getItem('user')).givenName
+  }
   changeLang(event) {
     // read the local storage to set a language
     localStorage.setItem('lang', event)
