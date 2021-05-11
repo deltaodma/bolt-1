@@ -158,6 +158,15 @@
     absolute
   );
 }
+// exclamation icon
+.exclamation-icon {
+  @include img-background(
+    url('/assets/icon/exclamation-triangle.svg'),
+    54px,
+    48px,
+    relative
+  );
+}
 
 // footer
 .bolt-icon {

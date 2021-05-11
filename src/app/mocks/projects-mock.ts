@@ -1,5 +1,6 @@
 export const MockProjects = [
   {
+    id: 'p1',
     name: 'bolt',
     active: true,
     icon: 'emoji_objects',
@@ -7,7 +8,9 @@ export const MockProjects = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit amet',
     menu: [
       {
+        id: 'p1sm1',
         name: 'user',
+        state: true,
         app_list: [
           {
             id: '0',
@@ -40,7 +43,9 @@ export const MockProjects = [
         ],
       },
       {
+        id: 'p1sm2',
         name: 'exter',
+        state: false,
         app_list: [
           {
             id: '4',
@@ -59,7 +64,9 @@ export const MockProjects = [
         ],
       },
       {
+        id: 'p1sm3',
         name: 'qa',
+        state: true,
         app_list: [
           {
             id: '6',
@@ -87,6 +94,7 @@ export const MockProjects = [
     ],
   },
   {
+    id: 'p2',
     name: 'becks',
     active: true,
     icon: 'assessment',
@@ -94,7 +102,9 @@ export const MockProjects = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit amet',
     menu: [
       {
+        id: 'p2sm1',
         name: 'user2',
+        state: true,
         app_list: [
           {
             id: '9',
@@ -113,7 +123,9 @@ export const MockProjects = [
         ],
       },
       {
+        id: 'p2sm2',
         name: 'exter2',
+        state: true,
         app_list: [
           {
             id: '11',
@@ -125,7 +137,9 @@ export const MockProjects = [
         ],
       },
       {
+        id: 'p2sm3',
         name: 'qa2',
+        state: false,
         app_list: [
           {
             id: '12',
@@ -139,6 +153,7 @@ export const MockProjects = [
     ],
   },
   {
+    id: 'p3',
     name: 'pony malta',
     active: false,
     icon: 'pie_chart',
@@ -146,7 +161,9 @@ export const MockProjects = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit amet',
     menu: [
       {
+        id: 'p3sm1',
         name: 'user3',
+        state: false,
         app_list: [
           {
             id: '13',
@@ -165,7 +182,9 @@ export const MockProjects = [
         ],
       },
       {
+        id: 'p3sm2',
         name: 'exter3',
+        state: true,
         app_list: [
           {
             id: '15',
@@ -177,7 +196,9 @@ export const MockProjects = [
         ],
       },
       {
+        id: 'p3sm3',
         name: 'q3',
+        state: true,
         app_list: [
           {
             id: '16',

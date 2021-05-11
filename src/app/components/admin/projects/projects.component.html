@@ -10,7 +10,7 @@
     <button class="bolt-btn-filled" *ngSwitchCase="'Eng'">
       Create new project
     </button>
-
+    <!-- active project -->
     <mat-tab-group>
       <mat-tab>
         <ng-template mat-tab-label>
@@ -54,7 +54,12 @@
               </div>
               <div class="grid-content__action">
                 <div class="col">
-                  <mat-slide-toggle class="enable-toogle"></mat-slide-toggle>
+                  <mat-slide-toggle
+                    [id]="activeItem.id"
+                    class="enable-toogle"
+                    (change)="projectStatus(activeItem, $event)"
+                    [checked]="!activeItem"
+                  ></mat-slide-toggle>
                   <p>Desactivar</p>
                 </div>
                 <button mat-button class="action-btn">
@@ -73,8 +78,10 @@
               <div class="col">
                 <mat-slide-toggle
                   *ngFor="let submenu of activeItem.menu"
+                  [id]="submenu.id"
                   class="sub-toogle"
-                  [checked]="open"
+                  (change)="subMenuDisable(submenu, $event)"
+                  [checked]="submenu.state"
                 >
                   {{ submenu.name }}
                 </mat-slide-toggle>
@@ -106,6 +113,7 @@
           </button>
         </div>
       </mat-tab>
+
       <!-- inactive projects -->
       <mat-tab>
         <ng-template mat-tab-label>
@@ -149,8 +157,13 @@
               </div>
               <div class="grid-content__action">
                 <div class="col">
-                  <mat-slide-toggle class="enable-toogle"></mat-slide-toggle>
-                  <p>Desactivar</p>
+                  <mat-slide-toggle
+                    [id]="inactiveItem.id"
+                    class="enable-toogle"
+                    (change)="projectStatus(inactiveItem, $event)"
+                    [checked]="!inactiveItem.active || this.forceState"
+                  ></mat-slide-toggle>
+                  <p>Activar</p>
                 </div>
                 <button mat-button class="action-btn">
                   <span class="material-icons menu-icon">
@@ -168,8 +181,10 @@
               <div class="col">
                 <mat-slide-toggle
                   *ngFor="let submenu of inactiveItem.menu"
+                  [id]="submenu.id"
                   class="sub-toogle"
-                  [checked]="open"
+                  (change)="subMenuDisable(submenu, $event)"
+                  [checked]="submenu.state"
                 >
                   {{ submenu.name }}
                 </mat-slide-toggle>
