@@ -7,11 +7,9 @@
   ></span>
   <div class="check-icon"></div>
   <p class="dialog-alert__content" *ngSwitchCase="'Esp'">
-    Su solicitud fue enviada con éxito en el momento en el que se genere el rol
-    será notificado por medio de su correo
+    {{ data.message_es }}
   </p>
   <p class="dialog-alert__content" *ngSwitchCase="'Eng'">
-    Your request was sent successfully at the time the role is generated will be
-    notified by mail
+    {{ data.message_en }}
   </p>
 </div>

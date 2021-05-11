@@ -11,7 +11,6 @@ import { UiService } from 'src/app/services/ui.service'
 })
 export class SidebarComponent implements OnInit {
   public lang: string
-  public userName: string = 'Pedro'
   public arrowType: string = 'arrow_forward_ios'
   public checked: boolean = false
   public favList: any = []

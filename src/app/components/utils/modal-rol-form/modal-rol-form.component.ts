@@ -50,6 +50,12 @@ export class ModalRolFormComponent implements OnInit {
       'auto',
       '',
       'backdrop',
+      {
+        message_es:
+          'Su solicitud fue enviada con éxito en el momento en el que se genere el rol será notificado por medio de su correo',
+        message_en:
+          'Your request was sent successfully at the time the role is generated will be notified by mail',
+      },
     )
   }
 

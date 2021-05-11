@@ -31,7 +31,7 @@ export class UiService {
     }
   }
 
-  showModal(refComponent, width, height, refClass?, backdropClass?) {
+  showModal(refComponent, width, height, refClass?, backdropClass?, data?) {
     try {
       this.dialog.open(refComponent, {
         id: refComponent,
@@ -41,6 +41,7 @@ export class UiService {
         panelClass: refClass,
         width: width,
         height: height,
+        data: data,
       })
     } catch (e) {
       console.error('showModal', e)
