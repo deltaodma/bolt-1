@@ -10,11 +10,15 @@ import { MsalGuard } from './services/msal.guard'
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'home', component: HomeComponent, canActivate: [MsalGuard] },
+  {
+    path: 'home',
+    component: HomeComponent,
+    // canActivate: [MsalGuard]
+  },
   {
     path: 'app-view/:id',
     component: EmbedViewComponent,
-    canActivate: [MsalGuard],
+    // canActivate: [MsalGuard],
   },
   {
     path: 'admin',
@@ -22,17 +26,17 @@ const routes: Routes = [
       {
         path: 'projects', // child route path
         component: ProjectsComponent, // child route component that the router renders
-        canActivate: [MsalGuard],
+        // canActivate: [MsalGuard],
       },
       {
         path: 'roles',
         component: RolesComponent, // another child route component that the router renders
-        canActivate: [MsalGuard],
+        // canActivate: [MsalGuard],
       },
       {
         path: 'banners',
         component: BannersComponent, // another child route component that the router renders
-        canActivate: [MsalGuard],
+        // canActivate: [MsalGuard],
       },
     ],
   },

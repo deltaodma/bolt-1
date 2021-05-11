@@ -1,11 +1,11 @@
 /* background images*/
-@mixin img-background($img, $width, $heigth, $position) {
+@mixin img-background($img, $width, $height, $position) {
   background: $img;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   width: $width;
-  height: $heigth;
+  height: $height;
   position: $position;
 }
 
