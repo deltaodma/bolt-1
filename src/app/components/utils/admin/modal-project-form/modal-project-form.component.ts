@@ -20,6 +20,24 @@ export class ModalProjectFormComponent implements OnInit {
   public lang: string
   public operation_es: string = 'creado'
   public operation_en: string = 'created'
+
+  private errorMessage: any = {
+    es: {
+      project_name_es: 'Ingrese un nombre de proyecto en español',
+      project_name_en: 'Ingrese un nombre de proyecto en inglés',
+      description_es: 'Ingrese una descripción en español',
+      description_en: 'Ingrese una descripción en inglés',
+      icon: 'Seleccione un icono',
+    },
+    en: {
+      project_name_es: 'Enter a project name in spanish',
+      project_name_en: 'Enter a project name in english',
+      description_es: 'Enter a description in spanish',
+      description_en: 'Enter a description in english',
+      icon: 'Select a icon',
+    },
+  }
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
@@ -96,34 +114,18 @@ export class ModalProjectFormComponent implements OnInit {
     }
   }
 
-  public getMessageform(item: any): string {
-    if (this.lang == 'Esp') {
-      if (item.hasError('user')) {
-        return 'usuario inválido'
+  public getMessageform(controlName: any): string {
+    let error = ''
+    const control = this.createProjectForm.get(controlName)
+    if (control.touched && control.errors) {
+      if (this.lang == 'Esp') {
+        error = this.errorMessage['es'][controlName]
       }
-      if (item.hasError('id')) {
-        return 'id inválido'
-      }
-      if (item.hasError('project')) {
-        return 'Seleccione un proyecto'
-      }
-      if (item.hasError('country')) {
-        return 'Seleccione un país'
-      }
-    } else {
-      if (item.hasError('user')) {
-        return 'invalid user'
-      }
-      if (item.hasError('id')) {
-        return 'invalid id'
-      }
-      if (item.hasError('project')) {
-        return 'Selecct a project'
-      }
-      if (item.hasError('country')) {
-        return 'select  a country'
+      if (this.lang == 'Eng') {
+        error = this.errorMessage['en'][controlName]
       }
     }
+    return error
   }
 
   closeModal() {

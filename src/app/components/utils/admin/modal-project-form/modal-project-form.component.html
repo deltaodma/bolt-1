@@ -31,7 +31,7 @@
       />
 
       <mat-error *ngIf="createProjectForm.controls.project_name_es.errors">
-        ingrese un nombre de proyecto en español
+        {{ getMessageform('project_name_es') }}
       </mat-error>
     </mat-form-field>
 
@@ -54,7 +54,7 @@
       />
 
       <mat-error *ngIf="createProjectForm.controls.project_name_en.errors">
-        enter a project name in english
+        {{ getMessageform('project_name_en') }}
       </mat-error>
     </mat-form-field>
 
@@ -77,7 +77,7 @@
       ></textarea>
 
       <mat-error *ngIf="createProjectForm.controls.description_es.errors">
-        seleccione un proyecto
+        {{ getMessageform('description_es') }}
       </mat-error>
     </mat-form-field>
 
@@ -100,7 +100,7 @@
       ></textarea>
 
       <mat-error *ngIf="createProjectForm.controls.description_en.errors">
-        Ingrese una descripción del proyecto en inglés
+        {{ getMessageform('description_en') }}
       </mat-error>
     </mat-form-field>
 
@@ -148,7 +148,7 @@
       </mat-select>
 
       <mat-error *ngIf="createProjectForm.controls.icon.errors">
-        seleccione un país
+        {{ getMessageform('icon') }}
       </mat-error>
     </mat-form-field>
 
