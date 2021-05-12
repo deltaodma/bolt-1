@@ -15,6 +15,7 @@ export class UiService {
       this.loading = this.dialog.open(LoadingComponent, {
         disableClose: true,
         panelClass: 'loading-modal',
+        backdropClass: 'backdrop',
       })
     } catch (e) {
       console.error('showLoading', e)

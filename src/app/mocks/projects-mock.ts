@@ -9,7 +9,8 @@ export const MockProjects = [
     menu: [
       {
         id: 'p1sm1',
-        name: 'user',
+        name_es: 'user',
+        name_en: 'user',
         state: true,
         app_list: [
           {
@@ -44,7 +45,8 @@ export const MockProjects = [
       },
       {
         id: 'p1sm2',
-        name: 'exter',
+        name_es: 'exter',
+        name_en: 'exter',
         state: false,
         app_list: [
           {
@@ -65,7 +67,8 @@ export const MockProjects = [
       },
       {
         id: 'p1sm3',
-        name: 'qa',
+        name_es: 'qa',
+        name_en: 'qa',
         state: true,
         app_list: [
           {
@@ -103,7 +106,8 @@ export const MockProjects = [
     menu: [
       {
         id: 'p2sm1',
-        name: 'user2',
+        name_es: 'user2',
+        name_en: 'user2',
         state: true,
         app_list: [
           {
@@ -124,7 +128,8 @@ export const MockProjects = [
       },
       {
         id: 'p2sm2',
-        name: 'exter2',
+        name_es: 'exter2',
+        name_en: 'exter2',
         state: true,
         app_list: [
           {
@@ -138,7 +143,8 @@ export const MockProjects = [
       },
       {
         id: 'p2sm3',
-        name: 'qa2',
+        name_es: 'qa2',
+        name_en: 'qa2',
         state: false,
         app_list: [
           {
@@ -162,7 +168,8 @@ export const MockProjects = [
     menu: [
       {
         id: 'p3sm1',
-        name: 'user3',
+        name_es: 'user3',
+        name_en: 'user3',
         state: false,
         app_list: [
           {
@@ -183,7 +190,8 @@ export const MockProjects = [
       },
       {
         id: 'p3sm2',
-        name: 'exter3',
+        name_es: 'exter3',
+        name_en: 'exter3',
         state: true,
         app_list: [
           {
@@ -197,7 +205,8 @@ export const MockProjects = [
       },
       {
         id: 'p3sm3',
-        name: 'q3',
+        name_es: 'q3',
+        name_en: 'q3',
         state: true,
         app_list: [
           {

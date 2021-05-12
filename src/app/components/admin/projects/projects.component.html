@@ -1,8 +1,8 @@
 <app-header></app-header>
 <div class="container" [ngSwitch]="lang">
-  <div class="tabs">
-    <h1 class="project-title" *ngSwitchCase="'Esp'">proyectos</h1>
-    <h1 class="project-title" *ngSwitchCase="'Eng'">projects</h1>
+  <div class="tabs inner-section">
+    <h1 class="underline-title" *ngSwitchCase="'Esp'">proyectos</h1>
+    <h1 class="underline-title" *ngSwitchCase="'Eng'">projects</h1>
     <button class="bolt-btn-filled" (click)="createProject()">
       <span *ngSwitchCase="'Esp'">
         Crear nuevo proyecto

@@ -1,14 +1,247 @@
 <app-header></app-header>
-<div class="container">
-  <button mat-button class="" (click)="goBack()">regresar</button>
-  <p>{{ submenu_data.id }}</p>
-  <p>{{ submenu_data.name }}</p>
-  <p>{{ submenu_data.active }}</p>
-  <p>{{ submenu_data.description }}</p>
-  <span class="material-icons">
-    {{ submenu_data.icon }}
-  </span>
-  <ul>
-    <li *ngFor="let app of app_list">{{ app.name }}</li>
-  </ul>
+<div class="container" [ngSwitch]="lang">
+  <button mat-button class="btn-back" (click)="goBack()">
+    <span class="material-icons">
+      arrow_back
+    </span>
+    <span *ngSwitchCase="'Esp'">
+      volver
+    </span>
+    <span *ngSwitchCase="'Eng'">
+      back
+    </span>
+  </button>
+
+  <div class="inner-section section__1">
+    <h1 class="underline-title" *ngSwitchCase="'Esp'">
+      Sub menú - {{ submenu_data.name }}
+    </h1>
+    <h1 class="underline-title" *ngSwitchCase="'Eng'">
+      Sub menú - {{ submenu_data.name }}
+    </h1>
+    <!-- 
+    <p>{{ submenu_data.id }}</p>
+    <p>{{ submenu_data.active }}</p>
+    <p>{{ submenu_data.description }}</p>
+    <span class="material-icons">
+      {{ submenu_data.icon }}
+    </span>
+    <ul>
+      <li *ngFor="let app of app_list">{{ app.name }}</li>
+    </ul> -->
+    <form
+      [formGroup]="createProjectForm"
+      class="form-section"
+      autocomplete="off"
+    >
+      <div class="row row__1">
+        <div class="col">
+          <mat-form-field
+            hideRequiredMarker="true"
+            appearance="outline"
+            floatLabel="auto"
+            class="fullInput input-bolt"
+          >
+            <mat-label *ngSwitchCase="'Esp'">
+              Nombre sub menú(Español)
+            </mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Sub menu name(Spanish)</mat-label>
+
+            <input
+              matInput
+              id="submenu_name_es"
+              formControlName="submenu_name_es"
+              type="text"
+              required
+              maxlength="15"
+            />
+
+            <mat-error
+              *ngIf="createProjectForm.controls.submenu_name_es.errors"
+            >
+              {{ getMessageform('submenu_name_es') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            id="disabled2"
+            hideRequiredMarker="true"
+            appearance="outline"
+            floatLabel="auto"
+            class="fullInput input-bolt"
+          >
+            <mat-label *ngSwitchCase="'Esp'">Creado</mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Created</mat-label>
+
+            <input
+              matInput
+              id="created_by"
+              formControlName="created_by"
+              type="text"
+              disabled
+            />
+
+            <mat-error *ngIf="createProjectForm.controls.created_by.errors">
+              {{ getMessageform('created_by') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field
+            hideRequiredMarker="true"
+            appearance="outline"
+            floatLabel="auto"
+            class="fullInput"
+          >
+            <mat-label *ngSwitchCase="'Esp'">
+              Nombre sub menú (Ingles)
+            </mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Sub menu name(English)</mat-label>
+
+            <input
+              matInput
+              id="submenu_name_en"
+              formControlName="submenu_name_en"
+              type="text"
+              required
+              maxlength="30"
+            />
+
+            <mat-error
+              *ngIf="createProjectForm.controls.submenu_name_en.errors"
+            >
+              {{ getMessageform('submenu_name_en') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            id="disabled2"
+            hideRequiredMarker="true"
+            appearance="outline"
+            floatLabel="auto"
+            class="fullInput input-bolt"
+          >
+            <mat-label *ngSwitchCase="'Esp'">Ultima modificación</mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Last update</mat-label>
+
+            <input
+              matInput
+              id="last_update"
+              formControlName="last_update"
+              type="text"
+              disable
+            />
+
+            <mat-error *ngIf="createProjectForm.controls.last_update.errors">
+              {{ getMessageform('last_update') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- <mat-error *ngIf="httpError">{{ httpError }}</mat-error> -->
+      </div>
+
+      <div class="row row__2">
+        <button class="bolt-btn-outline">
+          <span>Eliminar</span>
+        </button>
+        <button
+          (click)="saveProject()"
+          [ngClass]="{ 'button-disabled': createProjectForm.invalid }"
+          class="bolt-btn-filled"
+        >
+          <span *ngSwitchCase="'Esp'">Guardar cambios</span>
+          <span *ngSwitchCase="'Eng'">Save changes</span>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="inner-section section__2">
+    <div class="row">
+      <h2>App asociadas</h2>
+      <button class="bolt-btn-filled">
+        <span *ngSwitchCase="'Esp'">Añadir app asociada</span>
+        <span *ngSwitchCase="'Eng'">Add associated app</span>
+      </button>
+    </div>
+    <div class="grid">
+      <div class="grid-header">
+        <div class="grid-header__title">Proyecto</div>
+        <div class="grid-header__title">Descripción</div>
+        <div class="grid-header__title">icono</div>
+        <div class="grid-header__title">Acciones</div>
+      </div>
+
+      <!-- <div
+        class="background-transparent"
+        *ngFor="let activeItem of activeProjects; let id = index"
+        [id]="'submenu' + id"
+      >
+        <div class="grid-content">
+          <button
+            mat-button
+            class="project-btn row"
+            (click)="openPanel(id)"
+            disableRipple="true"
+          >
+            <span class="material-icons arrow" [id]="'arrowProject' + id">
+              arrow_forward_ios
+            </span>
+            <span class="grid-content__name">{{ activeItem.name }}</span>
+          </button>
+          <p class="grid-content__description">
+            {{ activeItem.description }}
+          </p>
+          <div class="grid-content__icon">
+            <span class="material-icons menu-icon">
+              {{ activeItem.icon }}
+            </span>
+          </div>
+          <div class="grid-content__action">
+            <div class="col">
+              <mat-slide-toggle
+                [id]="activeItem.id"
+                class="enable-toogle"
+                (change)="projectStatus(activeItem, $event, 'disable')"
+                [checked]="!activeItem.active"
+              ></mat-slide-toggle>
+              <p>Desactivar</p>
+            </div>
+            <button
+              mat-button
+              class="action-btn"
+              (click)="createProject(activeItem)"
+            >
+              <span class="material-icons menu-icon">
+                edit
+              </span>
+              editar
+            </button>
+            <button
+              mat-button
+              class="action-btn"
+              (click)="editSubMenu(activeItem)"
+            >
+              <span class="plus-icon"></span>
+              Añadir sub menú
+            </button>
+          </div>
+        </div>
+        <div class="col project-submenus" [id]="'box' + id">
+          <div class="col">
+            <mat-slide-toggle
+              *ngFor="let submenu of activeItem.menu"
+              [id]="submenu.id"
+              class="sub-toogle"
+              (change)="subMenuDisable(submenu, $event)"
+              [checked]="submenu.state"
+            >
+              {{ submenu.name }}
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
 </div>

@@ -41,6 +41,11 @@ import { ProjectsComponent } from './components/admin/projects/projects.componen
 import { RolesComponent } from './components/admin/roles/roles.component'
 import { BannersComponent } from './components/admin/banners/banners.component'
 import { SubmenuViewComponent } from './components/admin/submenu-view/submenu-view.component'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input'
+import { MatSelectModule } from '@angular/material/select'
+import { ReactiveFormsModule } from '@angular/forms'
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -98,6 +103,11 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MatExpansionModule,
     MatSlideToggleModule,
     MatButtonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
   ],
   providers: [
     HttpService,

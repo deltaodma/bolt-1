@@ -266,20 +266,25 @@
             mat-button
             disableRipple="true"
           >
-            redireccion a: {{ menuItem.name }}
+            redireccion a: {{ menuItem.name_es }}
           </button>
 
           <div *ngIf="menuItem.app_list.length > 0">
             <button
-              [id]="menuItem.name"
+              [id]="menuItem.name_es"
               mat-button
               [matMenuTriggerFor]="menu"
-              (menuOpened)="menuOpened(menuItem.name)"
-              (menuClosed)="menuClosed(menuItem.name)"
+              (menuOpened)="menuOpened(menuItem.name_es)"
+              (menuClosed)="menuClosed(menuItem.name_es)"
               disableRipple="true"
               class="colapsable-menu"
             >
-              {{ menuItem.name }}
+              <span *ngSwitchCase="'Esp'">
+                {{ menuItem.name_es }}
+              </span>
+              <span *ngSwitchCase="'Eng'">
+                {{ menuItem.name_es }}
+              </span>
             </button>
 
             <mat-menu
