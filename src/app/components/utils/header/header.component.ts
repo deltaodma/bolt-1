@@ -32,7 +32,9 @@ export class HeaderComponent implements OnInit, AfterContentChecked {
     this.callProfile()
   }
   ngAfterContentChecked() {
-    this.userName = JSON.parse(sessionStorage.getItem('user')).givenName
+    if (sessionStorage.getItem('user')) {
+      this.userName = JSON.parse(sessionStorage.getItem('user')).givenName
+    }
   }
   changeLang(event) {
     // read the local storage to set a language
