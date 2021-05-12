@@ -114,6 +114,11 @@
       <mat-label *ngSwitchCase="'Eng'">icon</mat-label>
 
       <mat-select [formControl]="createProjectForm.controls.icon">
+        <mat-select-trigger>
+          <span class="material-icons">
+            {{ this.createProjectForm.controls.icon.value }}
+          </span>
+        </mat-select-trigger>
         <mat-option
           *ngFor="
             let option of [

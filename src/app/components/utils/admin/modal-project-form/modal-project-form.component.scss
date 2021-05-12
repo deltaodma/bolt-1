@@ -1,3 +1,7 @@
-// ::ng-deep .cdk-overlay-connected-position-bounding-box {
-//   transform: none !important;
-// }
+:host ::ng-deep .mat-select .mat-select-value-text {
+  color: #e21d47;
+  .material-icons {
+    font-size: 24px;
+    transform: translateY(5px);
+  }
+}
