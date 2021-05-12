@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSlideToggleChange } from '@angular/material/slide-toggle'
+import { Router } from '@angular/router'
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { UiService } from 'src/app/services/ui.service'
 import { ModalConfirmationComponent } from '../../utils/admin/modal-confirmation/modal-confirmation.component'
@@ -25,7 +26,11 @@ export class ProjectsComponent implements OnInit {
   public message_action_en: string = 'disable'
   public active_count = 0
 
-  constructor(public ui: UiService, public dialog: MatDialog) {}
+  constructor(
+    public ui: UiService,
+    public router: Router,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
@@ -167,5 +172,13 @@ export class ProjectsComponent implements OnInit {
       this.active_count = this.pages
     }
     // TO DO active elements GET request
+  }
+
+  editSubMenu(submenuElement: any) {
+    console.log(submenuElement)
+
+    this.router.navigate(['admin/projects/submenu', submenuElement], {
+      queryParamsHandling: 'preserve',
+    })
   }
 }

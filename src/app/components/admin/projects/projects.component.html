@@ -75,7 +75,11 @@
                   </span>
                   editar
                 </button>
-                <button mat-button class="action-btn">
+                <button
+                  mat-button
+                  class="action-btn"
+                  (click)="editSubMenu(activeItem)"
+                >
                   <span class="plus-icon"></span>
                   Añadir sub menú
                 </button>
@@ -159,7 +163,11 @@
                   </span>
                   editar
                 </button>
-                <button mat-button class="action-btn">
+                <button
+                  mat-button
+                  class="action-btn"
+                  (click)="editSubMenu(inactiveItem)"
+                >
                   <span class="plus-icon"></span>
                   Añadir sub menú
                 </button>

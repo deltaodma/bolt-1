@@ -15,13 +15,20 @@ export class SidebarComponent implements OnInit {
   public checked: boolean = false
   public favList: any = []
   public role: string = 'admin'
-  public sideStatus: boolean = false
+  public sideStatus: boolean
   public prop = MockProjects
+  public sideMemory: string
 
   constructor(private router: Router, private ui: UiService) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
+    this.sideMemory = sessionStorage.getItem('sidebarStatus') || 'open'
+    if (this.sideMemory == 'close') {
+      this.sideStatus = false
+    } else {
+      this.sideStatus = true
+    }
     this.prop.forEach((project) => {
       project.menu.forEach((subM) => {
         subM.app_list.forEach((item) => {
@@ -31,6 +38,7 @@ export class SidebarComponent implements OnInit {
         })
       })
     })
+    this.openSidebar()
   }
 
   openSidebar() {
@@ -38,10 +46,13 @@ export class SidebarComponent implements OnInit {
     let sidebar = document.querySelector('#sidebar')
     this.sideStatus = !this.sideStatus
     if (this.sideStatus) {
+      sessionStorage.setItem('sidebarStatus', 'close')
+
       sidebar.setAttribute('style', 'transform: translateX(-267px)')
 
       innerArrow.setAttribute('style', 'transform: rotate(0deg) ')
     } else {
+      sessionStorage.setItem('sidebarStatus', 'open')
       sidebar.setAttribute('style', 'transform: translateX(0px)')
 
       innerArrow.setAttribute('style', 'transform: rotate(180deg) ')

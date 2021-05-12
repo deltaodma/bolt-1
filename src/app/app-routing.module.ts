@@ -5,6 +5,7 @@ import { ProjectsComponent } from './components/admin/projects/projects.componen
 import { RolesComponent } from './components/admin/roles/roles.component'
 import { EmbedViewComponent } from './components/home/embed-view/embed-view.component'
 import { HomeComponent } from './components/home/home/home.component'
+import { SubmenuViewComponent } from './components/utils/admin/submenu-view/submenu-view.component'
 import { LoginComponent } from './components/utils/login/login.component'
 import { MsalGuard } from './services/msal.guard'
 
@@ -25,8 +26,17 @@ const routes: Routes = [
     children: [
       {
         path: 'projects', // child route path
-        component: ProjectsComponent, // child route component that the router renders
         // canActivate: [MsalGuard],
+        children: [
+          {
+            path: '', // child route path
+            component: ProjectsComponent,
+          },
+          {
+            path: 'submenu', // child route path
+            component: SubmenuViewComponent,
+          },
+        ],
       },
       {
         path: 'roles',

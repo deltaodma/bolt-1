@@ -1,0 +1,16 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="container">
+  <button mat-button class="" (click)="goBack()">regresar</button>
+  <p>{{ submenu_data.id }}</p>
+  <p>{{ submenu_data.name }}</p>
+  <p>{{ submenu_data.active }}</p>
+  <p>{{ submenu_data.description }}</p>
+  <span class="material-icons">
+    {{ submenu_data.icon }}
+  </span>
+  <ul>
+    <li *ngFor="let app of app_list">{{ app.name }}</li>
+  </ul>
+</div>
+<app-footer></app-footer>
