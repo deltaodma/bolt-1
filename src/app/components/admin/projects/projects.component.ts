@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSlideToggleChange } from '@angular/material/slide-toggle'
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { UiService } from 'src/app/services/ui.service'
 import { ModalConfirmationComponent } from '../../utils/admin/modal-confirmation/modal-confirmation.component'
+import { ModalProjectFormComponent } from '../../utils/admin/modal-project-form/modal-project-form.component'
 import { ModalNotificationComponent } from '../../utils/modal-notification/modal-notification.component'
 
 @Component({
@@ -20,8 +21,6 @@ export class ProjectsComponent implements OnInit {
   public pages: number = 6
   public projectPermission: boolean
   public subMenuPermission: boolean
-  public forceState: boolean
-  public forceStateSub: boolean
 
   constructor(public ui: UiService, public dialog: MatDialog) {}
 
@@ -63,7 +62,7 @@ export class ProjectsComponent implements OnInit {
     console.log(this.projectPermission)
   }
 
-  projectStatus(project, event: MatSlideToggleChange) {
+  projectStatus(project, event) {
     if (event.checked) {
       const confDialog = this.dialog.open(ModalConfirmationComponent, {
         id: ModalConfirmationComponent.toString(),
@@ -94,8 +93,6 @@ export class ProjectsComponent implements OnInit {
 
             // show loading and reload page to update data view
           )
-        } else {
-          console.log(event)
         }
       })
     }
@@ -122,10 +119,25 @@ export class ProjectsComponent implements OnInit {
           setTimeout(() => {
             this.ui.dismissLoading()
           }, 2000)
-        } else {
-          console.log(event)
         }
       })
+    }
+  }
+
+  createProject(project?: any) {
+    if (!project) {
+      this.ui.showModal(ModalProjectFormComponent, '500px', 'auto', null, null)
+    } else {
+      this.ui.showModal(
+        ModalProjectFormComponent,
+        '500px',
+        'auto',
+        null,
+        null,
+        {
+          project: project,
+        },
+      )
     }
   }
 }

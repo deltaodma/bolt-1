@@ -5,7 +5,7 @@ export const MockProjects = [
     active: true,
     icon: 'emoji_objects',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit amet',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit',
     menu: [
       {
         id: 'p1sm1',
@@ -99,7 +99,7 @@ export const MockProjects = [
     active: true,
     icon: 'assessment',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit amet',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit',
     menu: [
       {
         id: 'p2sm1',
@@ -158,7 +158,7 @@ export const MockProjects = [
     active: false,
     icon: 'pie_chart',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit amet',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf, Lorem ipsum dolor sit',
     menu: [
       {
         id: 'p3sm1',

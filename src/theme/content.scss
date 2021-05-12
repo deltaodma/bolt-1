@@ -66,6 +66,7 @@ mat-divider {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 .dialog-alert,
 .dialog-notification {

@@ -25,7 +25,8 @@ import { MatInputModule } from '@angular/material/input'
 import { LoadingComponent } from './loading/loading.component'
 import { TutorialComponent } from './tutorial/tutorial.component'
 import { LoginComponent } from './login/login.component'
-import { ModalConfirmationComponent } from './admin/modal-confirmation/modal-confirmation.component'
+import { ModalConfirmationComponent } from './admin/modal-confirmation/modal-confirmation.component';
+import { ModalProjectFormComponent } from './admin/modal-project-form/modal-project-form.component'
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ModalConfirmationComponent } from './admin/modal-confirmation/modal-con
     TutorialComponent,
     LoginComponent,
     ModalConfirmationComponent,
+    ModalProjectFormComponent,
   ],
   imports: [
     CommonModule,

@@ -4,12 +4,15 @@
   <div class="tabs">
     <h1 class="project-title" *ngSwitchCase="'Esp'">proyectos</h1>
     <h1 class="project-title" *ngSwitchCase="'Eng'">projects</h1>
-    <button class="bolt-btn-filled" *ngSwitchCase="'Esp'">
-      Crear nuevo proyecto
+    <button class="bolt-btn-filled" (click)="createProject()">
+      <span *ngSwitchCase="'Esp'">
+        Crear nuevo proyecto
+      </span>
+      <span *ngSwitchCase="'Eng'">
+        Create new project
+      </span>
     </button>
-    <button class="bolt-btn-filled" *ngSwitchCase="'Eng'">
-      Create new project
-    </button>
+
     <!-- active project -->
     <mat-tab-group>
       <mat-tab>
@@ -58,11 +61,15 @@
                     [id]="activeItem.id"
                     class="enable-toogle"
                     (change)="projectStatus(activeItem, $event)"
-                    [checked]="!activeItem"
+                    [checked]="!activeItem.active"
                   ></mat-slide-toggle>
                   <p>Desactivar</p>
                 </div>
-                <button mat-button class="action-btn">
+                <button
+                  mat-button
+                  class="action-btn"
+                  (click)="createProject(activeItem)"
+                >
                   <span class="material-icons menu-icon">
                     edit
                   </span>
@@ -161,11 +168,15 @@
                     [id]="inactiveItem.id"
                     class="enable-toogle"
                     (change)="projectStatus(inactiveItem, $event)"
-                    [checked]="!inactiveItem.active || this.forceState"
+                    [checked]="!inactiveItem.active"
                   ></mat-slide-toggle>
                   <p>Activar</p>
                 </div>
-                <button mat-button class="action-btn">
+                <button
+                  mat-button
+                  class="action-btn"
+                  (click)="createProject(inactiveItem)"
+                >
                   <span class="material-icons menu-icon">
                     edit
                   </span>
