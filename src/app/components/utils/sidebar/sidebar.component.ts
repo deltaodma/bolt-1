@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
   public checked: boolean = false
   public favList: any = []
   public role: string = 'admin'
-  public sideStatus: boolean
+  public sideStatus: boolean = false
   public prop = MockProjects
   public sideMemory: string
 

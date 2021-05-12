@@ -25,9 +25,8 @@ import { MatInputModule } from '@angular/material/input'
 import { LoadingComponent } from './loading/loading.component'
 import { TutorialComponent } from './tutorial/tutorial.component'
 import { LoginComponent } from './login/login.component'
-import { ModalConfirmationComponent } from './admin/modal-confirmation/modal-confirmation.component';
-import { ModalProjectFormComponent } from './admin/modal-project-form/modal-project-form.component';
-import { SubmenuViewComponent } from './admin/submenu-view/submenu-view.component'
+import { ModalConfirmationComponent } from './admin/modal-confirmation/modal-confirmation.component'
+import { ModalProjectFormComponent } from './admin/modal-project-form/modal-project-form.component'
 
 @NgModule({
   declarations: [
@@ -42,7 +41,6 @@ import { SubmenuViewComponent } from './admin/submenu-view/submenu-view.componen
     LoginComponent,
     ModalConfirmationComponent,
     ModalProjectFormComponent,
-    SubmenuViewComponent,
   ],
   imports: [
     CommonModule,

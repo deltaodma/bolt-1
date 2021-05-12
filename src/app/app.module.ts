@@ -40,6 +40,7 @@ import { EmbedViewComponent } from './components/home/embed-view/embed-view.comp
 import { ProjectsComponent } from './components/admin/projects/projects.component'
 import { RolesComponent } from './components/admin/roles/roles.component'
 import { BannersComponent } from './components/admin/banners/banners.component'
+import { SubmenuViewComponent } from './components/admin/submenu-view/submenu-view.component'
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -80,6 +81,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     HomeComponent,
     EmbedViewComponent,
     ProjectsComponent,
+    SubmenuViewComponent,
     RolesComponent,
     BannersComponent,
   ],

@@ -7,9 +7,14 @@
       (click)="closeModal()"
     ></span>
   </div>
-
-  <h2 class="form-title" *ngSwitchCase="'Esp'">Crear un nuevo proyecto</h2>
-  <h2 class="form-title" *ngSwitchCase="'Eng'">Create a new project</h2>
+  <div style="width: 100%;" *ngIf="!this.data">
+    <h2 class="form-title" *ngSwitchCase="'Esp'">Crear un nuevo proyecto</h2>
+    <h2 class="form-title" *ngSwitchCase="'Eng'">Create a new project</h2>
+  </div>
+  <div style="width: 100%;" *ngIf="this.data">
+    <h2 class="form-title" *ngSwitchCase="'Esp'">Editar proyecto</h2>
+    <h2 class="form-title" *ngSwitchCase="'Eng'">Edit project</h2>
+  </div>
 
   <form [formGroup]="createProjectForm" class="form-section" autocomplete="off">
     <mat-form-field
