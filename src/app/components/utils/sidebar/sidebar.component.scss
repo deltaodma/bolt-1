@@ -12,11 +12,6 @@
   z-index: 1000;
 }
 
-::ng-deep .cdk-overlay-connected-position-bounding-box {
-  transform: translateX(267px) translateY(-36px);
-  left: 0 !important;
-}
-
 mat-accordion {
   max-width: 267px;
 }

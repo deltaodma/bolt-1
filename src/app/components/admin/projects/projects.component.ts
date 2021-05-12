@@ -18,17 +18,18 @@ export class ProjectsComponent implements OnInit {
   public activeProjects: any = []
   public inactiveProjects: any = []
   public open: boolean = false
-  public pages: number = 6
+  public pages: number
   public projectPermission: boolean
   public subMenuPermission: boolean
   public message_action_es: string = 'deshabilitar'
   public message_action_en: string = 'disable'
+  public active_count = 0
 
   constructor(public ui: UiService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-
+    this.pages = 6
     this.projects.forEach((project) => {
       if (project.active) {
         this.activeProjects.push(project)
@@ -150,5 +151,21 @@ export class ProjectsComponent implements OnInit {
         },
       )
     }
+  }
+
+  updatePage(page: string) {
+    if (page == 'start') {
+      this.active_count = 0
+    }
+    if (page == 'prev') {
+      this.active_count--
+    }
+    if (page == 'next') {
+      this.active_count++
+    }
+    if (page == 'last') {
+      this.active_count = this.pages
+    }
+    // TO DO active elements GET request
   }
 }

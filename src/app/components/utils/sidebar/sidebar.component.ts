@@ -50,7 +50,14 @@ export class SidebarComponent implements OnInit {
 
   menuOpened(item) {
     let menu = document.getElementById(item)
+    let overlay = document.getElementsByClassName(
+      'cdk-overlay-connected-position-bounding-box',
+    )
     menu.classList.add('highlight-item')
+    overlay[0].setAttribute(
+      'style',
+      'transform: translateX(218px) translateY(-36px) ;left: 0 !important;',
+    )
   }
 
   menuClosed(item) {

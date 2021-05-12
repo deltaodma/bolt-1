@@ -96,29 +96,6 @@
             </div>
           </div>
         </div>
-        <div class="paginator row">
-          <button mat-button class="paginator-button">
-            <span style="transform: rotate(180deg);" class="material-icons">
-              double_arrow
-            </span>
-          </button>
-          <button mat-button class="paginator-button">
-            <span style="transform: rotate(180deg);" class="material-icons">
-              play_arrow
-            </span>
-          </button>
-          <p>mostrando 6 de {{ pages }} resultados</p>
-          <button mat-button class="paginator-button">
-            <span class="material-icons">
-              play_arrow
-            </span>
-          </button>
-          <button mat-button class="paginator-button">
-            <span class="material-icons">
-              double_arrow
-            </span>
-          </button>
-        </div>
       </mat-tab>
 
       <!-- inactive projects -->
@@ -203,31 +180,51 @@
             </div>
           </div>
         </div>
-        <div class="paginator row">
-          <button mat-button class="paginator-button">
-            <span style="transform: rotate(180deg);" class="material-icons">
-              double_arrow
-            </span>
-          </button>
-          <button mat-button class="paginator-button">
-            <span style="transform: rotate(180deg);" class="material-icons">
-              play_arrow
-            </span>
-          </button>
-          <p>mostrando 6 de {{ pages }} resultados</p>
-          <button mat-button class="paginator-button">
-            <span class="material-icons">
-              play_arrow
-            </span>
-          </button>
-          <button mat-button class="paginator-button">
-            <span class="material-icons">
-              double_arrow
-            </span>
-          </button>
-        </div>
       </mat-tab>
     </mat-tab-group>
+    <div class="paginator row" *ngIf="pages">
+      <button
+        mat-button
+        class="paginator-button"
+        (click)="updatePage('start', true)"
+        [disabled]="active_count == 0"
+      >
+        <span style="transform: rotate(180deg);" class="material-icons">
+          double_arrow
+        </span>
+      </button>
+      <button
+        mat-button
+        class="paginator-button"
+        (click)="updatePage('prev', true)"
+        [disabled]="active_count == 0"
+      >
+        <span style="transform: rotate(180deg);" class="material-icons">
+          play_arrow
+        </span>
+      </button>
+      <p>mostrando {{ projects.length }} de {{ projects.length }} resultados</p>
+      <button
+        mat-button
+        class="paginator-button"
+        (click)="updatePage('next', true)"
+        [disabled]="active_count == pages"
+      >
+        <span class="material-icons">
+          play_arrow
+        </span>
+      </button>
+      <button
+        mat-button
+        class="paginator-button"
+        (click)="updatePage('last', true)"
+        [disabled]="active_count == pages"
+      >
+        <span class="material-icons">
+          double_arrow
+        </span>
+      </button>
+    </div>
   </div>
 </div>
 <app-footer></app-footer>
