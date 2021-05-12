@@ -9,12 +9,12 @@
 
   <div class="dialog-alert__content" *ngIf="data.project_name">
     <p *ngSwitchCase="'Esp'">
-      ¿Desea deshabilitar el proyecto
+      ¿Desea {{ data.message_action_es }} el proyecto
       <strong>{{ data.project_name }}</strong>
       ?
     </p>
     <p *ngSwitchCase="'Eng'">
-      Do you want to disable the project
+      Do you want to {{ data.message_action_en }} the project
       <strong>{{ data.project_name }}</strong>
       ?
     </p>
@@ -39,8 +39,8 @@
       class="bolt-btn-outline"
       [mat-dialog-close]="data.permission"
     >
-      <span *ngSwitchCase="'Esp'">Deshabilitar</span>
-      <span *ngSwitchCase="'Eng'">Disable</span>
+      <span *ngSwitchCase="'Esp'">{{ data.message_action_es }}</span>
+      <span *ngSwitchCase="'Eng'">{{ data.message_action_en }}</span>
     </button>
     <button mat-button class="alert-btn" (click)="closeModal()">
       <span *ngSwitchCase="'Esp'">Cancelar</span>

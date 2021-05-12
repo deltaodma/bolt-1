@@ -21,6 +21,8 @@ export class ProjectsComponent implements OnInit {
   public pages: number = 6
   public projectPermission: boolean
   public subMenuPermission: boolean
+  public message_action_es: string = 'deshabilitar'
+  public message_action_en: string = 'disable'
 
   constructor(public ui: UiService, public dialog: MatDialog) {}
 
@@ -62,8 +64,15 @@ export class ProjectsComponent implements OnInit {
     console.log(this.projectPermission)
   }
 
-  projectStatus(project, event) {
+  projectStatus(project, event, action) {
     if (event.checked) {
+      if (action == 'enable') {
+        this.message_action_es = 'habilitar'
+        this.message_action_en = 'enable'
+      } else {
+        this.message_action_es = 'deshabilitar'
+        this.message_action_en = 'disable'
+      }
       const confDialog = this.dialog.open(ModalConfirmationComponent, {
         id: ModalConfirmationComponent.toString(),
         disableClose: true,
@@ -72,6 +81,8 @@ export class ProjectsComponent implements OnInit {
         height: 'auto',
         data: {
           project_name: project.name,
+          message_action_es: this.message_action_es,
+          message_action_en: this.message_action_en,
         },
       })
 

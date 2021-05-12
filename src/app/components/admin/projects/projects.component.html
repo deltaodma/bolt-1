@@ -60,7 +60,7 @@
                   <mat-slide-toggle
                     [id]="activeItem.id"
                     class="enable-toogle"
-                    (change)="projectStatus(activeItem, $event)"
+                    (change)="projectStatus(activeItem, $event, 'disable')"
                     [checked]="!activeItem.active"
                   ></mat-slide-toggle>
                   <p>Desactivar</p>
@@ -167,8 +167,8 @@
                   <mat-slide-toggle
                     [id]="inactiveItem.id"
                     class="enable-toogle"
-                    (change)="projectStatus(inactiveItem, $event)"
-                    [checked]="!inactiveItem.active"
+                    (change)="projectStatus(inactiveItem, $event, 'enable')"
+                    [checked]="inactiveItem.active"
                   ></mat-slide-toggle>
                   <p>Activar</p>
                 </div>
