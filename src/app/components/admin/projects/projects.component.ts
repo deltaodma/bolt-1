@@ -125,6 +125,8 @@ export class ProjectsComponent implements OnInit {
         height: 'auto',
         data: {
           submenu_name: submenu.name,
+          message_action_es: 'deshabilitar',
+          message_action_en: 'disable',
         },
       })
 
