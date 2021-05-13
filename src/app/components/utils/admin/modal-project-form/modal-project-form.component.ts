@@ -88,10 +88,7 @@ export class ModalProjectFormComponent implements OnInit {
         // if neither data was received a new project is created
         // TO DO POST REQUEST
 
-        console.log(
-          'post request',
-          this.createProjectForm.controls.project_name_es.value,
-        )
+        console.log('post request')
       } else {
         // if any data was received the current project will be updated
         // TO DO POST REQUEST

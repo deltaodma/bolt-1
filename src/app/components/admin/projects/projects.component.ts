@@ -67,7 +67,6 @@ export class ProjectsComponent implements OnInit {
 
   receiveMessage($event) {
     this.projectPermission = $event
-    console.log(this.projectPermission)
   }
 
   projectStatus(project, event, action) {
@@ -104,7 +103,7 @@ export class ProjectsComponent implements OnInit {
             this.message_action_es = 'deshabilitó'
             this.message_action_en = 'disabled'
           }
-          const notify = this.ui.showModal(
+          this.ui.showModal(
             ModalNotificationComponent,
             '500px',
             'auto',
@@ -197,8 +196,6 @@ export class ProjectsComponent implements OnInit {
   }
 
   editSubMenu(submenuId: string) {
-    console.log(submenuId)
-
     this.router.navigate([`admin/projects/submenu/${submenuId}`], {
       queryParamsHandling: 'preserve',
     })

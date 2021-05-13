@@ -24,3 +24,33 @@ mat-option {
     }
   }
 }
+.form-advice {
+  margin-bottom: 20px;
+  .separator {
+    height: 2px;
+    width: 100%;
+    background-color: #e21d47;
+    margin: 0 auto;
+  }
+  .form-title {
+    border-bottom: none;
+    font-size: 16px;
+    line-height: 30px;
+    margin: 10px 0;
+  }
+  ::ng-deep .mat-checkbox-layout {
+    white-space: normal !important;
+  }
+  ::ng-deep .mat-checkbox-frame {
+    border-color: #e21d47;
+  }
+  ::ng-deep .mat-checkbox-label {
+    font-size: 12px;
+    line-height: 14px !important;
+
+    color: #2d2d2d;
+  }
+  ::ng-deep .mat-checkbox-inner-container {
+    margin-top: 0px;
+  }
+}

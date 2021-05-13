@@ -14,6 +14,7 @@ export class ModalAppAssoccComponent implements OnInit {
   public lang: string
   public hide: boolean = false
   public hide2: boolean = false
+  public checked: boolean = false
   private errorMessage: any = {
     es: {
       item_name_es: 'Ingrese un nombre en español',
@@ -43,7 +44,6 @@ export class ModalAppAssoccComponent implements OnInit {
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
     if (this.data) {
-      console.log(this.data['app'])
     }
     this.initforms()
     this.loadProject()
@@ -97,7 +97,6 @@ export class ModalAppAssoccComponent implements OnInit {
         item_type: this.data['app']['item_icon'],
         url: this.data['app']['url'],
         user: this.data['app']['user'],
-        password: this.data['app']['password'],
       })
     }
   }

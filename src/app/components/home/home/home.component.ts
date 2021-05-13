@@ -58,7 +58,6 @@ export class HomeComponent implements OnInit {
   }
 
   redirectTo(exUrl: string) {
-    console.log('redireccion externa')
     window.open(exUrl)
   }
 

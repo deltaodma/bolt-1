@@ -131,6 +131,17 @@
       </mat-error>
     </mat-form-field>
 
+    <div class="form-advice" *ngIf="data">
+      <div class="separator"></div>
+      <h2 class="form-title">Usuario y contraseña</h2>
+      <div class="row">
+        <mat-checkbox class="example-margin" [(checked)]="checked">
+          Desea realizar el cambio en todas la apps que esten asociadas a este
+          usuario
+        </mat-checkbox>
+      </div>
+    </div>
+
     <mat-form-field
       hideRequiredMarker="true"
       appearance="outline"
