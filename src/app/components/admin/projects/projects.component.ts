@@ -115,7 +115,7 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
-  subMenuDisable(submenu, event: MatSlideToggleChange) {
+  subMenuDisable(submenuName, event: MatSlideToggleChange) {
     if (!event.checked) {
       const confDialog = this.dialog.open(ModalConfirmationComponent, {
         id: ModalConfirmationComponent.toString(),
@@ -124,7 +124,7 @@ export class ProjectsComponent implements OnInit {
         width: '500px',
         height: 'auto',
         data: {
-          submenu_name: submenu.name,
+          submenu_name: submenuName,
           message_action_es: 'deshabilitar',
           message_action_en: 'disable',
         },

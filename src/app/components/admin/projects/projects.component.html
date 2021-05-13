@@ -90,10 +90,10 @@
                   *ngFor="let submenu of activeItem.menu"
                   [id]="submenu.id"
                   class="sub-toogle"
-                  (change)="subMenuDisable(submenu, $event)"
+                  (change)="subMenuDisable(submenu.name_es, $event)"
                   [checked]="submenu.state"
                 >
-                  {{ submenu.name }}
+                  {{ submenu.name_es }}
                 </mat-slide-toggle>
               </div>
             </div>
@@ -178,10 +178,10 @@
                   *ngFor="let submenu of inactiveItem.menu"
                   [id]="submenu.id"
                   class="sub-toogle"
-                  (change)="subMenuDisable(submenu, $event)"
+                  (change)="subMenuDisable(submenu.name_es, $event)"
                   [checked]="submenu.state"
                 >
-                  {{ submenu.name }}
+                  {{ submenu.name_es }}
                 </mat-slide-toggle>
               </div>
             </div>
