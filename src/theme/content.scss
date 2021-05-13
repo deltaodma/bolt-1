@@ -42,7 +42,7 @@ mat-divider {
 // set dialog styles
 .mat-dialog-container {
   background-color: #fff;
-  padding: 0px !important;
+  padding: 10px 0px !important;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px !important;
 }
@@ -96,6 +96,11 @@ mat-divider {
   &:hover {
     transform: scale(0.85);
   }
+}
+
+.mat-dialog-actions {
+  min-height: 35px !important;
+  height: fit-content;
 }
 
 .form-section {

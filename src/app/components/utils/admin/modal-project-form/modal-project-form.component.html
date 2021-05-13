@@ -32,7 +32,7 @@
         formControlName="project_name_es"
         type="text"
         required
-        maxlength="15"
+        maxlength="30"
       />
 
       <mat-error *ngIf="createProjectForm.controls.project_name_es.errors">
@@ -159,14 +159,9 @@
 
     <mat-error *ngIf="httpError">{{ httpError }}</mat-error>
 
-    <button
-      class="btn-submit-rol"
-      (click)="saveProject()"
-      block="block"
-      [ngClass]="{ 'button-disabled': createProjectForm.invalid }"
-    >
-      <span *ngSwitchCase="'Esp'">Guardar cambios</span>
-      <span *ngSwitchCase="'Eng'">Save changes</span>
+    <button class="btn-submit-rol" (click)="saveProject()">
+      <span *ngSwitchCase="'Esp'">Añadir app asociada</span>
+      <span *ngSwitchCase="'Eng'">Add assoccieted app</span>
     </button>
   </form>
 </div>

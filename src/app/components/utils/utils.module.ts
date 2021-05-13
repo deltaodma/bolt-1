@@ -26,7 +26,8 @@ import { LoadingComponent } from './loading/loading.component'
 import { TutorialComponent } from './tutorial/tutorial.component'
 import { LoginComponent } from './login/login.component'
 import { ModalConfirmationComponent } from './admin/modal-confirmation/modal-confirmation.component'
-import { ModalProjectFormComponent } from './admin/modal-project-form/modal-project-form.component'
+import { ModalProjectFormComponent } from './admin/modal-project-form/modal-project-form.component';
+import { ModalAppAssoccComponent } from './admin/modal-app-assocc/modal-app-assocc.component'
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ModalProjectFormComponent } from './admin/modal-project-form/modal-proj
     LoginComponent,
     ModalConfirmationComponent,
     ModalProjectFormComponent,
+    ModalAppAssoccComponent,
   ],
   imports: [
     CommonModule,

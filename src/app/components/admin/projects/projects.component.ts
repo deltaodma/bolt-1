@@ -109,7 +109,7 @@ export class ProjectsComponent implements OnInit {
             '500px',
             'auto',
             null,
-            null,
+            'backdrop',
             {
               message_es: `Se ${this.message_action_es} con éxito el proyecto ${project.name}`,
               message_en: `Successfully ${this.message_action_en} the project ${project.name}`,

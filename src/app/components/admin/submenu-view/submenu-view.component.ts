@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { UiService } from 'src/app/services/ui.service'
+import { ModalAppAssoccComponent } from '../../utils/admin/modal-app-assocc/modal-app-assocc.component'
 
 @Component({
   selector: 'app-submenu-view',
@@ -46,9 +47,6 @@ export class SubmenuViewComponent implements OnInit {
         }
       })
     })
-    console.log(this.submenu_data)
-    // console.log(this.app_list)
-
     this.initforms()
     this.loadProject()
   }
@@ -84,8 +82,11 @@ export class SubmenuViewComponent implements OnInit {
     })
   }
 
-  saveProject(): void {
-    if (this.createProjectForm.invalid) {
+  updateSubmenu(): void {
+    if (
+      this.createProjectForm.controls.submenu_name_en.invalid ||
+      this.createProjectForm.controls.submenu_name_es.invalid
+    ) {
       ;(<any>Object)
         .values(this.createProjectForm.controls)
         .forEach((control) => {
@@ -93,8 +94,16 @@ export class SubmenuViewComponent implements OnInit {
         })
       return
     } else {
+      // TO DO GET req
+      console.log('get request')
     }
   }
+
+  deletedSubmenu() {
+    // TO DO DELETE req
+    console.log('delete request')
+  }
+
   public getMessageform(controlName: any): string {
     let error = ''
     const control = this.createProjectForm.get(controlName)
@@ -116,6 +125,16 @@ export class SubmenuViewComponent implements OnInit {
         submenu_name_en: this.submenu_data['name_en'],
         // created_by: this.submenu_data['description'],
         // last_update: this.submenu_data['description'],
+      })
+    }
+  }
+
+  updateAppAssocc(app?: any) {
+    if (!app) {
+      this.ui.showModal(ModalAppAssoccComponent, '500px', 'auto', null, null)
+    } else {
+      this.ui.showModal(ModalAppAssoccComponent, '500px', 'auto', null, null, {
+        app: app,
       })
     }
   }

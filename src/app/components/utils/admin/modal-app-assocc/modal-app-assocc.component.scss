@@ -1,0 +1,26 @@
+.form-title {
+  width: fit-content;
+}
+::ng-deep.mat-form-field-flex {
+  max-height: 50px !important;
+}
+mat-select-trigger {
+  .row {
+    justify-content: flex-start;
+    height: fit-content;
+    max-height: 30px;
+    p {
+      margin-left: 10px;
+    }
+  }
+}
+mat-option {
+  .row {
+    justify-content: flex-start;
+    height: fit-content;
+    max-height: 30px;
+    p {
+      margin-left: 10px;
+    }
+  }
+}

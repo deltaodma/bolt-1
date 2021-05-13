@@ -1,0 +1,223 @@
+<div class="dialog-form" [ngSwitch]="lang">
+  <div mat-dialog-actions class="dialog-form__header">
+    <span
+      mat-button
+      mat-dialog-close
+      class="x-icon"
+      (click)="closeModal()"
+    ></span>
+  </div>
+  <div style="width: 100%;" *ngIf="!this.data">
+    <h2 class="form-title" *ngSwitchCase="'Esp'">Añadir app asociada</h2>
+    <h2 class="form-title" *ngSwitchCase="'Eng'">Add associated app</h2>
+  </div>
+  <div style="width: 100%;" *ngIf="this.data">
+    <h2 class="form-title" *ngSwitchCase="'Esp'">Editar app asociada</h2>
+    <h2 class="form-title" *ngSwitchCase="'Eng'">Edit associated app</h2>
+  </div>
+
+  <form
+    [formGroup]="updateAppAssocForm"
+    class="form-section"
+    autocomplete="off"
+  >
+    <mat-form-field
+      hideRequiredMarker="true"
+      appearance="outline"
+      floatLabel="auto"
+      class="fullInput input-bolt"
+    >
+      <mat-label *ngSwitchCase="'Esp'">Nombre (Español)</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">Name(Spanish)</mat-label>
+
+      <input
+        matInput
+        id="item_name_es"
+        formControlName="item_name_es"
+        type="text"
+        required
+        maxlength="30"
+      />
+
+      <mat-error *ngIf="updateAppAssocForm.controls.item_name_es.errors">
+        {{ getMessageform('item_name_es') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      hideRequiredMarker="true"
+      appearance="outline"
+      floatLabel="auto"
+      class="fullInput input-bolt"
+    >
+      <mat-label *ngSwitchCase="'Esp'">Nombre (Inglés)</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">Name (English)</mat-label>
+
+      <input
+        matInput
+        id="item_name_en"
+        formControlName="item_name_en"
+        type="text"
+        required
+        maxlength="30"
+      />
+
+      <mat-error *ngIf="updateAppAssocForm.controls.item_name_en.errors">
+        {{ getMessageform('item_name_en') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      hideRequiredMarker="true"
+      floatLabel="auto"
+      class="fullInput"
+    >
+      <mat-label *ngSwitchCase="'Esp'">Tipo de aplicación</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">Application type</mat-label>
+
+      <mat-select [formControl]="updateAppAssocForm.controls.item_type">
+        <mat-select-trigger>
+          <div class="row">
+            <div
+              [class]="this.updateAppAssocForm.controls.item_type.value + '-md'"
+            ></div>
+            <p>{{ this.updateAppAssocForm.controls.item_type.value }}</p>
+          </div>
+        </mat-select-trigger>
+        <mat-option
+          *ngFor="
+            let option of [
+              'shiny',
+              'power',
+              'tableau',
+            ]
+          "
+          [value]="option"
+        >
+          <div class="row">
+            <div [class]="option"></div>
+            <p>
+              {{ option }}
+            </p>
+          </div>
+        </mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="updateAppAssocForm.controls.item_type.errors">
+        {{ getMessageform('item_type') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      hideRequiredMarker="true"
+      appearance="outline"
+      floatLabel="auto"
+      class="fullInput input-bolt"
+    >
+      <mat-label>Link</mat-label>
+
+      <input
+        matInput
+        id="url"
+        formControlName="url"
+        type="text"
+        required
+        maxlength="100"
+      />
+
+      <mat-error *ngIf="updateAppAssocForm.controls.url.errors">
+        {{ getMessageform('url') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      hideRequiredMarker="true"
+      appearance="outline"
+      floatLabel="auto"
+      class="fullInput input-bolt"
+    >
+      <mat-label *ngSwitchCase="'Esp'">Usuario</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">User</mat-label>
+
+      <input
+        matInput
+        id="user"
+        formControlName="user"
+        type="text"
+        required
+        maxlength="30"
+      />
+
+      <mat-error *ngIf="updateAppAssocForm.controls.user.errors">
+        {{ getMessageform('user') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      hideRequiredMarker="true"
+      appearance="outline"
+      floatLabel="auto"
+      class="fullInput input-bolt"
+    >
+      <mat-label *ngSwitchCase="'Esp'">Contraseña</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">Password</mat-label>
+
+      <input
+        matInput
+        id="password"
+        formControlName="password"
+        [type]="!hide ? 'password' : 'text'"
+        required
+        maxlength="30"
+      />
+      <span matSuffix class="material-icons menu-icon" (click)="hide = !hide">
+        {{ !hide ? 'visibility_off' : 'visibility' }}
+      </span>
+      <mat-error *ngIf="updateAppAssocForm.controls.password.errors">
+        {{ getMessageform('password') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      hideRequiredMarker="true"
+      appearance="outline"
+      floatLabel="auto"
+      class="fullInput input-bolt"
+    >
+      <mat-label *ngSwitchCase="'Esp'">Confirmar contraseña</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">Confirm Password</mat-label>
+
+      <input
+        matInput
+        id="password_confirm"
+        formControlName="password_confirm"
+        [type]="!hide2 ? 'password' : 'text'"
+        required
+        maxlength="30"
+      />
+      <span matSuffix class="material-icons menu-icon" (click)="hide2 = !hide2">
+        {{ !hide2 ? 'visibility_off' : 'visibility' }}
+      </span>
+      <mat-error
+        *ngIf="
+          updateAppAssocForm.controls.password_confirm.value !=
+          updateAppAssocForm.controls.password.value
+        "
+      >
+        {{ getMessageform('password_confirm') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- <mat-error *ngIf="httpError">{{ httpError }}</mat-error> -->
+
+    <button *ngIf="!data" class="btn-submit-rol" (click)="uploadApp()">
+      <span *ngSwitchCase="'Esp'">Añadir app asociada</span>
+      <span *ngSwitchCase="'Eng'">Add assoccieted app</span>
+    </button>
+    <button *ngIf="data" class="btn-submit-rol" (click)="uploadApp()">
+      <span *ngSwitchCase="'Esp'">Editar app asociada</span>
+      <span *ngSwitchCase="'Eng'">Edit assoccieted app</span>
+    </button>
+  </form>
+</div>
