@@ -33,7 +33,7 @@ const routes: Routes = [
             component: ProjectsComponent,
           },
           {
-            path: 'submenu', // child route path
+            path: 'submenu/:id', // child route path
             component: SubmenuViewComponent,
           },
         ],

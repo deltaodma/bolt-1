@@ -55,6 +55,33 @@
 .shiny {
   @include img-background(url('/assets/icon/shiny.svg'), 20px, 20px, relative);
 }
+// brand icons  for sub menu view
+.tableau-md {
+  @include img-background(
+    url('/assets/icon/dash-big.svg'),
+    24px,
+    24px,
+    relative
+  );
+}
+
+.power-md {
+  @include img-background(
+    url('/assets/icon/power-big.svg'),
+    24px,
+    24px,
+    relative
+  );
+}
+
+.shiny-md {
+  @include img-background(
+    url('/assets/icon/shiny-big.svg'),
+    24px,
+    24px,
+    relative
+  );
+}
 // fav item icons big
 .tableau-big {
   @include img-background(

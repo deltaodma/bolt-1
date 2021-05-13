@@ -176,10 +176,10 @@ export class ProjectsComponent implements OnInit {
     // TO DO active elements GET request
   }
 
-  editSubMenu(submenuElement: any) {
-    console.log(submenuElement)
+  editSubMenu(submenuId: string) {
+    console.log(submenuId)
 
-    this.router.navigate(['admin/projects/submenu', submenuElement], {
+    this.router.navigate([`admin/projects/submenu/${submenuId}`], {
       queryParamsHandling: 'preserve',
     })
   }

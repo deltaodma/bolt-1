@@ -14,21 +14,12 @@
 
   <div class="inner-section section__1">
     <h1 class="underline-title" *ngSwitchCase="'Esp'">
-      Sub menú - {{ submenu_data.name }}
+      Sub menú - {{ submenu_data.name_es }}
     </h1>
     <h1 class="underline-title" *ngSwitchCase="'Eng'">
-      Sub menú - {{ submenu_data.name }}
+      Sub menu - {{ submenu_data.name_en }}
     </h1>
-    <!-- 
-    <p>{{ submenu_data.id }}</p>
-    <p>{{ submenu_data.active }}</p>
-    <p>{{ submenu_data.description }}</p>
-    <span class="material-icons">
-      {{ submenu_data.icon }}
-    </span>
-    <ul>
-      <li *ngFor="let app of app_list">{{ app.name }}</li>
-    </ul> -->
+
     <form
       [formGroup]="createProjectForm"
       class="form-section"
@@ -55,7 +46,9 @@
               required
               maxlength="15"
             />
-
+            <span matSuffix class="material-icons menu-icon">
+              edit
+            </span>
             <mat-error
               *ngIf="createProjectForm.controls.submenu_name_es.errors"
             >
@@ -107,7 +100,9 @@
               required
               maxlength="30"
             />
-
+            <span matSuffix class="material-icons menu-icon">
+              edit
+            </span>
             <mat-error
               *ngIf="createProjectForm.controls.submenu_name_en.errors"
             >
@@ -144,7 +139,8 @@
 
       <div class="row row__2">
         <button class="bolt-btn-outline">
-          <span>Eliminar</span>
+          <span *ngSwitchCase="'Esp'">Eliminar</span>
+          <span *ngSwitchCase="'Eng'">Delete</span>
         </button>
         <button
           (click)="saveProject()"
@@ -159,7 +155,8 @@
   </div>
   <div class="inner-section section__2">
     <div class="row">
-      <h2>App asociadas</h2>
+      <h2 *ngSwitchCase="'Esp'">App asociadas</h2>
+      <h2 *ngSwitchCase="'Eng'">Associated app</h2>
       <button class="bolt-btn-filled">
         <span *ngSwitchCase="'Esp'">Añadir app asociada</span>
         <span *ngSwitchCase="'Eng'">Add associated app</span>
@@ -167,81 +164,94 @@
     </div>
     <div class="grid">
       <div class="grid-header">
-        <div class="grid-header__title">Proyecto</div>
-        <div class="grid-header__title">Descripción</div>
-        <div class="grid-header__title">icono</div>
-        <div class="grid-header__title">Acciones</div>
+        <div class="grid-header__title">
+          <span>App</span>
+        </div>
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Creado</span>
+          <span *ngSwitchCase="'Eng'">Created</span>
+        </div>
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Ultima modificación</span>
+          <span *ngSwitchCase="'Eng'">last update</span>
+        </div>
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Tipo de aplicación</span>
+          <span *ngSwitchCase="'Eng'">Aplication type</span>
+        </div>
+        <div class="grid-header__title">
+          <span>Link</span>
+        </div>
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Usuairo</span>
+          <span *ngSwitchCase="'Eng'">User</span>
+        </div>
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Contraseña</span>
+          <span *ngSwitchCase="'Eng'">password</span>
+        </div>
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Acciones</span>
+          <span *ngSwitchCase="'Eng'">Actions</span>
+        </div>
       </div>
 
-      <!-- <div
-        class="background-transparent"
-        *ngFor="let activeItem of activeProjects; let id = index"
-        [id]="'submenu' + id"
-      >
+      <div *ngFor="let app of app_list; let id = index">
         <div class="grid-content">
-          <button
-            mat-button
-            class="project-btn row"
-            (click)="openPanel(id)"
-            disableRipple="true"
-          >
-            <span class="material-icons arrow" [id]="'arrowProject' + id">
-              arrow_forward_ios
-            </span>
-            <span class="grid-content__name">{{ activeItem.name }}</span>
-          </button>
-          <p class="grid-content__description">
-            {{ activeItem.description }}
-          </p>
-          <div class="grid-content__icon">
-            <span class="material-icons menu-icon">
-              {{ activeItem.icon }}
-            </span>
+          <p class="grid-content__name">{{ app.item_name }}</p>
+          <div class="col">
+            <p class="grid-content__name">{{ app.created.author }}</p>
+            <p class="grid-content__name">{{ app.created.author_id }}</p>
+            <p class="grid-content__name">{{ app.created.date }}</p>
           </div>
+          <div class="col">
+            <p class="grid-content__name">{{ app.created.author }}</p>
+            <p class="grid-content__name">{{ app.created.author_id }}</p>
+            <p class="grid-content__name">{{ app.created.date }}</p>
+          </div>
+
+          <div class="row">
+            <div [class]="app.item_icon + '-md'"></div>
+            <p class="grid-content__name">{{ app.item_icon }}</p>
+          </div>
+          <div>
+            <p [title]="app.url" class="grid-content__description">
+              {{ app.url }}
+            </p>
+          </div>
+          <p class="grid-content__name">{{ app.user }}</p>
+          <input
+            mat-input
+            class="grid-content__name"
+            type="password"
+            [value]="app.password"
+            disabled
+          />
           <div class="grid-content__action">
             <div class="col">
               <mat-slide-toggle
-                [id]="activeItem.id"
+                [id]="app.id"
                 class="enable-toogle"
-                (change)="projectStatus(activeItem, $event, 'disable')"
-                [checked]="!activeItem.active"
+                (change)="projectStatus(app, $event, 'disable')"
+                [checked]="!app.active"
               ></mat-slide-toggle>
-              <p>Desactivar</p>
+              <p class="toggle-text" *ngSwitchCase="'Esp'">Deshabilitar</p>
+              <p class="toggle-text" *ngSwitchCase="'Eng'">Disable</p>
             </div>
-            <button
-              mat-button
-              class="action-btn"
-              (click)="createProject(activeItem)"
-            >
+            <button mat-button class="action-btn" (click)="createProject(app)">
               <span class="material-icons menu-icon">
                 edit
               </span>
-              editar
-            </button>
-            <button
-              mat-button
-              class="action-btn"
-              (click)="editSubMenu(activeItem)"
-            >
-              <span class="plus-icon"></span>
-              Añadir sub menú
+              <span class="action-text" *ngSwitchCase="'Esp'">
+                editar
+              </span>
+              <span class="action-text" *ngSwitchCase="'Eng'">
+                edit
+              </span>
             </button>
           </div>
         </div>
-        <div class="col project-submenus" [id]="'box' + id">
-          <div class="col">
-            <mat-slide-toggle
-              *ngFor="let submenu of activeItem.menu"
-              [id]="submenu.id"
-              class="sub-toogle"
-              (change)="subMenuDisable(submenu, $event)"
-              [checked]="submenu.state"
-            >
-              {{ submenu.name }}
-            </mat-slide-toggle>
-          </div>
-        </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>

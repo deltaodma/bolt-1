@@ -130,9 +130,11 @@
     }
     &__icon,
     &__action {
-      .action-btn {
+      .action-text,
+      .toggle-text {
         @include title('Gotham', 10px, 15px, #e21d47);
         text-transform: capitalize;
+        margin-top: 0;
       }
     }
   }

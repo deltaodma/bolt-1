@@ -12,6 +12,7 @@ import { UiService } from 'src/app/services/ui.service'
 export class SubmenuViewComponent implements OnInit {
   public lang: string
   public submenu_data: any
+  public submenu_id: any
   public app_list: any = []
   public projects: any = MockProjects
   public createProjectForm: FormGroup
@@ -35,13 +36,19 @@ export class SubmenuViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.submenu_data = this.activeRoute.snapshot.params
-    this.projects.forEach((project) => {
-      if (project.id == this.submenu_data.id) {
-        this.app_list = project.menu
-      } else {
-      }
+    this.submenu_id = this.activeRoute.snapshot.params.id
+
+    this.projects.forEach((proj) => {
+      proj.menu.forEach((sub) => {
+        if (sub.id == this.submenu_id) {
+          this.submenu_data = sub
+          this.app_list = sub.app_list
+        }
+      })
     })
+    console.log(this.submenu_data)
+    // console.log(this.app_list)
+
     this.initforms()
     this.loadProject()
   }
@@ -61,14 +68,14 @@ export class SubmenuViewComponent implements OnInit {
       ]),
       created_by: new FormControl(
         {
-          value: 'Andres montenegro ID:93844 el 24/07/2021-08:34:69',
+          value: '',
           disabled: true,
         },
         [],
       ),
       last_update: new FormControl(
         {
-          value: 'Sofia Herrera ID:93784 el 16/08/2021-08:34:69',
+          value: '',
           disabled: true,
         },
         [],
@@ -103,15 +110,14 @@ export class SubmenuViewComponent implements OnInit {
   }
 
   loadProject() {
-    // if (this.data) {
-    //   this.createProjectForm.patchValue({
-    //     submenu_name_es: this.data.project['name'],
-    //     submenu_name_en: this.data.project['name'],
-    //     created_by: this.data.project['description'],
-    //     last_update: this.data.project['description'],
-    //     icon: this.data.project['icon'],
-    //   })
-    // }
+    if (this.submenu_data) {
+      this.createProjectForm.patchValue({
+        submenu_name_es: this.submenu_data['name_es'],
+        submenu_name_en: this.submenu_data['name_en'],
+        // created_by: this.submenu_data['description'],
+        // last_update: this.submenu_data['description'],
+      })
+    }
   }
 
   goBack() {
