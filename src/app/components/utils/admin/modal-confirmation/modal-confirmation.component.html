@@ -22,12 +22,12 @@
 
   <div class="dialog-alert__content" *ngIf="data.submenu_name">
     <p *ngSwitchCase="'Esp'">
-      ¿Desea deshabilitar el sub menú
+      ¿Desea {{ data.message_action_es }} el sub menú
       <strong>{{ data.submenu_name }}</strong>
       ?
     </p>
     <p *ngSwitchCase="'Eng'">
-      ¿ Do you want to disable the sub menu
+      ¿ Do you want to {{ data.message_action_en }} the sub menu
       <strong>{{ data.submenu_name }}</strong>
       ?
     </p>

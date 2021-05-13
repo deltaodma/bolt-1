@@ -97,50 +97,70 @@ export class ProjectsComponent implements OnInit {
         if (this.projectPermission) {
           // TO DO http request update project status
           // if 200
-          this.ui.showModal(
+          if (action == 'enable') {
+            this.message_action_es = 'habilitó'
+            this.message_action_en = 'enabled'
+          } else {
+            this.message_action_es = 'deshabilitó'
+            this.message_action_en = 'disabled'
+          }
+          const notify = this.ui.showModal(
             ModalNotificationComponent,
             '500px',
             'auto',
             null,
             null,
             {
-              message_es: `Se deshabilito con éxito el proyecto ${project.name}`,
-              message_en: `Successfully disabled the project ${project.name}`,
+              message_es: `Se ${this.message_action_es} con éxito el proyecto ${project.name}`,
+              message_en: `Successfully ${this.message_action_en} the project ${project.name}`,
             },
-
-            // show loading and reload page to update data view
           )
+          // show loading and reload page to update data view
+          setTimeout(() => {
+            window.location.reload()
+          }, 3000)
+        } else {
+          window.location.reload()
         }
       })
     }
   }
 
   subMenuDisable(submenuName, event: MatSlideToggleChange) {
-    if (!event.checked) {
-      const confDialog = this.dialog.open(ModalConfirmationComponent, {
-        id: ModalConfirmationComponent.toString(),
-        disableClose: true,
-        hasBackdrop: true,
-        width: '500px',
-        height: 'auto',
-        data: {
-          submenu_name: submenuName,
-          message_action_es: 'deshabilitar',
-          message_action_en: 'disable',
-        },
-      })
-
-      confDialog.afterClosed().subscribe((result) => {
-        this.projectPermission = result
-        if (this.projectPermission) {
-          // TO DO http request update project status
-          this.ui.showLoading()
-          setTimeout(() => {
-            this.ui.dismissLoading()
-          }, 2000)
-        }
-      })
+    let message_es
+    let message_en
+    if (event.checked == false) {
+      message_es = 'deshabilitar'
+      message_en = 'disable'
+    } else {
+      message_es = 'habilitar'
+      message_en = 'enable'
     }
+    const confDialog = this.dialog.open(ModalConfirmationComponent, {
+      id: ModalConfirmationComponent.toString(),
+      disableClose: true,
+      hasBackdrop: true,
+      width: '500px',
+      height: 'auto',
+      data: {
+        submenu_name: submenuName,
+        message_action_es: message_es,
+        message_action_en: message_en,
+      },
+    })
+
+    confDialog.afterClosed().subscribe((result) => {
+      this.projectPermission = result
+      if (this.projectPermission) {
+        // TO DO http request update project status
+        this.ui.showLoading()
+        setTimeout(() => {
+          this.ui.dismissLoading()
+        }, 2000)
+      } else {
+        window.location.reload()
+      }
+    })
   }
 
   createProject(project?: any) {
