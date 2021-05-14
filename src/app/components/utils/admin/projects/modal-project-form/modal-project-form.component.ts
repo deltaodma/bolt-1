@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { UiService } from 'src/app/services/ui.service'
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { ModalNotificationComponent } from '../../modal-notification/modal-notification.component'
+import { ModalNotificationComponent } from '../../../modal-notification/modal-notification.component'
 export interface DialogData {
   project: object
 }

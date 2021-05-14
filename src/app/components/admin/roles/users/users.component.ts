@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ModalConfirmationComponent } from 'src/app/components/utils/admin/modal-confirmation/modal-confirmation.component'
+import { ModalConfirmationComponent } from 'src/app/components/utils/admin/projects/modal-confirmation/modal-confirmation.component'
 import { MockUsers } from 'src/app/mocks/user-mock'
 import { UiService } from 'src/app/services/ui.service'
 
@@ -36,26 +36,21 @@ export class UsersComponent implements OnInit {
   initforms() {
     this.lang = localStorage.getItem('lang') || 'Esp'
     this.searchForm = this.formBuilder.group({
-      user_name: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(30),
-      ]),
-      country: new FormControl('', [Validators.required]),
+      user_name: new FormControl('', []),
+      country: new FormControl('', []),
 
-      user_id: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(10),
-      ]),
+      user_id: new FormControl('', []),
     })
   }
 
-  searchUser() {}
+  searchUser() {
+    //TO DO GET request
+    console.log('GET request find user')
+  }
 
-  updateSubmenu(target: any): void {
+  addNewRol(target: any): void {
     // TO DO PUT req
-    console.log('put request', target)
+    console.log('POST request', target)
     let response = 400
     if (response == 200) {
       setTimeout(() => {
@@ -83,7 +78,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  updateAppAssoc(app?: any) {}
+  createNewUser() {}
 
   updateAppStatus(toogleStatus: boolean, target: any) {
     // TO DO PUT request

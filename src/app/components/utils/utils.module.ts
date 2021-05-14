@@ -25,11 +25,11 @@ import { MatInputModule } from '@angular/material/input'
 import { LoadingComponent } from './loading/loading.component'
 import { TutorialComponent } from './tutorial/tutorial.component'
 import { LoginComponent } from './login/login.component'
-import { ModalConfirmationComponent } from './admin/modal-confirmation/modal-confirmation.component'
-import { ModalProjectFormComponent } from './admin/modal-project-form/modal-project-form.component'
-import { ModalAppAssoccComponent } from './admin/modal-app-assocc/modal-app-assocc.component'
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ModalSubmenuFormComponent } from './admin/modal-submenu-form/modal-submenu-form.component'
+import { ModalConfirmationComponent } from './admin/projects/modal-confirmation/modal-confirmation.component'
+import { ModalProjectFormComponent } from './admin/projects/modal-project-form/modal-project-form.component'
+import { ModalAppAssoccComponent } from './admin/projects/modal-app-assocc/modal-app-assocc.component'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { ModalSubmenuFormComponent } from './admin/projects/modal-submenu-form/modal-submenu-form.component'
 
 @NgModule({
   declarations: [

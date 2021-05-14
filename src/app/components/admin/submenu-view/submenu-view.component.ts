@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { UiService } from 'src/app/services/ui.service'
-import { ModalAppAssoccComponent } from '../../utils/admin/modal-app-assocc/modal-app-assocc.component'
-import { ModalConfirmationComponent } from '../../utils/admin/modal-confirmation/modal-confirmation.component'
+import { ModalAppAssoccComponent } from '../../utils/admin/projects/modal-app-assocc/modal-app-assocc.component'
+import { ModalConfirmationComponent } from '../../utils/admin/projects/modal-confirmation/modal-confirmation.component'
 
 @Component({
   selector: 'app-submenu-view',

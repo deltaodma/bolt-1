@@ -89,7 +89,7 @@
       <h2 *ngSwitchCase="'Esp'" class="form-title">Resúltados de busqueda</h2>
       <h2 *ngSwitchCase="'Eng'" class="form-title">Search results</h2>
 
-      <button class="bolt-btn-filled" (click)="updateAppAssoc()">
+      <button class="bolt-btn-filled" (click)="createNewUser()">
         <span *ngSwitchCase="'Esp'">Crear nuevo usuario</span>
         <span *ngSwitchCase="'Eng'">Create new user</span>
       </button>
@@ -184,7 +184,7 @@
                 edit
               </span>
             </button>
-            <button mat-button class="action-btn" (click)="createSubmenu()">
+            <button mat-button class="action-btn" (click)="addNewRol(user)">
               <span class="plus-icon"></span>
 
               <span
