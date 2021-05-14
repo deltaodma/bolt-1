@@ -13,7 +13,7 @@ import { TutorialComponent } from '../../utils/tutorial/tutorial.component'
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public user = ['']
+  public user = []
   public prop = MockProjects
   public bannerList: any = Banners
   public lang: string

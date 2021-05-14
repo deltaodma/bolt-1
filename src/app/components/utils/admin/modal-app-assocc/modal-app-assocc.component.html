@@ -165,60 +165,64 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field
-      hideRequiredMarker="true"
-      appearance="outline"
-      floatLabel="auto"
-      class="fullInput input-bolt"
-    >
-      <mat-label *ngSwitchCase="'Esp'">Contraseña</mat-label>
-      <mat-label *ngSwitchCase="'Eng'">Password</mat-label>
-
-      <input
-        matInput
-        id="password"
-        formControlName="password"
-        [type]="!hide ? 'password' : 'text'"
-        required
-        maxlength="30"
-      />
-      <span matSuffix class="material-icons menu-icon" (click)="hide = !hide">
-        {{ !hide ? 'visibility_off' : 'visibility' }}
-      </span>
-      <mat-error *ngIf="updateAppAssocForm.controls.password.errors">
-        {{ getMessageform('password') }}
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field
-      hideRequiredMarker="true"
-      appearance="outline"
-      floatLabel="auto"
-      class="fullInput input-bolt"
-    >
-      <mat-label *ngSwitchCase="'Esp'">Confirmar contraseña</mat-label>
-      <mat-label *ngSwitchCase="'Eng'">Confirm Password</mat-label>
-
-      <input
-        matInput
-        id="password_confirm"
-        formControlName="password_confirm"
-        [type]="!hide2 ? 'password' : 'text'"
-        required
-        maxlength="30"
-      />
-      <span matSuffix class="material-icons menu-icon" (click)="hide2 = !hide2">
-        {{ !hide2 ? 'visibility_off' : 'visibility' }}
-      </span>
-      <mat-error
-        *ngIf="
-          updateAppAssocForm.controls.password_confirm.value !=
-          updateAppAssocForm.controls.password.value
-        "
+    <form [formGroup]="passwordsForm" autocomplete="off">
+      <mat-form-field
+        hideRequiredMarker="true"
+        appearance="outline"
+        floatLabel="auto"
+        class="fullInput input-bolt"
       >
-        {{ getMessageform('password_confirm') }}
-      </mat-error>
-    </mat-form-field>
+        <mat-label *ngSwitchCase="'Esp'">Contraseña</mat-label>
+        <mat-label *ngSwitchCase="'Eng'">Password</mat-label>
+
+        <input
+          matInput
+          id="password"
+          formControlName="password"
+          [type]="!hide ? 'password' : 'text'"
+          required
+          maxlength="30"
+        />
+        <span matSuffix class="material-icons menu-icon" (click)="hide = !hide">
+          {{ !hide ? 'visibility_off' : 'visibility' }}
+        </span>
+
+        <mat-error *ngIf="passwordsForm.hasError('required', 'password')">
+          Please enter a password
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        hideRequiredMarker="true"
+        appearance="outline"
+        floatLabel="auto"
+        class="fullInput input-bolt"
+      >
+        <mat-label *ngSwitchCase="'Esp'">Confirmar contraseña</mat-label>
+        <mat-label *ngSwitchCase="'Eng'">Confirm Password</mat-label>
+
+        <input
+          matInput
+          id="password_confirm"
+          formControlName="password_confirm"
+          [type]="!hide2 ? 'password' : 'text'"
+          required
+          maxlength="30"
+          [errorStateMatcher]="matcher"
+        />
+        <span
+          matSuffix
+          class="material-icons menu-icon"
+          (click)="hide2 = !hide2"
+        >
+          {{ !hide2 ? 'visibility_off' : 'visibility' }}
+        </span>
+
+        <mat-error *ngIf="passwordsForm.hasError('notSame')">
+          Passwords do not match
+        </mat-error>
+      </mat-form-field>
+    </form>
 
     <!-- <mat-error *ngIf="httpError">{{ httpError }}</mat-error> -->
 

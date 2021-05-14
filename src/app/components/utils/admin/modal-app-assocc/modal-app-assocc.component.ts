@@ -1,8 +1,33 @@
 import { Component, Inject, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+} from '@angular/forms'
+import { ErrorStateMatcher } from '@angular/material/core'
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UiService } from 'src/app/services/ui.service'
 import { DialogData } from '../modal-confirmation/modal-confirmation.component'
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null,
+  ): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty)
+    const invalidParent = !!(
+      control &&
+      control.parent &&
+      control.parent.invalid &&
+      control.parent.dirty
+    )
+
+    return invalidCtrl || invalidParent
+  }
+}
 
 @Component({
   selector: 'app-modal-app-assocc',
@@ -11,10 +36,12 @@ import { DialogData } from '../modal-confirmation/modal-confirmation.component'
 })
 export class ModalAppAssoccComponent implements OnInit {
   public updateAppAssocForm: FormGroup
+  public passwordsForm: FormGroup
   public lang: string
   public hide: boolean = false
   public hide2: boolean = false
   public checked: boolean = false
+  matcher = new MyErrorStateMatcher()
   private errorMessage: any = {
     es: {
       item_name_es: 'Ingrese un nombre en español',
@@ -72,17 +99,27 @@ export class ModalAppAssoccComponent implements OnInit {
         Validators.minLength(4),
         Validators.maxLength(30),
       ]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(30),
-      ]),
-      password_confirm: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(30),
-      ]),
     })
+
+    this.passwordsForm = this.formBuilder.group(
+      {
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(30),
+        ]),
+        password_confirm: new FormControl('', [Validators.required]),
+      },
+      { validator: this.checkPasswords },
+    )
+  }
+
+  checkPasswords(group: FormGroup) {
+    // here we have the 'passwords' group
+    let pass = group.controls.password.value
+    let confirmPass = group.controls.password_confirm.value
+
+    return pass === confirmPass ? null : { notSame: true }
   }
 
   closeModal() {
@@ -102,16 +139,15 @@ export class ModalAppAssoccComponent implements OnInit {
   }
 
   uploadApp() {
-    if (
-      this.updateAppAssocForm.invalid ||
-      this.updateAppAssocForm.controls.password_confirm.value !=
-        this.updateAppAssocForm.controls.password.value
-    ) {
+    if (this.updateAppAssocForm.invalid || this.passwordsForm.invalid) {
       ;(<any>Object)
         .values(this.updateAppAssocForm.controls)
         .forEach((control) => {
           control.markAsTouched()
         })
+      ;(<any>Object).values(this.passwordsForm.controls).forEach((control) => {
+        control.markAsTouched()
+      })
       return
     } else {
       this.ui.showLoading()

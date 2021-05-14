@@ -223,15 +223,17 @@
             </div>
             <div class="col project-submenus" [id]="'box' + id">
               <div class="col">
-                <mat-slide-toggle
-                  *ngFor="let submenu of inactiveItem.menu"
-                  [id]="submenu.id"
-                  class="sub-toogle"
-                  (change)="subMenuDisable(submenu.name_es, $event)"
-                  [checked]="submenu.state"
-                >
-                  {{ submenu.name_es }}
-                </mat-slide-toggle>
+                <div class="row" *ngFor="let submenu of inactiveItem.menu">
+                  <mat-slide-toggle
+                    [id]="submenu.id"
+                    class="sub-toogle"
+                    (change)="subMenuDisable(submenu.name_es, $event)"
+                    [checked]="submenu.state"
+                  ></mat-slide-toggle>
+                  <a class="submenu-link" (click)="editSubMenu(submenu.id)">
+                    {{ submenu.name_es }}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
