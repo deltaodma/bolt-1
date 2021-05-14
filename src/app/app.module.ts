@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 
-import { AppRoutingModule } from './app-routing.module'
+import { AppRoutingModule } from './components/admin/roles/roles/app-routing.module'
 import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UtilsModule } from './components/utils/utils.module'
@@ -19,18 +19,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { HttpService } from './services/http.service'
 import { AuthService } from './services/auth.service'
 
-
 import { EmbedViewComponent } from './components/home/embed-view/embed-view.component'
 import { ProjectsComponent } from './components/admin/projects/projects.component'
-import { RolesComponent } from './components/admin/roles/roles.component'
+import { RolesComponent } from './components/admin/roles/roles/roles.component'
 import { BannersComponent } from './components/admin/banners/banners.component'
 import { SubmenuViewComponent } from './components/admin/submenu-view/submenu-view.component'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
-import { ReactiveFormsModule } from '@angular/forms'
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { UsersComponent } from './components/admin/roles/users/users.component'
 
 @NgModule({
   declarations: [
@@ -41,6 +40,7 @@ import { ReactiveFormsModule } from '@angular/forms'
     SubmenuViewComponent,
     RolesComponent,
     BannersComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,10 +61,7 @@ import { ReactiveFormsModule } from '@angular/forms'
     MatInputModule,
     MatSelectModule,
   ],
-  providers: [
-    HttpService,
-    AuthService,
-  ],
+  providers: [HttpService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
