@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-import { BannersComponent } from '../../banners/banners.component'
-import { ProjectsComponent } from '../../projects/projects.component'
-import { EmbedViewComponent } from '../../../home/embed-view/embed-view.component'
-import { HomeComponent } from '../../../home/home/home.component'
-import { SubmenuViewComponent } from '../../submenu-view/submenu-view.component'
-import { LoginComponent } from '../../../utils/login/login.component'
-import { RolesComponent } from './roles.component'
-import { UsersComponent } from '../users/users.component'
+import { BannersComponent } from './components/admin/banners/banners.component'
+import { ProjectsComponent } from './components/admin/projects/projects.component'
+import { EmbedViewComponent } from './components/home/embed-view/embed-view.component'
+import { HomeComponent } from './components/home/home/home.component'
+import { SubmenuViewComponent } from './components/admin/submenu-view/submenu-view.component'
+import { LoginComponent } from './components/utils/login/login.component'
+import { RolesComponent } from './components/admin/roles/roles/roles.component'
+import { UsersComponent } from './components/admin/roles/users/users.component'
 
 const routes: Routes = [
   // { path: '', component: LoginComponent },

@@ -1,4 +1,267 @@
 <app-header></app-header>
-<div class="container">
-  <p>roles works!</p>
+<div class="container" [ngSwitch]="lang">
+  <!-- search bar -->
+  <div class="inner-section section__1">
+    <h1 class="underline-title" *ngSwitchCase="'Esp'">Crear rol</h1>
+    <h1 class="underline-title" *ngSwitchCase="'Eng'">Create rol</h1>
+
+    <form [formGroup]="createRolForm" class="form-section" autocomplete="off">
+      <h2 class="form-title" *ngSwitchCase="'Esp'">Crear un nuevo rol</h2>
+      <h2 class="form-title" *ngSwitchCase="'Eng'">Create a new rol</h2>
+
+      <div class="row row__1">
+        <div class="col">
+          <mat-form-field
+            hideRequiredMarker="true"
+            appearance="outline"
+            floatLabel="auto"
+            class="fullInput input-bolt"
+          >
+            <mat-label *ngSwitchCase="'Esp'">
+              Nombre(inglés)
+            </mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Name(English)</mat-label>
+
+            <input
+              matInput
+              id="rol_name_en"
+              formControlName="rol_name_en"
+              type="text"
+              maxlength="30"
+            />
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="true"
+            floatLabel="auto"
+            class="fullInput"
+          >
+            <mat-label *ngSwitchCase="'Esp'">
+              Descripción (Inglés)
+            </mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Description (English)</mat-label>
+
+            <textarea
+              matInput
+              formControlName="description_en"
+              minlength="6"
+              maxlength="100"
+            ></textarea>
+
+            <!-- <mat-error *ngIf="createRolForm.controls.description_en.errors">
+          {{ getMessageform('description_en') }}
+        </mat-error> -->
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="true"
+            floatLabel="auto"
+            class="fullInput"
+          >
+            <mat-label *ngSwitchCase="'Esp'">Proyecto</mat-label>
+            <mat-label *ngSwitchCase="'Eng'">project</mat-label>
+
+            <mat-select
+              [formControl]="createRolForm.controls.rol_projects"
+              multiple
+            >
+              <mat-option
+                *ngFor="
+            let option of [
+              'Colombia',
+              'México',
+              'Ecuador',
+              'Peru',
+              'Argentina',
+              'Chile',
+              'Brasil',
+            ]
+          "
+                [value]="option"
+              >
+                {{ option }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field
+            hideRequiredMarker="true"
+            appearance="outline"
+            floatLabel="auto"
+            class="fullInput input-bolt"
+          >
+            <mat-label>ID</mat-label>
+
+            <input
+              matInput
+              id="rol_name_es"
+              formControlName="rol_name_en"
+              type="text"
+              maxlength="30"
+            />
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="true"
+            floatLabel="auto"
+            class="fullInput"
+          >
+            <mat-label *ngSwitchCase="'Esp'">
+              Descripción (Español)
+            </mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Description (Spanish)</mat-label>
+
+            <textarea
+              matInput
+              formControlName="description_en"
+              minlength="6"
+              maxlength="100"
+            ></textarea>
+
+            <!-- <mat-error *ngIf="createRolForm.controls.description_en.errors">
+          {{ getMessageform('description_en') }}
+        </mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row row__2">
+        <button class="bolt-btn-filled">
+          <span *ngSwitchCase="'Esp'">Guardar</span>
+          <span *ngSwitchCase="'Eng'">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- search results -->
+  <div class="inner-section section__2">
+    <div class="row">
+      <h2 class="form-title">Roles</h2>
+
+      <button class="bolt-btn-filled">
+        <span *ngSwitchCase="'Esp'">Crear nuevo rol</span>
+        <span *ngSwitchCase="'Eng'">Create new rol</span>
+      </button>
+    </div>
+
+    <div class="grid">
+      <div class="grid-header">
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Nombre</span>
+          <span *ngSwitchCase="'Eng'">Name</span>
+        </div>
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Descripción</span>
+          <span *ngSwitchCase="'Eng'">Description</span>
+        </div>
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Proyecto</span>
+          <span *ngSwitchCase="'Eng'">Project</span>
+        </div>
+        <div class="grid-header__title">
+          <span *ngSwitchCase="'Esp'">Acciones</span>
+          <span *ngSwitchCase="'Eng'">Actions</span>
+        </div>
+      </div>
+
+      <div *ngFor="let rol of roles; let id = index">
+        <div class="grid-content">
+          <p class="grid-content__name">{{ rol.role_name_es }}</p>
+          <p class="grid-content__name">{{ rol.role_description_es }}</p>
+          <div class="col">
+            <p class="grid-content__description">
+              <i *ngFor="let project of rol.role_projects">{{ project }}/</i>
+            </p>
+          </div>
+
+          <div class="grid-content__action">
+            <div class="col">
+              <mat-slide-toggle
+                [id]="rol.id"
+                class="enable-toogle"
+                (change)="showConfirmation(rol, 'habilitar', 'enable')"
+                [checked]="rol.active"
+              ></mat-slide-toggle>
+              <p class="toggle-text" *ngSwitchCase="'Esp'">
+                {{ rol.active ? 'Deshabilitar' : 'Habilitar' }}
+              </p>
+              <p class="toggle-text" *ngSwitchCase="'Eng'">
+                {{ rol.active ? 'Disable' : 'Enable' }}
+              </p>
+            </div>
+
+            <button mat-button class="action-btn" (click)="addNewRol(rol)">
+              <span class="plus-icon"></span>
+
+              <span
+                class="action-text"
+                style="margin-top: 5px;"
+                *ngSwitchCase="'Esp'"
+              >
+                Añadir nuevo rol
+              </span>
+              <span
+                class="action-text"
+                style="margin-top: 5px;"
+                *ngSwitchCase="'Eng'"
+              >
+                add new rol
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="paginator row" *ngIf="pages">
+      <button
+        mat-button
+        class="paginator-button"
+        (click)="updatePage('start', true)"
+        [disabled]="active_count == 0"
+      >
+        <span style="transform: rotate(180deg);" class="material-icons">
+          double_arrow
+        </span>
+      </button>
+      <button
+        mat-button
+        class="paginator-button"
+        (click)="updatePage('prev', true)"
+        [disabled]="active_count == 0"
+      >
+        <span style="transform: rotate(180deg);" class="material-icons">
+          play_arrow
+        </span>
+      </button>
+      <p *ngSwitchCase="'Esp'">
+        Mostrando {{ roles.length }} de {{ roles.length }} resultados
+      </p>
+      <p *ngSwitchCase="'Eng'">
+        Showing {{ roles.length }} of {{ roles.length }} results
+      </p>
+      <button
+        mat-button
+        class="paginator-button"
+        (click)="updatePage('next', true)"
+        [disabled]="active_count == pages"
+      >
+        <span class="material-icons">
+          play_arrow
+        </span>
+      </button>
+      <button
+        mat-button
+        class="paginator-button"
+        (click)="updatePage('last', true)"
+        [disabled]="active_count == pages"
+      >
+        <span class="material-icons">
+          double_arrow
+        </span>
+      </button>
+    </div>
+  </div>
 </div>

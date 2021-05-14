@@ -79,8 +79,8 @@ export class RolFormComponent implements OnInit {
         '',
         'backdrop',
         {
-          message_es: `El submenu de nombre ${this.addNewRolForm.controls.user_name.value} fue creado con éxito`,
-          message_en: `The ${this.addNewRolForm.controls.user_name.value} project was successfully created`,
+          message_es: `Los roles del usuario con nombre ${this.addNewRolForm.controls.user_name.value} fueron actualizados con éxito`,
+          message_en: `The roles of the user ${this.addNewRolForm.controls.user_name.value} were updated successfully`,
         },
       )
       setTimeout(() => {
