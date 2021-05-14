@@ -57,7 +57,7 @@
     >
       <mat-label>Roles</mat-label>
 
-      <mat-select [formControl]="addNewRolForm.controls.user_roles">
+      <mat-select [formControl]="addNewRolForm.controls.user_roles" multiple>
         <mat-option
           *ngFor="
         let option of [
@@ -73,6 +73,10 @@
           {{ option }}
         </mat-option>
       </mat-select>
+
+      <mat-error *ngIf="addNewRolForm.controls.user_roles.errors">
+        {{ getMessageform('user_roles') }}
+      </mat-error>
     </mat-form-field>
     <!-- <mat-error *ngIf="httpError">{{ httpError }}</mat-error> -->
 

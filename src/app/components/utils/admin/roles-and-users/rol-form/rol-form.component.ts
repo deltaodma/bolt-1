@@ -21,12 +21,10 @@ export class RolFormComponent implements OnInit {
 
   private errorMessage: any = {
     es: {
-      user_name: 'Ingrese un nombre de sub menú en español',
-      user_id: 'Ingrese un nombre de sub menú en inglés',
+      user_roles: 'Selecione como mínimo un rol',
     },
     en: {
-      user_name: 'Enter a sub menu name in spanish',
-      user_id: 'Enter a sub menu name in english',
+      user_roles: 'Select at least one rol',
     },
   }
 
