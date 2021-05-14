@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ModalConfirmationComponent } from 'src/app/components/utils/admin/projects/modal-confirmation/modal-confirmation.component'
+import { RolFormComponent } from 'src/app/components/utils/admin/roles-and-users/rol-form/rol-form.component'
 import { MockUsers } from 'src/app/mocks/user-mock'
 import { UiService } from 'src/app/services/ui.service'
 
@@ -17,6 +18,7 @@ export class UsersComponent implements OnInit {
   public user_list: any = []
   public users: any = MockUsers
   public searchForm: FormGroup
+  public active_count = 0
 
   constructor(
     public activeRoute: ActivatedRoute,
@@ -48,39 +50,24 @@ export class UsersComponent implements OnInit {
     console.log('GET request find user')
   }
 
+  // updateUser(target: any) {
+  //   this.ui.showModal(
+  //     CreateUserFormComponent,
+  //     '500px',
+  //     'auto',
+  //     null,
+  //     null,
+  //     target,
+  //   )
+  // }
+
   addNewRol(target: any): void {
-    // TO DO PUT req
-    console.log('POST request', target)
-    let response = 400
-    if (response == 200) {
-      setTimeout(() => {
-        this.ui.dismissLoading()
-        window.location.reload()
-      }, 2000)
-    } else {
-      this.ui.dismissLoading()
-      //TO DO show http error
-    }
+    this.ui.showModal(RolFormComponent, '500px', 'auto', null, null, {
+      user: target,
+    })
   }
 
-  deletedSubmenu(target: any) {
-    // TO DO DELETE req
-    console.log('delete request', target)
-    let response = 200
-    if (response == 200) {
-      setTimeout(() => {
-        this.ui.dismissLoading()
-        window.location.reload()
-      }, 2000)
-    } else {
-      this.ui.dismissLoading()
-      //TO DO show http error
-    }
-  }
-
-  createNewUser() {}
-
-  updateAppStatus(toogleStatus: boolean, target: any) {
+  updateUserStatus(toogleStatus: boolean, target: any) {
     // TO DO PUT request
     console.log('put app', toogleStatus, target)
     let response = 200
@@ -95,18 +82,11 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  showConfirmation(
-    target: any,
-    operation: any,
-    message_es: string,
-    message_en: string,
-  ) {
-    let submenuName = target.name_es
-
-    if (this.lang == 'Eng') {
-      submenuName = target.name_en
+  showConfirmation(target: any, message_es: string, message_en: string) {
+    if (target.active == true) {
+      message_es = 'deshabilitar'
+      message_en = 'disable'
     }
-
     const confDialog = this.dialog.open(ModalConfirmationComponent, {
       id: ModalConfirmationComponent.toString(),
       disableClose: true,
@@ -114,7 +94,7 @@ export class UsersComponent implements OnInit {
       width: '500px',
       height: 'auto',
       data: {
-        submenu_name: submenuName,
+        user_name: target.user_name,
         message_action_es: message_es,
         message_action_en: message_en,
       },
@@ -123,9 +103,27 @@ export class UsersComponent implements OnInit {
     confDialog.afterClosed().subscribe((result) => {
       if (result) {
         this.ui.showLoading()
+        let toogle = !target.active
+        this.updateUserStatus(toogle, target)
       } else {
         window.location.reload()
       }
     })
+  }
+
+  updatePage(page: string) {
+    if (page == 'start') {
+      this.active_count = 0
+    }
+    if (page == 'prev') {
+      this.active_count--
+    }
+    if (page == 'next') {
+      this.active_count++
+    }
+    if (page == 'last') {
+      this.active_count = this.pages
+    }
+    // TO DO active elements GET request
   }
 }

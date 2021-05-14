@@ -89,10 +89,10 @@
       <h2 *ngSwitchCase="'Esp'" class="form-title">Resúltados de busqueda</h2>
       <h2 *ngSwitchCase="'Eng'" class="form-title">Search results</h2>
 
-      <button class="bolt-btn-filled" (click)="createNewUser()">
+      <!-- <button class="bolt-btn-filled" (click)="createNewUser()">
         <span *ngSwitchCase="'Esp'">Crear nuevo usuario</span>
         <span *ngSwitchCase="'Eng'">Create new user</span>
-      </button>
+      </button> -->
     </div>
 
     <div class="grid">
@@ -152,14 +152,7 @@
               <mat-slide-toggle
                 [id]="user.id"
                 class="enable-toogle"
-                (change)="
-                  showConfirmation(
-                    user,
-                    'updateAppStatus',
-                    'habilitar',
-                    'enable'
-                  )
-                "
+                (change)="showConfirmation(user, 'habilitar', 'enable')"
                 [checked]="user.active"
               ></mat-slide-toggle>
               <p class="toggle-text" *ngSwitchCase="'Esp'">
@@ -169,11 +162,7 @@
                 {{ user.active ? 'Disable' : 'Enable' }}
               </p>
             </div>
-            <button
-              mat-button
-              class="action-btn"
-              (click)="updateAppAssoc(user)"
-            >
+            <!-- <button mat-button class="action-btn" (click)="updateUser(user)">
               <span class="material-icons menu-icon">
                 edit
               </span>
@@ -183,7 +172,7 @@
               <span class="action-text" *ngSwitchCase="'Eng'">
                 edit
               </span>
-            </button>
+            </button> -->
             <button mat-button class="action-btn" (click)="addNewRol(user)">
               <span class="plus-icon"></span>
 

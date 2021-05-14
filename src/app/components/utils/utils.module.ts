@@ -30,6 +30,7 @@ import { ModalProjectFormComponent } from './admin/projects/modal-project-form/m
 import { ModalAppAssoccComponent } from './admin/projects/modal-app-assocc/modal-app-assocc.component'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { ModalSubmenuFormComponent } from './admin/projects/modal-submenu-form/modal-submenu-form.component'
+import { RolFormComponent } from './admin/roles-and-users/rol-form/rol-form.component'
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ModalSubmenuFormComponent } from './admin/projects/modal-submenu-form/m
     ModalProjectFormComponent,
     ModalAppAssoccComponent,
     ModalSubmenuFormComponent,
+    RolFormComponent,
   ],
   imports: [
     CommonModule,

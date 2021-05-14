@@ -45,6 +45,19 @@
       ?
     </p>
   </div>
+  <!-- view for user -->
+  <div class="dialog-alert__content" *ngIf="data.user_name">
+    <p *ngSwitchCase="'Esp'">
+      ¿Desea {{ data.message_action_es }} al usuario
+      <strong>{{ data.user_name }}</strong>
+      ?
+    </p>
+    <p *ngSwitchCase="'Eng'">
+      ¿ Do you want to {{ data.message_action_en }} the user
+      <strong>{{ data.user_name }}</strong>
+      ?
+    </p>
+  </div>
 
   <div class="row">
     <button
