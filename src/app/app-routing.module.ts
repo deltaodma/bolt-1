@@ -7,10 +7,9 @@ import { EmbedViewComponent } from './components/home/embed-view/embed-view.comp
 import { HomeComponent } from './components/home/home/home.component'
 import { SubmenuViewComponent } from './components/admin/submenu-view/submenu-view.component'
 import { LoginComponent } from './components/utils/login/login.component'
-import { MsalGuard } from './services/msal.guard'
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  // { path: '', component: LoginComponent },
   {
     path: 'home',
     component: HomeComponent,

@@ -18,23 +18,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { HttpService } from './services/http.service'
 import { AuthService } from './services/auth.service'
-import {
-  InteractionType,
-  IPublicClientApplication,
-  PublicClientApplication,
-} from '@azure/msal-browser'
 
-import {
-  MsalBroadcastService,
-  MsalGuard,
-  MsalGuardConfiguration,
-  MsalInterceptor,
-  MsalInterceptorConfiguration,
-  MsalService,
-  MSAL_GUARD_CONFIG,
-  MSAL_INSTANCE,
-  MSAL_INTERCEPTOR_CONFIG,
-} from '@azure/msal-angular'
 
 import { EmbedViewComponent } from './components/home/embed-view/embed-view.component'
 import { ProjectsComponent } from './components/admin/projects/projects.component'
@@ -47,38 +31,6 @@ import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
 import { ReactiveFormsModule } from '@angular/forms'
 
-export function MSALInstanceFactory(): IPublicClientApplication {
-  return new PublicClientApplication({
-    auth: {
-      clientId: 'b5ccc36d-a024-43a2-a0b5-d3a212700ea5',
-      redirectUri: 'http://localhost:4200',
-      authority:
-        'https://login.microsoftonline.com/1b4c1c25-a699-4f61-95e2-45d8dec5a788',
-    },
-    cache: {
-      cacheLocation: 'localStorage',
-    },
-  })
-}
-
-export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
-  const protectedResourceMap = new Map<string, Array<string>>()
-  protectedResourceMap.set('https://graph.microsoft.com/v1.0/me', ['user.read'])
-
-  return {
-    interactionType: InteractionType.Redirect,
-    protectedResourceMap,
-  }
-}
-
-export function MSALGuardConfigFactory(): MsalGuardConfiguration {
-  return {
-    interactionType: InteractionType.Redirect,
-    authRequest: {
-      scopes: ['user.read'],
-    },
-  }
-}
 
 @NgModule({
   declarations: [
@@ -112,26 +64,6 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   providers: [
     HttpService,
     AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MsalInterceptor,
-      multi: true,
-    },
-    {
-      provide: MSAL_INTERCEPTOR_CONFIG,
-      useFactory: MSALInterceptorConfigFactory,
-    },
-    {
-      provide: MSAL_INSTANCE,
-      useFactory: MSALInstanceFactory,
-    },
-    {
-      provide: MSAL_GUARD_CONFIG,
-      useFactory: MSALGuardConfigFactory,
-    },
-    MsalService,
-    MsalGuard,
-    MsalBroadcastService,
   ],
   bootstrap: [AppComponent],
 })
