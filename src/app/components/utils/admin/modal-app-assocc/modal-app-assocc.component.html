@@ -188,7 +188,7 @@
         </span>
 
         <mat-error *ngIf="passwordsForm.hasError('required', 'password')">
-          Please enter a password
+          {{ lang == 'Esp' ? 'Ingrese una contraseña ' : 'Enter a password' }}
         </mat-error>
       </mat-form-field>
 
@@ -219,7 +219,11 @@
         </span>
 
         <mat-error *ngIf="passwordsForm.hasError('notSame')">
-          Passwords do not match
+          {{
+            lang == 'Esp'
+              ? 'Las contrase;as no coinciden'
+              : 'Passwords do not match'
+          }}
         </mat-error>
       </mat-form-field>
     </form>
