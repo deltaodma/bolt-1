@@ -138,11 +138,26 @@
       </div>
 
       <div class="row row__2">
-        <button class="bolt-btn-outline" (click)="deletedSubmenu()">
+        <button
+          class="bolt-btn-outline"
+          (click)="
+            showConfirmation(
+              submenu_data,
+              'deletedSubmenu',
+              'eliminar',
+              'delete'
+            )
+          "
+        >
           <span *ngSwitchCase="'Esp'">Eliminar</span>
           <span *ngSwitchCase="'Eng'">Delete</span>
         </button>
-        <button (click)="updateSubmenu()" class="bolt-btn-filled">
+        <button
+          (click)="
+            showConfirmation(submenu_data, 'updateSubmenu', 'guardar', 'save')
+          "
+          class="bolt-btn-filled"
+        >
           <span *ngSwitchCase="'Esp'">Guardar cambios</span>
           <span *ngSwitchCase="'Eng'">Save changes</span>
         </button>
@@ -155,7 +170,7 @@
     <div class="row">
       <h2 *ngSwitchCase="'Esp'" class="form-title">App asociadas</h2>
       <h2 *ngSwitchCase="'Eng'" class="form-title">Associated app</h2>
-      <button class="bolt-btn-filled" (click)="updateAppAssocc()">
+      <button class="bolt-btn-filled" (click)="updateAppAssoc()">
         <span *ngSwitchCase="'Esp'">Añadir app asociada</span>
         <span *ngSwitchCase="'Eng'">Add associated app</span>
       </button>
@@ -230,17 +245,24 @@
               <mat-slide-toggle
                 [id]="app.id"
                 class="enable-toogle"
-                (change)="projectStatus(app, $event, 'disable')"
-                [checked]="!app.active"
+                (change)="
+                  showConfirmation(
+                    app,
+                    'updateAppStatus',
+                    'habilitar',
+                    'enable'
+                  )
+                "
+                [checked]="app.active"
               ></mat-slide-toggle>
-              <p class="toggle-text" *ngSwitchCase="'Esp'">Deshabilitar</p>
-              <p class="toggle-text" *ngSwitchCase="'Eng'">Disable</p>
+              <p class="toggle-text" *ngSwitchCase="'Esp'">
+                {{ app.active ? 'Deshabilitar' : 'Habilitar' }}
+              </p>
+              <p class="toggle-text" *ngSwitchCase="'Eng'">
+                {{ app.active ? 'Disable' : 'Enable' }}
+              </p>
             </div>
-            <button
-              mat-button
-              class="action-btn"
-              (click)="updateAppAssocc(app)"
-            >
+            <button mat-button class="action-btn" (click)="updateAppAssoc(app)">
               <span class="material-icons menu-icon">
                 edit
               </span>

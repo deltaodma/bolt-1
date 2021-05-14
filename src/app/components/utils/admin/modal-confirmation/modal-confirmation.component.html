@@ -6,7 +6,7 @@
     (click)="closeModal()"
   ></span>
   <div class="exclamation-icon"></div>
-
+  <!-- view for project -->
   <div class="dialog-alert__content" *ngIf="data.project_name">
     <p *ngSwitchCase="'Esp'">
       ¿Desea {{ data.message_action_es }} el proyecto
@@ -19,7 +19,7 @@
       ?
     </p>
   </div>
-
+  <!-- view for sub menu -->
   <div class="dialog-alert__content" *ngIf="data.submenu_name">
     <p *ngSwitchCase="'Esp'">
       ¿Desea {{ data.message_action_es }} el sub menú
@@ -29,6 +29,19 @@
     <p *ngSwitchCase="'Eng'">
       ¿ Do you want to {{ data.message_action_en }} the sub menu
       <strong>{{ data.submenu_name }}</strong>
+      ?
+    </p>
+  </div>
+  <!-- view for app -->
+  <div class="dialog-alert__content" *ngIf="data.app_name">
+    <p *ngSwitchCase="'Esp'">
+      ¿Desea {{ data.message_action_es }} la aplicación
+      <strong>{{ data.app_name }}</strong>
+      ?
+    </p>
+    <p *ngSwitchCase="'Eng'">
+      ¿ Do you want to {{ data.message_action_en }} the app
+      <strong>{{ data.app_name }}</strong>
       ?
     </p>
   </div>

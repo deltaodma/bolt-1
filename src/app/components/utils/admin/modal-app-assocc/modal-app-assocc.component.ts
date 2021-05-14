@@ -114,13 +114,33 @@ export class ModalAppAssoccComponent implements OnInit {
         })
       return
     } else {
+      this.ui.showLoading()
       if (!this.data) {
         // TO DO POST request
-
         console.log('post request')
+        let response = 200
+        if (response == 200) {
+          setTimeout(() => {
+            this.ui.dismissLoading()
+            window.location.reload()
+          }, 2000)
+        } else {
+          this.ui.dismissLoading()
+          //TO DO show http error
+        }
       } else {
         // TO DO PUT request
-        console.log('put')
+        console.log('put request')
+        let response = 200
+        if (response == 200) {
+          setTimeout(() => {
+            this.ui.dismissLoading()
+            window.location.reload()
+          }, 2000)
+        } else {
+          this.ui.dismissLoading()
+          //TO DO show http error
+        }
       }
     }
   }

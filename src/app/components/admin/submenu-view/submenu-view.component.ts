@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { UiService } from 'src/app/services/ui.service'
 import { ModalAppAssoccComponent } from '../../utils/admin/modal-app-assocc/modal-app-assocc.component'
+import { ModalConfirmationComponent } from '../../utils/admin/modal-confirmation/modal-confirmation.component'
 
 @Component({
   selector: 'app-submenu-view',
@@ -33,6 +35,7 @@ export class SubmenuViewComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     public ui: UiService,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -82,26 +85,121 @@ export class SubmenuViewComponent implements OnInit {
     })
   }
 
-  updateSubmenu(): void {
-    if (
-      this.createProjectForm.controls.submenu_name_en.invalid ||
-      this.createProjectForm.controls.submenu_name_es.invalid
-    ) {
-      ;(<any>Object)
-        .values(this.createProjectForm.controls)
-        .forEach((control) => {
-          control.markAsTouched()
-        })
-      return
+  updateSubmenu(target: any): void {
+    // TO DO PUT req
+    console.log('put request', target)
+    let response = 400
+    if (response == 200) {
+      setTimeout(() => {
+        this.ui.dismissLoading()
+        window.location.reload()
+      }, 2000)
     } else {
-      // TO DO GET req
-      console.log('get request')
+      this.ui.dismissLoading()
+      //TO DO show http error
     }
   }
 
-  deletedSubmenu() {
+  deletedSubmenu(target: any) {
     // TO DO DELETE req
-    console.log('delete request')
+    console.log('delete request', target)
+    let response = 200
+    if (response == 200) {
+      setTimeout(() => {
+        this.ui.dismissLoading()
+        window.location.reload()
+      }, 2000)
+    } else {
+      this.ui.dismissLoading()
+      //TO DO show http error
+    }
+  }
+
+  updateAppAssoc(app?: any) {
+    if (!app) {
+      this.ui.showModal(ModalAppAssoccComponent, '500px', 'auto', null, null)
+    } else {
+      this.ui.showModal(ModalAppAssoccComponent, '500px', 'auto', null, null, {
+        app: app,
+      })
+    }
+  }
+
+  updateAppStatus(toogleStatus: boolean, target: any) {
+    // TO DO PUT request
+    console.log('put app', toogleStatus, target)
+    let response = 200
+    if (response == 200) {
+      setTimeout(() => {
+        this.ui.dismissLoading()
+        window.location.reload()
+      }, 2000)
+    } else {
+      this.ui.dismissLoading()
+      //TO DO show http error
+    }
+  }
+
+  showConfirmation(
+    target: any,
+    operation: any,
+    message_es: string,
+    message_en: string,
+  ) {
+    let submenuName = target.name_es
+    let appName
+    if (operation == 'updateAppStatus') {
+      appName = target.item_name
+      if (target.active == true) {
+        message_es = 'deshabilitar'
+        message_en = 'disable'
+      }
+    }
+    if (this.lang == 'Eng') {
+      submenuName = target.name_en
+    }
+
+    const confDialog = this.dialog.open(ModalConfirmationComponent, {
+      id: ModalConfirmationComponent.toString(),
+      disableClose: true,
+      hasBackdrop: true,
+      width: '500px',
+      height: 'auto',
+      data: {
+        submenu_name: submenuName,
+        app_name: appName,
+        message_action_es: message_es,
+        message_action_en: message_en,
+      },
+    })
+
+    confDialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.ui.showLoading()
+        if (operation == 'deletedSubmenu') {
+          this.deletedSubmenu(target)
+        } else if (operation == 'updateSubmenu') {
+          if (
+            this.createProjectForm.controls.submenu_name_en.invalid ||
+            this.createProjectForm.controls.submenu_name_es.invalid
+          ) {
+            ;(<any>Object)
+              .values(this.createProjectForm.controls)
+              .forEach((control) => {
+                control.markAsTouched()
+              })
+            return
+          } else {
+            this.updateSubmenu(target)
+          }
+        } else if (operation == 'updateAppStatus') {
+          let toogle = !target.active
+          this.updateAppStatus(toogle, target)
+        }
+      } else {
+        window.location.reload()
+      }
+    })
   }
 
   public getMessageform(controlName: any): string {
@@ -123,18 +221,6 @@ export class SubmenuViewComponent implements OnInit {
       this.createProjectForm.patchValue({
         submenu_name_es: this.submenu_data['name_es'],
         submenu_name_en: this.submenu_data['name_en'],
-        // created_by: this.submenu_data['description'],
-        // last_update: this.submenu_data['description'],
-      })
-    }
-  }
-
-  updateAppAssocc(app?: any) {
-    if (!app) {
-      this.ui.showModal(ModalAppAssoccComponent, '500px', 'auto', null, null)
-    } else {
-      this.ui.showModal(ModalAppAssoccComponent, '500px', 'auto', null, null, {
-        app: app,
       })
     }
   }

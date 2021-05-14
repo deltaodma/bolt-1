@@ -155,6 +155,7 @@ export class ProjectsComponent implements OnInit {
         this.ui.showLoading()
         setTimeout(() => {
           this.ui.dismissLoading()
+          window.location.reload()
         }, 2000)
       } else {
         window.location.reload()
