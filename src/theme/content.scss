@@ -197,6 +197,9 @@ mat-divider {
       flex-direction: row;
       justify-content: space-around;
       align-items: flex-start;
+      .col {
+        min-width: 60px;
+      }
     }
   }
   .project-submenus {
@@ -207,4 +210,9 @@ mat-divider {
       align-items: flex-start;
     }
   }
+}
+
+.paginator {
+  align-self: flex-end;
+  margin-top: 10px;
 }

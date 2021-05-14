@@ -120,7 +120,7 @@
   }
 
   &-content {
-    @include title('Roboto', 14px, 16px, #333333);
+    @include title('Roboto', 14px, 14px, #333333);
     text-align: center;
     &__name {
       @include title('Roboto', 14px, 16px, #333333);
