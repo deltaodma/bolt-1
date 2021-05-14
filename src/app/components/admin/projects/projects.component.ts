@@ -6,6 +6,7 @@ import { MockProjects } from 'src/app/mocks/projects-mock'
 import { UiService } from 'src/app/services/ui.service'
 import { ModalConfirmationComponent } from '../../utils/admin/modal-confirmation/modal-confirmation.component'
 import { ModalProjectFormComponent } from '../../utils/admin/modal-project-form/modal-project-form.component'
+import { ModalSubmenuFormComponent } from '../../utils/admin/modal-submenu-form/modal-submenu-form.component'
 import { ModalNotificationComponent } from '../../utils/modal-notification/modal-notification.component'
 
 @Component({
@@ -178,6 +179,9 @@ export class ProjectsComponent implements OnInit {
         },
       )
     }
+  }
+  createSubmenu() {
+    this.ui.showModal(ModalSubmenuFormComponent, '500px', 'auto', null, null)
   }
 
   updatePage(page: string) {

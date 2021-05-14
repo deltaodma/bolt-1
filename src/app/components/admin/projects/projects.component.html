@@ -19,14 +19,22 @@
           <span class="material-icons icon">
             check_circle
           </span>
-          Habilitados
+          {{ this.lang == 'Esp' ? 'Habilitados' : 'Enabled' }}
         </ng-template>
         <div class="grid">
           <div class="grid-header">
-            <div class="grid-header__title">Proyecto</div>
-            <div class="grid-header__title">Descripción</div>
-            <div class="grid-header__title">icono</div>
-            <div class="grid-header__title">Acciones</div>
+            <div class="grid-header__title">
+              {{ this.lang == 'Esp' ? 'Proyecto' : 'Project' }}
+            </div>
+            <div class="grid-header__title">
+              {{ this.lang == 'Esp' ? 'Descripción' : 'Description' }}
+            </div>
+            <div class="grid-header__title">
+              {{ this.lang == 'Esp' ? 'Icono' : 'Icon' }}
+            </div>
+            <div class="grid-header__title">
+              {{ this.lang == 'Esp' ? 'Acciones' : 'Actions' }}
+            </div>
           </div>
 
           <div
@@ -80,7 +88,7 @@
                     edit
                   </span>
                 </button>
-                <button mat-button class="action-btn">
+                <button mat-button class="action-btn" (click)="createSubmenu()">
                   <span class="plus-icon"></span>
                   <span
                     class="action-text"
@@ -124,14 +132,22 @@
           <span class="material-icons icon">
             disabled_by_default
           </span>
-          Deshabilitados
+          {{ this.lang == 'Esp' ? 'Deshabilitados' : 'Disabled' }}
         </ng-template>
         <div class="grid">
           <div class="grid-header">
-            <div class="grid-header__title">Proyecto</div>
-            <div class="grid-header__title">Descripción</div>
-            <div class="grid-header__title">icono</div>
-            <div class="grid-header__title">Acciones</div>
+            <div class="grid-header__title">
+              {{ this.lang == 'Esp' ? 'Proyecto' : 'Project' }}
+            </div>
+            <div class="grid-header__title">
+              {{ this.lang == 'Esp' ? 'Descripción' : 'Description' }}
+            </div>
+            <div class="grid-header__title">
+              {{ this.lang == 'Esp' ? 'Icono' : 'Icon' }}
+            </div>
+            <div class="grid-header__title">
+              {{ this.lang == 'Esp' ? 'Acciones' : 'Actions' }}
+            </div>
           </div>
 
           <div
@@ -185,11 +201,7 @@
                     edit
                   </span>
                 </button>
-                <button
-                  mat-button
-                  class="action-btn"
-                  (click)="editSubMenu(inactiveItem)"
-                >
+                <button mat-button class="action-btn" (click)="createSubmenu()">
                   <span class="plus-icon"></span>
 
                   <span
@@ -247,7 +259,12 @@
           play_arrow
         </span>
       </button>
-      <p>mostrando {{ projects.length }} de {{ projects.length }} resultados</p>
+      <p *ngSwitchCase="'Esp'">
+        Mostrando {{ projects.length }} de {{ projects.length }} resultados
+      </p>
+      <p *ngSwitchCase="'Eng'">
+        Showing {{ projects.length }} of {{ projects.length }} results
+      </p>
       <button
         mat-button
         class="paginator-button"
