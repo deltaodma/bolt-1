@@ -60,6 +60,52 @@
       </mat-error>
     </mat-form-field>
 
+    <mat-form-field
+      appearance="outline"
+      hideRequiredMarker="true"
+      floatLabel="auto"
+      class="fullInput"
+    >
+      <mat-label *ngSwitchCase="'Esp'">
+        Descripción (Español)
+      </mat-label>
+      <mat-label *ngSwitchCase="'Eng'">Description (Spanish)</mat-label>
+
+      <textarea
+        matInput
+        formControlName="description_es"
+        minlength="6"
+        maxlength="100"
+      ></textarea>
+
+      <mat-error *ngIf="createSubMenuForm.controls.description_es.errors">
+        {{ getMessageform('description_es') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      hideRequiredMarker="true"
+      floatLabel="auto"
+      class="fullInput"
+    >
+      <mat-label *ngSwitchCase="'Esp'">
+        Descripción (Inglés)
+      </mat-label>
+      <mat-label *ngSwitchCase="'Eng'">Description (English)</mat-label>
+
+      <textarea
+        matInput
+        formControlName="description_en"
+        minlength="6"
+        maxlength="100"
+      ></textarea>
+
+      <mat-error *ngIf="createSubMenuForm.controls.description_en.errors">
+        {{ getMessageform('description_en') }}
+      </mat-error>
+    </mat-form-field>
+
     <!-- <mat-error *ngIf="httpError">{{ httpError }}</mat-error> -->
 
     <button class="btn-submit-rol" (click)="saveProject()">

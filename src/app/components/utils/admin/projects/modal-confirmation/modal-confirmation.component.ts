@@ -6,6 +6,7 @@ export interface DialogData {
   submenu_name: string
   app_name: string
   user_name: string
+  role_name: string
   message_action_es: string
   message_action_en: string
   permission: boolean

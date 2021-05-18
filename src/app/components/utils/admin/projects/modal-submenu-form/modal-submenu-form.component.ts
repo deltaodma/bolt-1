@@ -21,10 +21,14 @@ export class ModalSubmenuFormComponent implements OnInit {
     es: {
       submenu_name_es: 'Ingrese un nombre de sub menú en español',
       submenu_name_en: 'Ingrese un nombre de sub menú en inglés',
+      description_es: 'Ingrese una descripción(Español)',
+      description_en: 'Ingrese una descripción(Inglés)',
     },
     en: {
       submenu_name_es: 'Enter a sub menu name in spanish',
       submenu_name_en: 'Enter a sub menu name in english',
+      description_es: 'Enter a description(Spanish)',
+      description_en: 'Enter a description(English)',
     },
   }
 
@@ -45,6 +49,16 @@ export class ModalSubmenuFormComponent implements OnInit {
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(30),
+      ]),
+      description_es: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(100),
+      ]),
+      description_en: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(100),
       ]),
     })
   }

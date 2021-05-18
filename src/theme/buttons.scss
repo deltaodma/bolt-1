@@ -184,8 +184,16 @@
   background: transparent;
   min-width: 20px !important;
   .material-icons {
-    color: #9e9e9e;
+    color: #212121;
     font-size: 16px;
     line-height: 16px;
   }
+}
+
+// paginator buttons
+.mat-button.mat-button-disabled,
+.mat-icon-button.mat-button-disabled,
+.mat-stroked-button.mat-button-disabled,
+.mat-flat-button.mat-button-disabled {
+  opacity: 0.3;
 }

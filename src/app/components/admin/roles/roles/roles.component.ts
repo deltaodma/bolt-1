@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
+
+import { MatDialog } from '@angular/material/dialog'
+
 import { ModalConfirmationComponent } from 'src/app/components/utils/admin/projects/modal-confirmation/modal-confirmation.component'
-import { RolFormComponent } from 'src/app/components/utils/admin/roles-and-users/rol-form/rol-form.component'
 import { MockRoles } from 'src/app/mocks/roles-mock'
+import { MockProjectsByRole } from 'src/app/mocks/projects-by-role-mock'
+import { MockProjects } from 'src/app/mocks/projects-mock'
+
 import { UiService } from 'src/app/services/ui.service'
 
 @Component({
@@ -16,8 +20,31 @@ export class RolesComponent implements OnInit {
   public lang: string
   public pages: number = 3
   public roles: any = MockRoles
+  public projects
   public createRolForm: FormGroup
   public active_count = 0
+  public showForm: boolean = false
+  public projectResume = []
+  public projectNames = []
+  public allowed_apps = []
+  public editionActive: boolean = false
+
+  private errorMessage: any = {
+    es: {
+      rol_name_es: 'Ingrese un nombre de proyecto en español',
+      rol_name_en: 'Ingrese un nombre de proyecto en inglés',
+      description_es: 'Ingrese una descripción en español',
+      description_en: 'Ingrese una descripción en inglés',
+      role_projects: 'Seleccione por lo menos un proyecto',
+    },
+    en: {
+      rol_name_es: 'Enter a name in spanish',
+      rol_name_en: 'Enter a name in english',
+      description_es: 'Enter a description in spanish',
+      description_en: 'Enter a description in english',
+      role_projects: 'Select a least one',
+    },
+  }
 
   constructor(
     public activeRoute: ActivatedRoute,
@@ -29,8 +56,7 @@ export class RolesComponent implements OnInit {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    console.log(this.roles)
-
+    this.projects = MockProjects
     this.initforms()
   }
 
@@ -58,22 +84,65 @@ export class RolesComponent implements OnInit {
         Validators.maxLength(100),
       ]),
 
-      rol_projects: new FormControl('', []),
+      role_projects: new FormControl('', [Validators.required]),
     })
   }
 
-  searchUser() {
-    //TO DO GET request
-    console.log('GET request find user')
+  saveRole() {
+    if (this.createRolForm.invalid) {
+      ;(<any>Object).values(this.createRolForm.controls).forEach((control) => {
+        control.markAsTouched()
+      })
+      return
+    }
+    this.showForm = false
+    //TO DO POST request
+    let dataForm = {
+      rol_name_es: this.createRolForm.controls.rol_name_es.value,
+      rol_name_en: this.createRolForm.controls.rol_name_en.value,
+      description_es: this.createRolForm.controls.description_es.value,
+      description_en: this.createRolForm.controls.description_en.value,
+      role_projects: {
+        projects: this.projectResume,
+        apps: this.allowed_apps,
+      },
+    }
+    console.log('POST request save role', dataForm)
+    window.location.reload()
   }
 
-  addNewRol(target: any): void {
-    this.ui.showModal(RolFormComponent, '500px', 'auto', null, null, {
-      user: target,
+  createRol() {
+    this.showForm = true
+    this.projects = MockProjects
+  }
+
+  editRole(target: any) {
+    this.showForm = true
+    this.projects = MockProjectsByRole
+
+    target.role_projects.forEach((element) => {
+      this.projectNames = [...this.projectNames, element.name]
     })
+
+    this.createRolForm.patchValue({
+      rol_name_es: target['role_name_es'],
+      rol_name_en: target['role_name_en'],
+      description_es: target['role_description_es'],
+      description_en: target['role_description_en'],
+      role_projects: this.projectNames,
+    })
+    this.readProjectsSelected(this.projectNames)
   }
 
-  updateUserStatus(toogleStatus: boolean, target: any) {
+  cancel() {
+    this.showForm = false
+    this.projectNames = []
+    this.projectResume = []
+    this.createRolForm.reset('')
+    this.createRolForm.markAsUntouched()
+  }
+
+  updateRoleStatus(toogleStatus: boolean, target: any) {
     // TO DO PUT request
     console.log('put app', toogleStatus, target)
     let response = 200
@@ -100,7 +169,7 @@ export class RolesComponent implements OnInit {
       width: '500px',
       height: 'auto',
       data: {
-        user_name: target.user_name,
+        role_name: target.role_name_es,
         message_action_es: message_es,
         message_action_en: message_en,
       },
@@ -110,11 +179,65 @@ export class RolesComponent implements OnInit {
       if (result) {
         this.ui.showLoading()
         let toogle = !target.active
-        this.updateUserStatus(toogle, target)
+        this.updateRoleStatus(toogle, target)
       } else {
         window.location.reload()
       }
     })
+  }
+
+  readProjectsSelected(projects_selected: any) {
+    this.projectResume = []
+    // TO DO GET request to obtain projects by rol
+    this.projects.forEach((singleProject) => {
+      projects_selected.forEach((nameProject) => {
+        if (nameProject == singleProject.name) {
+          this.projectResume = [...this.projectResume, singleProject]
+        }
+      })
+    })
+  }
+
+  updateCheckboxStatus(checkboxStatus: boolean, submenu: any) {
+    let checkbox
+    let blocker
+
+    submenu.app_list.forEach((app) => {
+      checkbox = document.getElementById(submenu.id + app.id)
+      blocker = document.getElementById('blocker' + app.id)
+      checkbox.classList.add('mat-checkbox-disabled')
+      if (!checkboxStatus) {
+        checkbox.classList.add('mat-checkbox-disabled')
+        blocker.classList.add('big-z-index')
+      } else {
+        checkbox.classList.remove('mat-checkbox-disabled')
+        blocker.classList.remove('big-z-index')
+      }
+    })
+  }
+
+  allowAccess(checkboxStatus: boolean, parent: any, target: any) {
+    if (checkboxStatus) {
+      this.allowed_apps = [
+        ...this.allowed_apps,
+        { parent: parent, chlid: target },
+      ]
+    }
+    console.log(this.allowed_apps)
+  }
+
+  public getMessageform(controlName: any): string {
+    let error = ''
+    const control = this.createRolForm.get(controlName)
+    if (control.touched && control.errors) {
+      if (this.lang == 'Esp') {
+        error = this.errorMessage['es'][controlName]
+      }
+      if (this.lang == 'Eng') {
+        error = this.errorMessage['en'][controlName]
+      }
+    }
+    return error
   }
 
   updatePage(page: string) {

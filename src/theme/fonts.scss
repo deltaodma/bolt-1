@@ -23,7 +23,7 @@
 }
 // sidebar
 .sidebar-title {
-  @include title(Roboto, 14px, 16px, #393939);
+  @include title('Roboto', 14px, 16px, #393939);
   font-weight: bold;
   padding: 0 24px;
   margin: 10px 0;
@@ -139,4 +139,14 @@
       }
     }
   }
+}
+
+.check-row-title {
+  @include title('Roboto', 18px, 21px, #333333);
+  text-transform: capitalize;
+  font-weight: 500;
+}
+.check-row-font {
+  @include title('Roboto', 14px, 16px, #333333);
+  font-weight: 500;
 }

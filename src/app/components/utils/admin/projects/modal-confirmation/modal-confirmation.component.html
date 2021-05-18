@@ -58,6 +58,19 @@
       ?
     </p>
   </div>
+  <!-- view for role -->
+  <div class="dialog-alert__content" *ngIf="data.role_name">
+    <p *ngSwitchCase="'Esp'">
+      ¿Desea {{ data.message_action_es }} el rol
+      <strong>{{ data.role_name }}</strong>
+      ?
+    </p>
+    <p *ngSwitchCase="'Eng'">
+      ¿ Do you want to {{ data.message_action_en }} the role
+      <strong>{{ data.role_name }}</strong>
+      ?
+    </p>
+  </div>
 
   <div class="row">
     <button

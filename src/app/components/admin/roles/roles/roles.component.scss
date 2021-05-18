@@ -46,6 +46,30 @@
             text-transform: capitalize;
           }
         }
+        &__3 {
+          .col {
+            align-items: flex-start;
+            .text-muted {
+              text-transform: none;
+              font-size: 14px;
+              line-height: 30px;
+              margin-top: 0;
+            }
+          }
+          .row-check {
+            justify-content: flex-start;
+            align-items: flex-start;
+            .col {
+              justify-content: flex-start;
+              align-items: flex-start;
+              margin-right: 50px;
+              li {
+                position: relative;
+                list-style: none;
+              }
+            }
+          }
+        }
       }
       .mat-input-element:disabled {
         color: #4f4f4f !important;
@@ -70,38 +94,46 @@
       width: 100%;
       &-header {
         display: grid;
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns: 20% 39% 20% 18%;
         grid-gap: 10px;
         border-bottom: 1px solid #c4c4c4;
         &__title {
           padding: 10px 0;
+          text-align: left;
         }
       }
 
       &-content {
         display: grid;
-        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-columns: 20% 39% 20% 18%;
         grid-gap: 10px;
         margin: 10px 0;
         border-bottom: 1px solid #c4c4c4;
 
         .col {
-          align-items: flex-start;
           .grid-content__name {
             margin: 0;
             text-align: left;
           }
+          .grid-content__description {
+            text-align: left;
+          }
         }
+        &__name {
+          margin: 0;
+          text-align: left;
+        }
+
         &__action {
           .col {
-            align-items: center;
           }
         }
         &__description {
-          width: 100%;
+          width: 90%;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
+          text-align: center;
         }
       }
     }
@@ -109,4 +141,14 @@
       width: fit-content !important;
     }
   }
+}
+.blocker-container {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  z-index: 0;
+}
+.big-z-index {
+  z-index: 100 !important;
 }

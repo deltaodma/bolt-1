@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div class="container" [ngSwitch]="lang">
   <!-- search bar -->
-  <div class="inner-section section__1">
+  <div class="inner-section section__1" *ngIf="showForm">
     <h1 class="underline-title" *ngSwitchCase="'Esp'">Crear rol</h1>
     <h1 class="underline-title" *ngSwitchCase="'Eng'">Create rol</h1>
 
@@ -18,17 +18,21 @@
             class="fullInput input-bolt"
           >
             <mat-label *ngSwitchCase="'Esp'">
-              Nombre(inglés)
+              Nombre (inglés)
             </mat-label>
-            <mat-label *ngSwitchCase="'Eng'">Name(English)</mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Name (English)</mat-label>
 
             <input
               matInput
               id="rol_name_en"
               formControlName="rol_name_en"
               type="text"
+              minlength="6"
               maxlength="30"
             />
+            <mat-error *ngIf="createRolForm.controls.rol_name_en.errors">
+              {{ getMessageform('rol_name_en') }}
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field
@@ -49,10 +53,11 @@
               maxlength="100"
             ></textarea>
 
-            <!-- <mat-error *ngIf="createRolForm.controls.description_en.errors">
-          {{ getMessageform('description_en') }}
-        </mat-error> -->
+            <mat-error *ngIf="createRolForm.controls.description_en.errors">
+              {{ getMessageform('description_en') }}
+            </mat-error>
           </mat-form-field>
+
           <mat-form-field
             appearance="outline"
             hideRequiredMarker="true"
@@ -63,28 +68,23 @@
             <mat-label *ngSwitchCase="'Eng'">project</mat-label>
 
             <mat-select
-              [formControl]="createRolForm.controls.rol_projects"
+              [formControl]="createRolForm.controls.role_projects"
               multiple
+              (selectionChange)="readProjectsSelected($event.value)"
             >
               <mat-option
-                *ngFor="
-            let option of [
-              'Colombia',
-              'México',
-              'Ecuador',
-              'Peru',
-              'Argentina',
-              'Chile',
-              'Brasil',
-            ]
-          "
-                [value]="option"
+                *ngFor="let option of projects"
+                [value]="option?.name"
               >
-                {{ option }}
+                {{ option?.name }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="createRolForm.controls.role_projects.errors">
+              {{ getMessageform('role_projects') }}
+            </mat-error>
           </mat-form-field>
         </div>
+
         <div class="col">
           <mat-form-field
             hideRequiredMarker="true"
@@ -92,15 +92,20 @@
             floatLabel="auto"
             class="fullInput input-bolt"
           >
-            <mat-label>ID</mat-label>
+            <mat-label *ngSwitchCase="'Esp'">Nombre (Español)</mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Nombre (Spanish)</mat-label>
 
             <input
               matInput
               id="rol_name_es"
-              formControlName="rol_name_en"
+              formControlName="rol_name_es"
               type="text"
+              minlength="6"
               maxlength="30"
             />
+            <mat-error *ngIf="createRolForm.controls.rol_name_es.errors">
+              {{ getMessageform('rol_name_es') }}
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field
@@ -116,31 +121,79 @@
 
             <textarea
               matInput
-              formControlName="description_en"
+              formControlName="description_es"
               minlength="6"
               maxlength="100"
             ></textarea>
 
-            <!-- <mat-error *ngIf="createRolForm.controls.description_en.errors">
-          {{ getMessageform('description_en') }}
-        </mat-error> -->
+            <mat-error *ngIf="createRolForm.controls.description_es.errors">
+              {{ getMessageform('description_es') }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
+
+      <div class="row row__3" *ngFor="let project of projectResume">
+        <div class="col">
+          <h2 class="check-row-title">{{ project.name }}</h2>
+          <p *ngSwitchCase="'Esp'" class="text-muted">Sub menús</p>
+          <p *ngSwitchCase="'Eng'" class="text-muted">Sub menus</p>
+
+          <div class="row row-check">
+            <div class="col" *ngFor="let submenu of project.menu">
+              <div *ngIf="submenu.state">
+                <mat-checkbox
+                  class="check-row-font"
+                  [checked]="submenu?.access"
+                  (change)="updateCheckboxStatus($event.checked, submenu)"
+                >
+                  {{ lang == 'Esp' ? submenu.name_es : submenu.name_en }}
+                </mat-checkbox>
+                <ul *ngFor="let app of submenu.app_list; let i = index">
+                  <li>
+                    <div
+                      [id]="'blocker' + app.id"
+                      class="blocker-container"
+                    ></div>
+                    <mat-checkbox
+                      [id]="submenu.id + app.id"
+                      class="check-row-font"
+                      (change)="allowAccess($event.checked, submenu.id, app)"
+                      [checked]="app?.access"
+                    >
+                      {{ app.item_name }}
+                    </mat-checkbox>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row row__2">
-        <button class="bolt-btn-filled">
+        <button
+          class="bolt-btn-filled"
+          (click)="saveRole()"
+          style="margin-right: 20px;"
+        >
           <span *ngSwitchCase="'Esp'">Guardar</span>
           <span *ngSwitchCase="'Eng'">Save</span>
+        </button>
+        <button class="bolt-btn-filled" (click)="cancel()">
+          <span *ngSwitchCase="'Esp'">Cancelar</span>
+          <span *ngSwitchCase="'Eng'">Cancel</span>
         </button>
       </div>
     </form>
   </div>
-  <!-- search results -->
+
+  <!-- roles -->
   <div class="inner-section section__2">
     <div class="row">
       <h2 class="form-title">Roles</h2>
 
-      <button class="bolt-btn-filled">
+      <button class="bolt-btn-filled" (click)="createRol()">
         <span *ngSwitchCase="'Esp'">Crear nuevo rol</span>
         <span *ngSwitchCase="'Eng'">Create new rol</span>
       </button>
@@ -160,54 +213,51 @@
           <span *ngSwitchCase="'Esp'">Proyecto</span>
           <span *ngSwitchCase="'Eng'">Project</span>
         </div>
-        <div class="grid-header__title">
+        <div class="grid-header__title" style="text-align: center;">
           <span *ngSwitchCase="'Esp'">Acciones</span>
           <span *ngSwitchCase="'Eng'">Actions</span>
         </div>
       </div>
 
-      <div *ngFor="let rol of roles; let id = index">
+      <div *ngFor="let role of roles; let id = index">
         <div class="grid-content">
-          <p class="grid-content__name">{{ rol.role_name_es }}</p>
-          <p class="grid-content__name">{{ rol.role_description_es }}</p>
+          <p class="grid-content__name">{{ role.role_name_es }}</p>
+          <p class="grid-content__description">
+            {{ role.role_description_es }}
+          </p>
           <div class="col">
             <p class="grid-content__description">
-              <i *ngFor="let project of rol.role_projects">{{ project }}/</i>
+              <i *ngFor="let project of role.role_projects">
+                {{ lang == 'Esp' ? project.name : project.name }}/
+              </i>
             </p>
           </div>
 
           <div class="grid-content__action">
             <div class="col">
               <mat-slide-toggle
-                [id]="rol.id"
+                [id]="role.id"
                 class="enable-toogle"
-                (change)="showConfirmation(rol, 'habilitar', 'enable')"
-                [checked]="rol.active"
+                (change)="showConfirmation(role, 'habilitar', 'enable')"
+                [checked]="role.active"
               ></mat-slide-toggle>
               <p class="toggle-text" *ngSwitchCase="'Esp'">
-                {{ rol.active ? 'Deshabilitar' : 'Habilitar' }}
+                {{ role.active ? 'Deshabilitar' : 'Habilitar' }}
               </p>
               <p class="toggle-text" *ngSwitchCase="'Eng'">
-                {{ rol.active ? 'Disable' : 'Enable' }}
+                {{ role.active ? 'Disable' : 'Enable' }}
               </p>
             </div>
 
-            <button mat-button class="action-btn" (click)="addNewRol(rol)">
-              <span class="plus-icon"></span>
-
-              <span
-                class="action-text"
-                style="margin-top: 5px;"
-                *ngSwitchCase="'Esp'"
-              >
-                Añadir nuevo rol
+            <button mat-button class="action-btn" (click)="editRole(role)">
+              <span class="material-icons menu-icon">
+                edit
               </span>
-              <span
-                class="action-text"
-                style="margin-top: 5px;"
-                *ngSwitchCase="'Eng'"
-              >
-                add new rol
+              <span class="action-text" *ngSwitchCase="'Esp'">
+                editar
+              </span>
+              <span class="action-text" *ngSwitchCase="'Eng'">
+                edit
               </span>
             </button>
           </div>

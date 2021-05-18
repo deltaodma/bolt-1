@@ -1,4 +1,4 @@
-export const MockProjects = [
+export const MockProjectsByRole = [
   {
     id: 'p1',
     name: 'bolt',
@@ -12,6 +12,7 @@ export const MockProjects = [
         name_es: 'user',
         name_en: 'user',
         state: true,
+        access: true,
         app_list: [
           {
             id: '0',
@@ -27,6 +28,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: true,
           },
           {
             id: '1',
@@ -42,6 +44,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: true,
           },
           {
             id: '2',
@@ -57,6 +60,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: true,
           },
           {
             id: '3',
@@ -72,6 +76,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: true,
           },
         ],
       },
@@ -80,6 +85,7 @@ export const MockProjects = [
         name_es: 'exter',
         name_en: 'exter',
         state: true,
+        access: false,
         app_list: [
           {
             id: '4',
@@ -95,6 +101,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: false,
+            access: true,
           },
           {
             id: '5',
@@ -110,6 +117,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: true,
           },
         ],
       },
@@ -118,6 +126,7 @@ export const MockProjects = [
         name_es: 'qa',
         name_en: 'qa',
         state: true,
+        access: true,
         app_list: [
           {
             id: '6',
@@ -133,6 +142,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: false,
           },
           {
             id: '7',
@@ -148,6 +158,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: false,
           },
           {
             id: '8',
@@ -163,6 +174,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: false,
           },
         ],
       },
@@ -181,6 +193,7 @@ export const MockProjects = [
         name_es: 'user2',
         name_en: 'user2',
         state: true,
+        access: false,
         app_list: [
           {
             id: '9',
@@ -196,6 +209,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: true,
           },
           {
             id: '10',
@@ -211,6 +225,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: false,
           },
         ],
       },
@@ -219,6 +234,7 @@ export const MockProjects = [
         name_es: 'exter2',
         name_en: 'exter2',
         state: true,
+        access: true,
         app_list: [
           {
             id: '11',
@@ -234,6 +250,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: false,
           },
         ],
       },
@@ -242,6 +259,7 @@ export const MockProjects = [
         name_es: 'qa2',
         name_en: 'qa2',
         state: false,
+        access: true,
         app_list: [
           {
             id: '12',
@@ -257,6 +275,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: false,
           },
         ],
       },
@@ -275,6 +294,7 @@ export const MockProjects = [
         name_es: 'user3',
         name_en: 'user3',
         state: false,
+        access: true,
         app_list: [
           {
             id: '13',
@@ -290,6 +310,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: false,
           },
           {
             id: '14',
@@ -305,6 +326,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: false,
           },
         ],
       },
@@ -313,6 +335,7 @@ export const MockProjects = [
         name_es: 'exter3',
         name_en: 'exter3',
         state: true,
+        access: false,
         app_list: [
           {
             id: '15',
@@ -328,6 +351,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: false,
           },
         ],
       },
@@ -336,6 +360,7 @@ export const MockProjects = [
         name_es: 'q3',
         name_en: 'q3',
         state: true,
+        access: true,
         app_list: [
           {
             id: '16',
@@ -351,6 +376,7 @@ export const MockProjects = [
             user: 'Shiny47653',
             password: 'dasdasdasdsadsav11321',
             active: true,
+            access: true,
           },
         ],
       },
