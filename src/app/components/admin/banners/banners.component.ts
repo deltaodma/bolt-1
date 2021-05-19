@@ -14,30 +14,34 @@ export class BannersComponent implements OnInit {
   public lang: string
   public bannerForm: FormGroup
   public banner_list: any = Banners
+  public open_form: boolean = false
   public redirec_option: boolean = false
   public sizeError: boolean = false
   public sizeErrorPdf: boolean = false
-  public pdfFileName: string = ''
-  public imgFileName: string = ''
+  public urlImagBanner: string = ''
+  public urlPdfBanner: string = ''
+  public pdfFile: any
+  public imgFile: any
+  public BannerName: string = ''
+  public BannerStatus: number = 0
+  public urlAction: boolean = true
 
   private errorMessage: any = {
     es: {
-      banner_name_es: 'Ingrese un nombre de proyecto en español',
-      banner_name_en: 'Ingrese un nombre de proyecto en inglés',
+      banner_name_es: 'Ingrese un nombre en español',
+      banner_name_en: 'Ingrese un nombre en inglés',
       button_text_es: 'Ingrese un texto para el botón en español',
       button_text_en: 'Ingrese un texto para el botón en inglés',
       message_es: 'Ingrese una descripción en español',
       message_en: 'Ingrese una descripción en inglés',
-      role_projects: 'Seleccione por lo menos un proyecto',
     },
     en: {
-      rol_name_es: 'Enter a name in spanish',
-      rol_name_en: 'Enter a name in english',
+      banner_name_es: 'Enter a name in spanish',
+      banner_name_en: 'Enter a name in english',
       button_text_es: 'Enter a button text in spanish',
       button_text_en: 'Enter a button text in english',
       message_es: 'Enter a description in spanish',
       message_en: 'Enter a description in english',
-      role_projects: 'Select a least one',
     },
   }
   constructor(
@@ -86,17 +90,52 @@ export class BannersComponent implements OnInit {
         Validators.minLength(10),
         Validators.maxLength(30),
       ]),
-      pdf_file: new FormControl('', []),
-      banner_image: new FormControl('', [Validators.required]),
     })
   }
 
-  updateBanner() {
-    if (this.pdfFileName.length == 0) {
-      this.sizeErrorPdf = true
+  openBannerForm(action?: any) {
+    this.open_form = true
+    if (action) {
+      this.loadBanner(action)
     }
-    if (this.imgFileName.length == 0) {
+  }
+
+  loadBanner(target) {
+    if (target) {
+      this.bannerForm.patchValue({
+        banner_name_es: target['name_es'],
+        banner_name_en: target['name_en'],
+        button_text_es: target['button_es'],
+        button_text_en: target['button_en'],
+        url_exter: target['url_redirection'],
+        message_es: target['content_es'],
+        message_en: target['content_en'],
+      })
+      this.urlImagBanner = target['image']
+      this.urlPdfBanner = target['pdf']
+      this.BannerStatus = target['status']
+      if (target['pdf'].length == 0) {
+        this.urlAction = true
+      } else {
+        this.urlAction = false
+      }
+
+      if (this.lang == 'Esp') {
+        this.BannerName = target['name_es']
+      } else {
+        this.BannerName = target['name_en']
+      }
+    }
+  }
+
+  updateBanner() {
+    if (this.urlPdfBanner.length == 0 && !this.urlAction) {
+      this.sizeErrorPdf = true
+      return
+    }
+    if (this.urlImagBanner.length == 0) {
       this.sizeError = true
+      return
     }
     if (this.bannerForm.invalid) {
       ;(<any>Object).values(this.bannerForm.controls).forEach((control) => {
@@ -104,6 +143,20 @@ export class BannersComponent implements OnInit {
       })
       return
     }
+
+    let dataForm = {
+      status: true,
+      image: this.imgFile,
+      pdf: this.pdfFile,
+      url_redirection: this.bannerForm.controls.url_exter,
+      name_es: this.bannerForm.controls.banner_name_es.value,
+      name_en: this.bannerForm.controls.banner_name_en.value,
+      button_es: this.bannerForm.controls.button_text_es.value,
+      buttont_en: this.bannerForm.controls.button_text_en.value,
+      message_es: this.bannerForm.controls.message_es.value,
+      message_en: this.bannerForm.controls.message_en.value,
+    }
+    console.log(dataForm)
   }
 
   updateBannerStatus(toogleStatus: boolean, target: any) {
@@ -121,18 +174,13 @@ export class BannersComponent implements OnInit {
     }
   }
 
-  public getMessageform(controlName: any): string {
-    let error = ''
-    const control = this.bannerForm.get(controlName)
-    if (control.touched && control.errors) {
-      if (this.lang == 'Esp') {
-        error = this.errorMessage['es'][controlName]
-      }
-      if (this.lang == 'Eng') {
-        error = this.errorMessage['en'][controlName]
-      }
-    }
-    return error
+  cancel() {
+    this.open_form = false
+    this.urlAction = true
+    this.urlImagBanner = ''
+    this.urlPdfBanner = ''
+    this.bannerForm.reset('')
+    this.bannerForm.markAsUntouched()
   }
 
   showConfirmation(target: any, message_es: string, message_en: string) {
@@ -164,6 +212,20 @@ export class BannersComponent implements OnInit {
     })
   }
 
+  public getMessageform(controlName: any): string {
+    let error = ''
+    const control = this.bannerForm.get(controlName)
+    if (control.touched && control.errors) {
+      if (this.lang == 'Esp') {
+        error = this.errorMessage['es'][controlName]
+      }
+      if (this.lang == 'Eng') {
+        error = this.errorMessage['en'][controlName]
+      }
+    }
+    return error
+  }
+
   loadFile(eventfile) {
     if (eventfile.item(0).type == 'application/pdf') {
       if (eventfile.item(0).size > 500000) {
@@ -171,7 +233,8 @@ export class BannersComponent implements OnInit {
         return
       }
       this.sizeErrorPdf = false
-      this.pdfFileName = eventfile.item(0).name
+      this.urlPdfBanner = eventfile.item(0).name
+      this.pdfFile = eventfile.item(0)
     }
     if (
       eventfile.item(0).type == 'image/jpeg' ||
@@ -182,10 +245,17 @@ export class BannersComponent implements OnInit {
         return
       }
       this.sizeError = false
-      this.imgFileName = eventfile.item(0).name
+      this.urlImagBanner = eventfile.item(0).name
+      this.imgFile = eventfile.item(0)
     }
-    console.log(eventfile.item(0))
+  }
 
-    // this.termsExp = eventfile.item(0)
+  disableField() {
+    this.urlAction = !this.urlAction
+    if (!this.urlAction) {
+      this.bannerForm.controls.url_exter.reset()
+    } else {
+      this.pdfFile = null
+    }
   }
 }
