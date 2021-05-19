@@ -30,8 +30,6 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    console.log(this.users)
-
     this.initforms()
   }
 

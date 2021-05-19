@@ -223,7 +223,6 @@ export class RolesComponent implements OnInit {
         { parent: parent, chlid: target },
       ]
     }
-    console.log(this.allowed_apps)
   }
 
   public getMessageform(controlName: any): string {
