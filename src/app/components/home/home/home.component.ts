@@ -57,8 +57,12 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  redirectTo(exUrl: string) {
-    window.open(exUrl)
+  redirectTo(slide: any) {
+    let extUrl = slide.url_redirection
+    if (slide.pdf.length != 0) {
+      extUrl = slide.pdf
+    }
+    window.open(extUrl)
   }
 
   openApp(dashboard) {
