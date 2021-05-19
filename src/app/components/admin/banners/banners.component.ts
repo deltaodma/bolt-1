@@ -20,8 +20,8 @@ export class BannersComponent implements OnInit {
   public sizeErrorPdf: boolean = false
   public urlImagBanner: string = ''
   public urlPdfBanner: string = ''
-  public pdfFile: any
-  public imgFile: any
+  public pdfFile: any = null
+  public imgFile: any = null
   public BannerName: string = ''
   public BannerStatus: number = 0
   public urlAction: boolean = true
@@ -148,7 +148,7 @@ export class BannersComponent implements OnInit {
       status: true,
       image: this.imgFile,
       pdf: this.pdfFile,
-      url_redirection: this.bannerForm.controls.url_exter,
+      url_redirection: this.bannerForm.controls.url_exter.value,
       name_es: this.bannerForm.controls.banner_name_es.value,
       name_en: this.bannerForm.controls.banner_name_en.value,
       button_es: this.bannerForm.controls.button_text_es.value,
