@@ -8,3 +8,134 @@ h3 {
   width: 100%;
   height: 800px;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #c7c6c6;
+  border-radius: 8px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e21d47;
+  border-radius: 8px;
+  background-clip: padding-box;
+}
+
+.inner-section {
+  width: 90%;
+  margin: 20px 0;
+  .row {
+    &__1 {
+      width: 100%;
+      margin-bottom: 20px;
+      align-items: flex-start;
+      .form-title {
+        border-bottom: none;
+        text-transform: capitalize;
+      }
+    }
+  }
+  .form-section {
+    width: 100%;
+    max-width: 100%;
+    align-items: flex-start;
+    box-sizing: border-box;
+    padding: 0;
+    .col {
+      width: 47%;
+      max-width: 610px;
+      align-items: flex-start;
+      &__1 {
+        margin-right: 50px;
+      }
+    }
+    .row {
+      width: 100%;
+      &__1 {
+      }
+      &__2 {
+        justify-content: flex-end;
+        .bolt-btn-filled {
+          margin: 0 !important;
+          width: 147px;
+        }
+      }
+    }
+  }
+}
+
+.btn-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  font-size: 11px;
+  line-height: 13px;
+  color: #525252;
+  text-align: left;
+}
+
+.bolt-input-btn-outline {
+  background: #ffffff;
+  border: 1px solid #e21d47;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 0;
+  padding-left: 10px;
+  margin: 10px 0;
+
+  font-family: Arial;
+  font-style: normal;
+  font-weight: normal;
+
+  .btn-action {
+    width: 96px;
+    height: 40px;
+    background: #e21d47;
+    font-size: 14px;
+    line-height: 16px;
+    color: #fff;
+    border-radius: 0px 4px 4px 0px;
+  }
+}
+
+.position-relative {
+  position: relative !important;
+}
+.position-absolute {
+  position: absolute !important;
+}
+
+.input-file-container {
+  width: 100%;
+  margin-bottom: 15px;
+  font-family: Arial;
+  font-style: normal;
+  font-weight: normal;
+  mat-error {
+    font-size: 75%;
+  }
+}
+
+.btn-file {
+  height: 45px;
+  margin: 5px 0 10px 0;
+
+  background: #e6e6e6;
+  border: 1px solid #d4d4d4;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 0;
+  padding-left: 10px;
+
+  .check {
+    color: #348441;
+  }
+  .cancel {
+    color: #e21d47;
+  }
+}

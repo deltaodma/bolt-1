@@ -197,3 +197,24 @@
 .mat-flat-button.mat-button-disabled {
   opacity: 0.3;
 }
+
+// mat tradio button styles
+.mat-radio-container {
+  width: 15px !important;
+  height: 15px !important;
+}
+.mat-radio-outer-circle {
+  border-color: #e21d47;
+  width: 15px !important;
+  height: 15px !important;
+}
+.mat-radio-inner-circle {
+  width: 15px !important;
+  height: 15px !important;
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background: #e21d47;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #e21d47;
+}

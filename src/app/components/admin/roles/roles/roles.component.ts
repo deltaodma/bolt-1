@@ -61,7 +61,6 @@ export class RolesComponent implements OnInit {
   }
 
   initforms() {
-    this.lang = localStorage.getItem('lang') || 'Esp'
     this.createRolForm = this.formBuilder.group({
       rol_name_es: new FormControl('', [
         Validators.required,
