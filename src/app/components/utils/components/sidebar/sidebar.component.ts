@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { UiService } from 'src/app/services/ui.service'
+import { ModalConfirmationComponent } from '../../admin/projects/modal-confirmation/modal-confirmation.component'
+import { ModalNotificationComponent } from '../../pop up/modal-notification/modal-notification.component'
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +22,11 @@ export class SidebarComponent implements OnInit {
   public prop = MockProjects
   public sideMemory: string
 
-  constructor(private router: Router, private ui: UiService) {}
+  constructor(
+    private router: Router,
+    private ui: UiService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
@@ -114,18 +121,98 @@ export class SidebarComponent implements OnInit {
   }
 
   updateFav(event, element) {
+    let message_action_es
+    let message_action_en
+    console.log(event, element)
+
     if (this.favList.length < 6) {
       if (event) {
+        message_action_es = 'agregar'
+        message_action_en = 'add'
+        // push elements in the array
         this.favList.push(element)
-        // TO DO
-        // http request to insert a new element in the list
-        return
       } else {
-        this.favList.splice(element, 1)
-        // TO DO
-        // http request to remove the element in the list
-        return
+        message_action_es = 'eliminar'
+        message_action_en = 'delete'
+        let elemtFav = this.favList.indexOf(element)
+        // deletet element in the array
+        this.favList.splice(elemtFav, elemtFav)
       }
+
+      const confDialog = this.dialog.open(ModalConfirmationComponent, {
+        id: ModalConfirmationComponent.toString(),
+        disableClose: true,
+        hasBackdrop: true,
+        width: '500px',
+        height: 'auto',
+        data: {
+          fav_name: element.item_name,
+          message_action_es: message_action_es,
+          message_action_en: message_action_en,
+        },
+      })
+
+      confDialog.afterClosed().subscribe((result) => {
+        // if confirmation is true
+        if (result) {
+          // if event is true = add
+          if (event) {
+            // TO DO  http POST request to insert a new element in the list
+            // if 200
+            let response = 200
+            if (response == 200) {
+              message_action_es = 'agregó'
+              message_action_en = 'added'
+
+              this.ui.showModal(
+                ModalNotificationComponent,
+                '500px',
+                'auto',
+                null,
+                'backdrop',
+                {
+                  message_es: `Se ${message_action_es} con éxito la aplicación ${element.item_name} de tu lista de favoritos`,
+                  message_en: `Successfully ${message_action_en} the app ${element.item_name}of you favorite list`,
+                },
+              )
+              // show loading and reload page to update data view
+              setTimeout(() => {
+                window.location.reload()
+              }, 3000)
+            } else {
+              window.location.reload()
+            }
+          } else {
+            // TO DO  http UPDATE request to insert a new element in the list
+            // if 200
+            let response = 200
+            if (response == 200) {
+              message_action_es = 'eliminó'
+              message_action_en = 'deleted'
+
+              this.ui.showModal(
+                ModalNotificationComponent,
+                '500px',
+                'auto',
+                null,
+                'backdrop',
+                {
+                  message_es: `Se ${message_action_es} con éxito la aplicación ${element.item_name} de tu lista de favoritos`,
+                  message_en: `Successfully ${message_action_en} the app ${element.item_name}of you favorite list`,
+                },
+              )
+              // show loading and reload page to update data view
+              setTimeout(() => {
+                window.location.reload()
+              }, 3000)
+            } else {
+              window.location.reload()
+            }
+          }
+        } else {
+          window.location.reload()
+        }
+      })
     } else {
       if (event) {
         this.ui.createSnackbar(
@@ -149,6 +236,52 @@ export class SidebarComponent implements OnInit {
   adminRedirect(route: string) {
     this.router.navigate([`admin/${route}`], {
       queryParamsHandling: 'preserve',
+    })
+  }
+
+  showConfirmation(event, element, message_action_es, message_action_en) {
+    const confDialog = this.dialog.open(ModalConfirmationComponent, {
+      id: ModalConfirmationComponent.toString(),
+      disableClose: true,
+      hasBackdrop: true,
+      width: '500px',
+      height: 'auto',
+      data: {
+        fav_name: element.item_name,
+        message_action_es: message_action_es,
+        message_action_en: message_action_en,
+      },
+    })
+
+    confDialog.afterClosed().subscribe((result) => {
+      if (result) {
+        // TO DO http request update project status
+        // if 200
+        if (event == 'enable') {
+          message_action_es = 'agregó'
+          message_action_en = 'added'
+        } else {
+          message_action_es = 'eliminó'
+          message_action_en = 'deleted'
+        }
+        this.ui.showModal(
+          ModalNotificationComponent,
+          '500px',
+          'auto',
+          null,
+          'backdrop',
+          {
+            message_es: `Se ${message_action_es} con éxito el proyecto ${element.name_es}`,
+            message_en: `Successfully ${message_action_en} the project ${element.name_en}`,
+          },
+        )
+        // show loading and reload page to update data view
+        setTimeout(() => {
+          window.location.reload()
+        }, 3000)
+      } else {
+        window.location.reload()
+      }
     })
   }
 }

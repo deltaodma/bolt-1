@@ -71,6 +71,19 @@
       ?
     </p>
   </div>
+  <!-- view for fav item -->
+  <div class="dialog-alert__content" *ngIf="data.fav_name">
+    <p *ngSwitchCase="'Esp'">
+      ¿Desea {{ data.message_action_es }} la aplicacion
+      <strong>{{ data.fav_name }}</strong>
+      en su lista de favoritos ?
+    </p>
+    <p *ngSwitchCase="'Eng'">
+      ¿ Do you want to {{ data.message_action_en }} the role
+      <strong>{{ data.fav_name }}</strong>
+      in your favorite list ?
+    </p>
+  </div>
 
   <div class="row">
     <button
