@@ -15,7 +15,8 @@ import { TutorialComponent } from '../../utils/tutorial/tutorial.component'
 export class HomeComponent implements OnInit {
   public user = ['']
   public prop = MockProjects
-  public bannerList: any = Banners
+  public banners: any = Banners
+  public bannerList: any = []
   public lang: string
   public date = new Date().toLocaleDateString()
   public favList: any = []
@@ -25,7 +26,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.ui.dismissLoading()
     this.lang = localStorage.getItem('lang') || 'Esp'
-
+    this.banners.forEach((singleBanner) => {
+      if (singleBanner.status) {
+        this.bannerList = [...this.bannerList, singleBanner]
+      }
+    })
     if (this.user && this.user.length > 0) {
       this.prop.forEach((project) => {
         project.menu.forEach((subM) => {
