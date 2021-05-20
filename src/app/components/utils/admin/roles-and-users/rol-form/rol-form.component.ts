@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 
 import { UiService } from 'src/app/services/ui.service'
 
-import { ModalNotificationComponent } from '../../../modal-notification/modal-notification.component'
+import { ModalNotificationComponent } from '../../../pop up/modal-notification/modal-notification.component'
 import { DialogData } from '../../projects/modal-confirmation/modal-confirmation.component'
 
 @Component({

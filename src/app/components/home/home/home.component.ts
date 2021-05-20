@@ -3,9 +3,9 @@ import { MockProjects } from 'src/app/mocks/projects-mock'
 import { Banners } from 'src/app/mocks/banner-mock'
 import { Router } from '@angular/router'
 
-import { ModalAlertComponent } from '../../utils/modal-alert/modal-alert.component'
+import { ModalAlertComponent } from '../../utils/pop up/modal-alert/modal-alert.component'
 import { UiService } from 'src/app/services/ui.service'
-import { TutorialComponent } from '../../utils/tutorial/tutorial.component'
+import { TutorialComponent } from '../../utils/components/tutorial/tutorial.component'
 
 @Component({
   selector: 'app-home',

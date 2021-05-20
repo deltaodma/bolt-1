@@ -193,7 +193,7 @@ export const MockProjects = [
             item_icon: 'power',
             item_name: 'Follow-up Traking CO',
             url: 'https://powerbi.microsoft.com/es-es/',
-            fav: true,
+            fav: false,
             created: {
               author: 'Andres montenegro',
               author_id: '93844',

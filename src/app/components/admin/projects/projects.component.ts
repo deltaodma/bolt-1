@@ -7,7 +7,7 @@ import { UiService } from 'src/app/services/ui.service'
 import { ModalConfirmationComponent } from '../../utils/admin/projects/modal-confirmation/modal-confirmation.component'
 import { ModalProjectFormComponent } from '../../utils/admin/projects/modal-project-form/modal-project-form.component'
 import { ModalSubmenuFormComponent } from '../../utils/admin/projects/modal-submenu-form/modal-submenu-form.component'
-import { ModalNotificationComponent } from '../../utils/modal-notification/modal-notification.component'
+import { ModalNotificationComponent } from '../../utils/pop up/modal-notification/modal-notification.component'
 
 @Component({
   selector: 'app-projects',
