@@ -123,6 +123,8 @@ export class SidebarComponent implements OnInit {
   updateFav(event, element) {
     let message_action_es
     let message_action_en
+    let connector_es
+    let connector_en
     console.log(event, element)
 
     if (this.favList.length < 6) {
@@ -163,22 +165,8 @@ export class SidebarComponent implements OnInit {
             if (response == 200) {
               message_action_es = 'agregó'
               message_action_en = 'added'
-
-              this.ui.showModal(
-                ModalNotificationComponent,
-                '500px',
-                'auto',
-                null,
-                'backdrop',
-                {
-                  message_es: `Se ${message_action_es} con éxito la aplicación ${element.item_name} de tu lista de favoritos`,
-                  message_en: `Successfully ${message_action_en} the app ${element.item_name}of you favorite list`,
-                },
-              )
-              // show loading and reload page to update data view
-              setTimeout(() => {
-                window.location.reload()
-              }, 3000)
+              connector_es = 'a'
+              connector_en = 'to'
             } else {
               window.location.reload()
             }
@@ -189,26 +177,33 @@ export class SidebarComponent implements OnInit {
             if (response == 200) {
               message_action_es = 'eliminó'
               message_action_en = 'deleted'
-
-              this.ui.showModal(
-                ModalNotificationComponent,
-                '500px',
-                'auto',
-                null,
-                'backdrop',
-                {
-                  message_es: `Se ${message_action_es} con éxito la aplicación ${element.item_name} de tu lista de favoritos`,
-                  message_en: `Successfully ${message_action_en} the app ${element.item_name}of you favorite list`,
-                },
-              )
-              // show loading and reload page to update data view
-              setTimeout(() => {
-                window.location.reload()
-              }, 3000)
+              connector_es = 'de'
+              connector_en = 'of'
             } else {
               window.location.reload()
             }
           }
+
+          // show modal notificacion to the user
+          this.ui.showModal(
+            ModalNotificationComponent,
+            '500px',
+            'auto',
+            null,
+            'backdrop',
+            {
+              message_es: `Se ${message_action_es} con éxito la aplicación ${
+                element.item_name + ' ' + connector_es
+              }  tu lista de favoritos`,
+              message_en: `Successfully ${message_action_en} the app ${
+                element.item_name + ' ' + connector_en
+              } you favorite list`,
+            },
+          )
+          // show loading and reload page to update data view
+          setTimeout(() => {
+            window.location.reload()
+          }, 3000)
         } else {
           window.location.reload()
         }
