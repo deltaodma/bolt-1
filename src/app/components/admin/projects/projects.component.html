@@ -52,10 +52,16 @@
                 <span class="material-icons arrow" [id]="'arrowProject' + id">
                   arrow_forward_ios
                 </span>
-                <span class="grid-content__name">{{ activeItem.name }}</span>
+                <span class="grid-content__name">
+                  {{ lang == 'Esp' ? activeItem.name_es : activeItem.name_en }}
+                </span>
               </button>
               <p class="grid-content__description">
-                {{ activeItem.description }}
+                {{
+                  lang == 'Esp'
+                    ? activeItem.description_es
+                    : activeItem.description_en
+                }}
               </p>
               <div class="grid-content__icon">
                 <span class="material-icons menu-icon">
@@ -165,10 +171,18 @@
                 <span class="material-icons arrow" [id]="'arrowProject' + id">
                   arrow_forward_ios
                 </span>
-                <span class="grid-content__name">{{ inactiveItem.name }}</span>
+                <span class="grid-content__name">
+                  {{
+                    lang == 'Esp' ? inactiveItem.name_es : inactiveItem.name_en
+                  }}
+                </span>
               </button>
               <p class="grid-content__description">
-                {{ inactiveItem.description }}
+                {{
+                  lang == 'Esp'
+                    ? inactiveItem.description_es
+                    : inactiveItem.description_en
+                }}
               </p>
               <div class="grid-content__icon">
                 <span class="material-icons menu-icon">

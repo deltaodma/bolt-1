@@ -1,10 +1,13 @@
 export const MockProjectsByRole = [
   {
     id: 'p1',
-    name: 'bolt',
+    name_es: 'bolt',
+    name_en: 'bolt',
     active: true,
     icon: 'emoji_objects',
-    description:
+    description_es:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
+    description_en:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
     menu: [
       {
@@ -185,7 +188,9 @@ export const MockProjectsByRole = [
     name: 'becks',
     active: true,
     icon: 'assessment',
-    description:
+    description_es:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
+    description_en:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
     menu: [
       {
@@ -286,7 +291,9 @@ export const MockProjectsByRole = [
     name: 'pony malta',
     active: false,
     icon: 'pie_chart',
-    description:
+    description_es:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
+    description_en:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
     menu: [
       {

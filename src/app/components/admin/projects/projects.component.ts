@@ -72,6 +72,8 @@ export class ProjectsComponent implements OnInit {
 
   projectStatus(project, event, action) {
     if (event.checked) {
+      let ProjName = project.name_es
+
       if (action == 'enable') {
         this.message_action_es = 'habilitar'
         this.message_action_en = 'enable'
@@ -79,6 +81,10 @@ export class ProjectsComponent implements OnInit {
         this.message_action_es = 'deshabilitar'
         this.message_action_en = 'disable'
       }
+      if (this.lang == 'Eng') {
+        ProjName = project.name_en
+      }
+
       const confDialog = this.dialog.open(ModalConfirmationComponent, {
         id: ModalConfirmationComponent.toString(),
         disableClose: true,
@@ -86,7 +92,7 @@ export class ProjectsComponent implements OnInit {
         width: '500px',
         height: 'auto',
         data: {
-          project_name: project.name,
+          project_name: ProjName,
           message_action_es: this.message_action_es,
           message_action_en: this.message_action_en,
         },

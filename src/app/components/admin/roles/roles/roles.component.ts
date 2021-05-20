@@ -190,7 +190,7 @@ export class RolesComponent implements OnInit {
     // TO DO GET request to obtain projects by rol
     this.projects.forEach((singleProject) => {
       projects_selected.forEach((nameProject) => {
-        if (nameProject == singleProject.name) {
+        if (nameProject == singleProject.name_en) {
           this.projectResume = [...this.projectResume, singleProject]
         }
       })

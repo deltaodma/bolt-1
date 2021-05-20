@@ -1,10 +1,13 @@
 export const MockProjects = [
   {
     id: 'p1',
-    name: 'bolt',
+    name_es: 'bolt',
+    name_en: 'bolt',
     active: true,
     icon: 'emoji_objects',
-    description:
+    description_es:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
+    description_en:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
     menu: [
       {
@@ -170,10 +173,13 @@ export const MockProjects = [
   },
   {
     id: 'p2',
-    name: 'becks',
+    name_es: 'becks',
+    name_en: 'becks',
     active: true,
     icon: 'assessment',
-    description:
+    description_es:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
+    description_en:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
     menu: [
       {
@@ -264,10 +270,13 @@ export const MockProjects = [
   },
   {
     id: 'p3',
-    name: 'pony malta',
+    name_es: 'pony malta',
+    name_en: 'pony malta',
     active: false,
     icon: 'pie_chart',
-    description:
+    description_es:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
+    description_en:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elitfcrigrhkrtokhregofgyyf consectetur adipiscing',
     menu: [
       {

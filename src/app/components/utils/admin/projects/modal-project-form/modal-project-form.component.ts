@@ -132,10 +132,10 @@ export class ModalProjectFormComponent implements OnInit {
   loadProject() {
     if (this.data) {
       this.createProjectForm.patchValue({
-        project_name_es: this.data.project['name'],
-        project_name_en: this.data.project['name'],
-        description_es: this.data.project['description'],
-        description_en: this.data.project['description'],
+        project_name_es: this.data.project['name_es'],
+        project_name_en: this.data.project['name_en'],
+        description_es: this.data.project['description_es'],
+        description_en: this.data.project['description_en'],
         icon: this.data.project['icon'],
       })
     }

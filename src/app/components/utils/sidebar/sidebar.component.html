@@ -257,7 +257,7 @@
         <span class="material-icons icon menu-icon" [id]="'iconH' + id">
           {{ project.icon }}
         </span>
-        {{ project.name }}
+        {{ lang == 'Esp' ? project.name_es : project.name_en }}
       </mat-expansion-panel-header>
       <div class="left-line">
         <div *ngFor="let menuItem of project.menu">
