@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 
 import { MockProjects } from 'src/app/mocks/projects-mock'
 import { UiService } from 'src/app/services/ui.service'
-import { ModalConfirmationComponent } from '../../admin/projects/modal-confirmation/modal-confirmation.component'
+import { ModalConfirmationComponent } from '../../pop up/modal-confirmation/modal-confirmation.component'
 import { ModalNotificationComponent } from '../../pop up/modal-notification/modal-notification.component'
 
 @Component({

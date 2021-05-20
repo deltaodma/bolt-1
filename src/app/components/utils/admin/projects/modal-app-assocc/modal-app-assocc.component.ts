@@ -10,7 +10,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core'
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UiService } from 'src/app/services/ui.service'
-import { DialogData } from '../modal-confirmation/modal-confirmation.component'
+import { DialogData } from '../../../pop up/modal-confirmation/modal-confirmation.component'
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(

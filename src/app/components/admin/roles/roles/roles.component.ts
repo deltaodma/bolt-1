@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 
 import { MatDialog } from '@angular/material/dialog'
 
-import { ModalConfirmationComponent } from 'src/app/components/utils/admin/projects/modal-confirmation/modal-confirmation.component'
+import { ModalConfirmationComponent } from 'src/app/components/utils/pop up/modal-confirmation/modal-confirmation.component'
 import { MockRoles } from 'src/app/mocks/roles-mock'
 import { MockProjectsByRole } from 'src/app/mocks/projects-by-role-mock'
 import { MockProjects } from 'src/app/mocks/projects-mock'

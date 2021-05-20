@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { UiService } from 'src/app/services/ui.service'
-import { ModalConfirmationComponent } from '../../utils/admin/projects/modal-confirmation/modal-confirmation.component'
+import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmation/modal-confirmation.component'
 import { Banners } from '../../../mocks/banner-mock'
 
 @Component({

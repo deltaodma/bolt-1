@@ -29,7 +29,7 @@ import { ModalRolFormComponent } from './pop up/modal-rol-form/modal-rol-form.co
 import { ModalAlertComponent } from './pop up/modal-alert/modal-alert.component'
 
 import { LoginComponent } from './login/login.component'
-import { ModalConfirmationComponent } from './admin/projects/modal-confirmation/modal-confirmation.component'
+import { ModalConfirmationComponent } from './pop up/modal-confirmation/modal-confirmation.component'
 import { ModalProjectFormComponent } from './admin/projects/modal-project-form/modal-project-form.component'
 import { ModalAppAssoccComponent } from './admin/projects/modal-app-assocc/modal-app-assocc.component'
 import { ModalSubmenuFormComponent } from './admin/projects/modal-submenu-form/modal-submenu-form.component'
