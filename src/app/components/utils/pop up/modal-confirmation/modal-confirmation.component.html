@@ -84,6 +84,19 @@
       in your favorite list ?
     </p>
   </div>
+  <!-- view for banners -->
+  <div class="dialog-alert__content" *ngIf="data.banner_name">
+    <p *ngSwitchCase="'Esp'">
+      ¿Desea {{ data.message_action_es }} el banner
+      <strong>{{ data.banner_name }}</strong>
+      ?
+    </p>
+    <p *ngSwitchCase="'Eng'">
+      ¿ Do you want to {{ data.message_action_en }} the banner
+      <strong>{{ data.banner_name }}</strong>
+      ?
+    </p>
+  </div>
 
   <div class="row">
     <button

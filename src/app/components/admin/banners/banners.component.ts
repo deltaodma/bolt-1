@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { UiService } from 'src/app/services/ui.service'
 import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmation/modal-confirmation.component'
 import { Banners } from '../../../mocks/banner-mock'
+import { MatSlideToggleChange } from '@angular/material/slide-toggle'
 
 @Component({
   selector: 'app-banners',
@@ -145,7 +146,7 @@ export class BannersComponent implements OnInit {
     }
 
     let dataForm = {
-      status: true,
+      status: this.BannerStatus,
       image: this.imgFile,
       pdf: this.pdfFile,
       url_redirection: this.bannerForm.controls.url_exter.value,
@@ -159,18 +160,24 @@ export class BannersComponent implements OnInit {
     console.log(dataForm)
   }
 
-  updateBannerStatus(toogleStatus: boolean, target: any) {
-    // TO DO PUT request
-    console.log('put app', toogleStatus, target)
+  deleteBanner(target) {
+    // TO DO HTTP DELETE request
     let response = 200
     if (response == 200) {
-      setTimeout(() => {
-        this.ui.dismissLoading()
-        window.location.reload()
-      }, 2000)
-    } else {
       this.ui.dismissLoading()
-      //TO DO show http error
+      console.log('banner deleted successfully')
+      window.location.reload()
+    } else {
+      //  TO DO show http error
+      this.ui.dismissLoading()
+      console.log('banner deleted successfully')
+    }
+  }
+
+  updateBannerStatus(toogleStatus: MatSlideToggleChange) {
+    this.BannerStatus = 0
+    if (toogleStatus.checked) {
+      this.BannerStatus = 1
     }
   }
 
@@ -183,11 +190,15 @@ export class BannersComponent implements OnInit {
     this.bannerForm.markAsUntouched()
   }
 
-  showConfirmation(target: any, message_es: string, message_en: string) {
-    if (target.status == true) {
-      message_es = 'deshabilitar'
-      message_en = 'disable'
+  showConfirmation(target: any) {
+    let message_es = 'eliminar'
+    let message_en = 'delete'
+    let banner_name = target.name_es
+    console.log(target)
+    if (this.lang == 'Eng') {
+      banner_name = target.name_en
     }
+
     const confDialog = this.dialog.open(ModalConfirmationComponent, {
       id: ModalConfirmationComponent.toString(),
       disableClose: true,
@@ -195,7 +206,7 @@ export class BannersComponent implements OnInit {
       width: '500px',
       height: 'auto',
       data: {
-        role_name: target.role_name_es,
+        banner_name: banner_name,
         message_action_es: message_es,
         message_action_en: message_en,
       },
@@ -204,10 +215,7 @@ export class BannersComponent implements OnInit {
     confDialog.afterClosed().subscribe((result) => {
       if (result) {
         this.ui.showLoading()
-        let toogle = !target.active
-        this.updateBannerStatus(toogle, target)
-      } else {
-        window.location.reload()
+        this.deleteBanner(target)
       }
     })
   }

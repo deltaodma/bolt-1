@@ -8,6 +8,7 @@ export interface DialogData {
   user_name: string
   role_name: string
   fav_name: string
+  banner_name: string
   message_action_es: string
   message_action_en: string
   permission: boolean

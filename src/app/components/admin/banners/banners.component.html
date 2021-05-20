@@ -12,40 +12,52 @@
     </button>
   </div>
 
-  <div style="width: 100%; max-width: 1440px;">
+  <div style="width: 100%; max-width: 1440px; margin-top: 10px;">
     <div class="banners-container row">
       <mat-card class="card" *ngFor="let banner of banner_list; let id = index">
-        <div class="card__body">
-          <img [src]="banner.image" alt="banner.name_en" />
-          <div class="card__body__content row">
-            <div class="card__body__message">
-              {{
-                lang == 'Esp'
-                  ? 'Nombre: ' + banner.content_es
-                  : 'Name: ' + banner.content_en
-              }}
-              <br />
+        <img [src]="banner.image" alt="banner.name_en" />
+        <mat-card-content>
+          <div class="row">
+            <p class="card__body__message menu-icon">
+              {{ lang == 'Esp' ? 'Nombre: ' : 'Name: ' }}
+            </p>
+            <p class="card__body__message">
+              {{ lang == 'Esp' ? banner.content_es : banner.content_en }}
+            </p>
+          </div>
+          <div class="row">
+            <p class="card__body__message menu-icon">
+              {{ lang == 'Esp' ? 'Estado: ' : 'State: ' }}
+            </p>
+            <p class="card__body__message">
               {{
                 lang == 'Esp'
                   ? banner.status == 1
-                    ? 'Estado: Activa'
-                    : 'Estado: inactiva'
+                    ? ' Activa'
+                    : ' inactiva'
                   : banner.status == 1
-                  ? 'State: Active'
-                  : 'State: inactive'
+                  ? 'Active'
+                  : 'inactive'
               }}
-            </div>
-            <div class="card__actions">
-              <button
-                mat-button
-                class="menu-icon"
-                (click)="openBannerForm(banner)"
-              >
-                {{ lang == 'Esp' ? 'Editar' : 'Edit' }}
-              </button>
-            </div>
+            </p>
           </div>
-        </div>
+        </mat-card-content>
+        <mat-card-actions class="row">
+          <button mat-button class="menu-icon" (click)="openBannerForm(banner)">
+            <span class="material-icons">
+              edit
+            </span>
+          </button>
+          <button
+            mat-button
+            class="menu-icon"
+            (click)="showConfirmation(banner)"
+          >
+            <span class="material-icons">
+              delete
+            </span>
+          </button>
+        </mat-card-actions>
       </mat-card>
     </div>
   </div>
@@ -55,7 +67,7 @@
       <h2 class="form-title">{{ BannerName }}</h2>
       <mat-slide-toggle
         class="enable-toogle"
-        (change)="showConfirmation(BannerName, 'habilitar', 'enable')"
+        (change)="updateBannerStatus($event)"
         [checked]="BannerStatus == 1"
       ></mat-slide-toggle>
     </div>
