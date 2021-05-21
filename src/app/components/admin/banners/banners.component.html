@@ -150,6 +150,7 @@
               type="text"
               minlength="10"
               maxlength="150"
+              [required]="urlAction"
             />
             <mat-error *ngIf="bannerForm.controls.url_exter.errors">
               {{ getMessageform('url_exter') }}

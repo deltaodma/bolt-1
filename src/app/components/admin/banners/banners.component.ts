@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+
 import { MatDialog } from '@angular/material/dialog'
-import { UiService } from 'src/app/services/ui.service'
-import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmation/modal-confirmation.component'
-import { Banners } from '../../../mocks/banner-mock'
 import { MatSlideToggleChange } from '@angular/material/slide-toggle'
+
+import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmation/modal-confirmation.component'
+import { UiService } from 'src/app/services/ui.service'
+import { environment } from 'src/environments/environment'
+import { HttpService } from 'src/app/services/http.service'
+import { Banner } from 'src/app/model/banner.model'
 
 @Component({
   selector: 'app-banners',
@@ -14,7 +18,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle'
 export class BannersComponent implements OnInit {
   public lang: string
   public bannerForm: FormGroup
-  public banner_list: any = Banners
+  public banner_list: Banner
   public open_form: boolean = false
   public redirec_option: boolean = false
   public sizeError: boolean = false
@@ -35,6 +39,7 @@ export class BannersComponent implements OnInit {
       button_text_en: 'Ingrese un texto para el botón en inglés',
       message_es: 'Ingrese una descripción en español',
       message_en: 'Ingrese una descripción en inglés',
+      url_exter: 'Ingrese una url válida',
     },
     en: {
       banner_name_es: 'Enter a name in spanish',
@@ -43,17 +48,28 @@ export class BannersComponent implements OnInit {
       button_text_en: 'Enter a button text in english',
       message_es: 'Enter a description in spanish',
       message_en: 'Enter a description in english',
+      url_exter: 'Enter a valid url ',
     },
   }
   constructor(
     private formBuilder: FormBuilder,
     public ui: UiService,
     public dialog: MatDialog,
+    private httpService: HttpService,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
     this.initforms()
+
+    this.httpService
+      .get(environment.serverUrl + environment.banners.getAll)
+      .subscribe((response: any) => {
+        if (response.status == 200) {
+          console.log(response.body.items)
+          this.banner_list = response.body.items
+        }
+      })
   }
   initforms() {
     this.bannerForm = this.formBuilder.group({
@@ -132,11 +148,9 @@ export class BannersComponent implements OnInit {
   updateBanner() {
     if (this.urlPdfBanner.length == 0 && !this.urlAction) {
       this.sizeErrorPdf = true
-      return
     }
     if (this.urlImagBanner.length == 0) {
       this.sizeError = true
-      return
     }
     if (this.bannerForm.invalid) {
       ;(<any>Object).values(this.bannerForm.controls).forEach((control) => {
@@ -146,32 +160,65 @@ export class BannersComponent implements OnInit {
     }
 
     let dataForm = {
-      status: this.BannerStatus,
-      image: this.imgFile,
       pdf: this.pdfFile,
-      url_redirection: this.bannerForm.controls.url_exter.value,
+      url_redirect: this.bannerForm.controls.url_exter.value,
       name_es: this.bannerForm.controls.banner_name_es.value,
       name_en: this.bannerForm.controls.banner_name_en.value,
       button_es: this.bannerForm.controls.button_text_es.value,
-      buttont_en: this.bannerForm.controls.button_text_en.value,
-      message_es: this.bannerForm.controls.message_es.value,
-      message_en: this.bannerForm.controls.message_en.value,
+      button_en: this.bannerForm.controls.button_text_en.value,
+      content_es: this.bannerForm.controls.message_es.value,
+      content_en: this.bannerForm.controls.message_en.value,
+      image: this.imgFile,
+      status: this.BannerStatus,
     }
+
+    this.httpService
+      .post(environment.serverUrl + environment.banners.post, dataForm)
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
+          if (response.status == 200) {
+            this.ui.dismissLoading()
+            console.log('An error has occured during the post request')
+            window.location.reload()
+          } else {
+            this.ui.dismissLoading()
+            console.log('An error has occured during the post request')
+          }
+        },
+        (error) => {
+          // TODO :: logic for error
+          console.log('An error has occured during the post request: ' + error)
+        },
+      )
     console.log(dataForm)
   }
 
   deleteBanner(target) {
     // TO DO HTTP DELETE request
-    let response = 200
-    if (response == 200) {
-      this.ui.dismissLoading()
-      console.log('banner deleted successfully')
-      window.location.reload()
-    } else {
-      //  TO DO show http error
-      this.ui.dismissLoading()
-      console.log('banner deleted successfully')
-    }
+    this.httpService
+      .delete(
+        environment.serverUrl + environment.banners.deleteById + target.id,
+      )
+      .subscribe(
+        (response: any) => {
+          if (response.status == 200) {
+            this.ui.dismissLoading()
+            console.log('banner deleted successfully')
+            window.location.reload()
+          } else {
+            //  TO DO show http error
+            this.ui.dismissLoading()
+            console.log('An error has occured during the delete request')
+          }
+        },
+        (error) => {
+          // TODO :: logic for error
+          console.log(
+            'An error has occured during the delete request: ' + error,
+          )
+        },
+      )
   }
 
   updateBannerStatus(toogleStatus: MatSlideToggleChange) {
@@ -183,6 +230,8 @@ export class BannersComponent implements OnInit {
 
   cancel() {
     this.open_form = false
+    this.sizeError = false
+    this.sizeErrorPdf = false
     this.urlAction = true
     this.urlImagBanner = ''
     this.urlPdfBanner = ''
@@ -262,8 +311,10 @@ export class BannersComponent implements OnInit {
     this.urlAction = !this.urlAction
     if (!this.urlAction) {
       this.bannerForm.controls.url_exter.reset()
+      this.sizeError = false
     } else {
       this.pdfFile = null
+      this.sizeErrorPdf = false
     }
   }
 }

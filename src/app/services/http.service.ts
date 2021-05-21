@@ -12,7 +12,6 @@ import { UiService } from './ui.service'
   providedIn: 'root',
 })
 export class HttpService {
-  private error_counter = 0
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -63,13 +62,7 @@ export class HttpService {
     if (headersIn == null) {
       headersIn = this.getHeaders()
     }
-    if (url.indexOf('?') > -1) {
-      if (url.indexOf('time_stamp') == -1) {
-        url = url + '&time_stamp=' + Math.floor(Date.now() / 1000)
-      }
-    } else {
-      url = url + '?time_stamp=' + Math.floor(Date.now() / 1000)
-    }
+
     return this.http
       .get(url, {
         headers: headersIn,
@@ -98,7 +91,6 @@ export class HttpService {
     if (headersIn == null) {
       headersIn = this.getHeadersFormData()
     }
-    // console.log(url);
 
     return this.http
       .post(url, body, {
@@ -149,26 +141,13 @@ export class HttpService {
       error.status === HttpConstants.UNAUTHORIZED ||
       error.status === HttpConstants.FORBIDDEN
     ) {
-      // if (error.url.indexOf(environment.login.resource) == -1) {
-      //   if (++this.error_counter == 1) {
-      //     this.error_counter = 0
-      //     this.authService.setAuthenticated(null)
-      //     // this.ui.showModal(BasicAlertComponent, 'modalMessage', false, false, {
-      //     //   title: 'Sesión expirada',
-      //     //   description: 'Cerrando sesión de forma segura',
-      //     // })
-      //     setTimeout(() => {
-      //       location.reload()
-      //     }, 3000)
-      //   }
-      // }
     } else if (error.status === HttpConstants.CONFLICT) {
-      // console.log("mensaje incorrecto");
+      console.log('mensaje incorrecto')
     } else if (
       error.status === HttpConstants.INTERNAL_SERVER_ERROR ||
       error.status === HttpConstants.SERVICE_UNAVAILABLE
     ) {
-      // console.log("mensaje de servidor error");
+      console.log('mensaje de servidor error')
     } else if (!error.ok) {
       console.log('ERROR ::: ', error)
     }

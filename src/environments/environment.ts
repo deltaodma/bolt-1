@@ -3,8 +3,37 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-};
+  production: false,
+  serverUrl: 'https://bolt-back.herokuapp.com/api/v1/',
+  login: {
+    resource: '/oauth/token?_format=json',
+  },
+  logout: {
+    resource: '/user/logout',
+  },
+  banners: {
+    getAll: 'banners',
+    post: 'banners',
+    upload: 'upload',
+    getById: 'banners/',
+    putById: 'banners/',
+    deleteById: 'banners/',
+  },
+  projects: {
+    getAll: 'projects',
+    post: 'projects',
+    getById: 'projects/',
+    putById: 'projects/',
+    deleteById: 'projects/',
+  },
+  submenus: {
+    getAll: 'apps',
+    post: 'apps',
+    getById: 'apps/',
+    putById: 'apps/',
+    deleteById: 'apps/',
+  },
+}
 
 /*
  * For easier debugging in development mode, you can import the following file
