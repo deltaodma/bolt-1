@@ -51,18 +51,26 @@ export class SidebarComponent implements OnInit {
   openSidebar() {
     let innerArrow = document.querySelector('#arrowSide')
     let sidebar = document.querySelector('#sidebar')
+    let buttonSide = document.querySelector('#collapseSide')
+
     this.sideStatus = !this.sideStatus
     if (this.sideStatus) {
       sessionStorage.setItem('sidebarStatus', 'close')
 
       sidebar.setAttribute('style', 'transform: translateX(-267px)')
-
+      buttonSide.setAttribute(
+        'style',
+        'width: 290px !important; border-radius: 0 5px 5px 0 !important;',
+      )
       innerArrow.setAttribute('style', 'transform: rotate(0deg) ')
     } else {
       sessionStorage.setItem('sidebarStatus', 'open')
       sidebar.setAttribute('style', 'transform: translateX(0px)')
-
-      innerArrow.setAttribute('style', 'transform: rotate(180deg) ')
+      buttonSide.setAttribute(
+        'style',
+        'width: 267px !important;border-radius: 0 !important;',
+      )
+      innerArrow.setAttribute('style', 'transform: rotate(180deg)')
     }
   }
 

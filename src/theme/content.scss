@@ -78,6 +78,8 @@ mat-divider {
 }
 .dialog-form {
   @include dialog(496px, auto, #ffffff, #707782);
+  max-height: 95vh;
+  overflow-y: auto;
   .material-icons {
     font-size: 18px;
     margin-right: 5px;

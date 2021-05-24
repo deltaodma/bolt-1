@@ -1,5 +1,19 @@
 <!-- sidebar -->
 <aside class="flex-column box-shadow" id="sidebar" [ngSwitch]="lang">
+  <!-- hide/show sidebar button -->
+  <button
+    mat-button
+    disableRipple="true"
+    (click)="openSidebar()"
+    id="collapseSide"
+    class="rounded"
+    title="Expandir Menu"
+  >
+    <span class="material-icons menu-icon" id="arrowSide">
+      double_arrow
+    </span>
+  </button>
+
   <mat-accordion id="accordion1" multi="false">
     <!-- fav section -->
     <mat-expansion-panel
@@ -327,19 +341,4 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <!-- separator -->
-  <span class="separator"></span>
-  <!-- hide/show sidebar button -->
-  <button
-    mat-button
-    disableRipple="true"
-    (click)="openSidebar()"
-    id="collapseSide"
-    class="rounded"
-    title="Expandir Menu"
-  >
-    <span class="material-icons icon" id="arrowSide">
-      play_arrow
-    </span>
-  </button>
 </aside>

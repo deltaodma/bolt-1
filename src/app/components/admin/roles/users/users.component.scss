@@ -1,3 +1,20 @@
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #c7c6c6;
+  border-radius: 8px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e21d47;
+  border-radius: 8px;
+  background-clip: padding-box;
+}
+
 .container {
   .section {
     &__1 {

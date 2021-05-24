@@ -66,10 +66,6 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
-  receiveMessage($event) {
-    this.projectPermission = $event
-  }
-
   projectStatus(project, event, action) {
     if (event.checked) {
       let ProjName = project.name_es
@@ -117,8 +113,8 @@ export class ProjectsComponent implements OnInit {
             null,
             'backdrop',
             {
-              message_es: `Se ${this.message_action_es} con éxito el proyecto ${project.name}`,
-              message_en: `Successfully ${this.message_action_en} the project ${project.name}`,
+              message_es: `Se ${this.message_action_es} con éxito el proyecto ${project.name_es}`,
+              message_en: `Successfully ${this.message_action_en} the project ${project.name_en}`,
             },
           )
           // show loading and reload page to update data view

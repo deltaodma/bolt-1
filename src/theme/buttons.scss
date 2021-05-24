@@ -45,22 +45,16 @@
 }
 // sidebar
 .rounded {
-  @include btn(
-    290px !important,
-    36px,
-    linear-gradient(90deg, #e3e3e3 0%, #dc1a5e 100%),
-    #fff,
-    Arial,
-    14px,
-    16px
-  );
+  @include btn(267px !important, 36px, #b3b3b3, #fff, Arial, 14px, 16px);
 
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 !important;
   text-align: right !important;
   padding-right: 0px !important;
   transition: left 0.4s;
 
-  &:hover {
+  &:hover,
+  &:active {
+    background-color: #b3b3b3;
     transform: scale(1);
   }
   .icon {
