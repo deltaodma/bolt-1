@@ -60,7 +60,7 @@ const routes: Routes = [
     ],
   },
 
-  { path: '**', component: HomeComponent },
+  { path: '**', component: LoginComponent },
 ]
 
 @NgModule({

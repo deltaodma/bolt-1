@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { SwUpdate } from '@angular/service-worker'
 
 @Component({
   selector: 'app-login',
@@ -6,12 +7,12 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor() {
+  constructor(private swUpdate: SwUpdate) {}
 
-  }
   ngOnInit() {
-
+    this.swUpdate.available.subscribe(() => {
+      // here you can reload your page
+      window.location.reload()
+    })
   }
-
-
 }
