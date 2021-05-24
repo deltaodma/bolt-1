@@ -1,3 +1,6 @@
+/*import colors*/
+@import './variables.scss';
+
 /* button styles */
 .flex-column .mat-button {
   width: 100%;
@@ -29,7 +32,7 @@
   font-weight: bold;
 
   &:active {
-    background-color: #991334;
+    background-color: $septenary-red;
   }
   &:hover {
     transform: scale(1.1);
@@ -37,15 +40,23 @@
 }
 // pop up buttons
 .alert-btn {
-  @include btn(96px, 36px, #d91948, #fff, Arial, 14px, 16px);
+  @include btn(96px, 36px, $octonary-red, $primary-white, Arial, 14px, 16px);
 }
 // rol form button
 .btn-submit-rol {
-  @include btn(203px, 36px, #d91948, #fff, Arial, 14px, 16px);
+  @include btn(203px, 36px, $octonary-red, $primary-white, Arial, 14px, 16px);
 }
 // sidebar
 .rounded {
-  @include btn(267px !important, 36px, #b3b3b3, #fff, Arial, 14px, 16px);
+  @include btn(
+    267px !important,
+    36px,
+    $nonary-white,
+    $primary-white,
+    Arial,
+    14px,
+    16px
+  );
 
   border-radius: 0 !important;
   text-align: right !important;
@@ -54,7 +65,7 @@
 
   &:hover,
   &:active {
-    background-color: #b3b3b3;
+    background-color: $nonary-white;
     transform: scale(1);
   }
   .icon {
@@ -63,7 +74,7 @@
 }
 
 .banner__btn {
-  @include btn(152px, 36px, #d91948, #fff, Arial, 14px, 16px);
+  @include btn(152px, 36px, $octonary-red, $primary-white, Arial, 14px, 16px);
 }
 
 .bolt-btn-outline {
@@ -81,13 +92,21 @@
   box-sizing: border-box !important;
   text-transform: capitalize;
   &:active {
-    background-color: #991334;
-    color: #fff;
+    background-color: $septenary-red;
+    color: $primary-white;
   }
 }
 
 .bolt-btn-filled {
-  @include btn(107px, 36px, #d91948, #fff, 'Gotham', 14px, 13px !important);
+  @include btn(
+    107px,
+    36px,
+    $octonary-red,
+    $primary-white,
+    'Gotham',
+    14px,
+    13px !important
+  );
 }
 
 .transparent-btn {
@@ -133,12 +152,12 @@
   .mat-slide-toggle-thumb {
     width: 12px;
     height: 12px;
-    background-color: #fff;
+    background-color: $primary-white;
     border: 2px solid #e21d47;
   }
 }
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-  background-color: #fff;
+  background-color: $primary-white;
 }
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
   transform: translate3d(9px, 0, 0) !important;

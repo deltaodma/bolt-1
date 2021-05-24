@@ -1,3 +1,6 @@
+/*import colors*/
+@import './variables.scss';
+
 @font-face {
   font-family: 'Gotham';
   src: url('../assets/fonts/GothamMedium.ttf');
@@ -13,17 +16,17 @@
 
 /* titles */
 .title-header {
-  @include title('Gotham', 22px, 26px, #fff);
+  @include title('Gotham', 22px, 26px, $primary-white);
   font-weight: bold;
   letter-spacing: 2px;
 }
 
 .select-font {
-  @include title('Gotham', 20px, 22px, #fff);
+  @include title('Gotham', 20px, 22px, $primary-white);
 }
 // sidebar
 .sidebar-title {
-  @include title('Roboto', 14px, 16px, #393939);
+  @include title('Roboto', 14px, 16px, $quinary-grey);
   font-weight: bold;
   padding: 0 24px;
   margin: 10px 0;
@@ -32,55 +35,55 @@
 
 // pop ups
 .dialog-alert__content {
-  @include title('Gotham', 20px, 30px, #707782);
+  @include title('Gotham', 20px, 30px, $quinary-grey);
 }
 .form-title {
-  @include title('Gotham', 24px, 30px, #707782);
+  @include title('Gotham', 24px, 30px, $quinary-grey);
   margin: 0 auto 10px 28px;
   align-self: flex-start;
-  border-bottom: 2px solid #e21d47;
+  border-bottom: 2px solid $primary-red;
   width: fit-content;
 }
 // home banner
 .banner {
   &__text {
-    @include title('Gotham', 50px, 60px, #282828);
+    @include title('Gotham', 50px, 60px, $quaternary-black);
     font-weight: bold;
     font-size: 50px;
     line-height: 60px;
-    background-color: #fff;
+    background-color: $primary-white;
     text-transform: uppercase;
   }
   &__btn {
-    @include title('Gotham', 14px, 16px, #fff);
+    @include title('Gotham', 14px, 16px, $primary-white);
   }
 }
 
 .favorites-banner-title {
-  @include title('Gotham', 36px, 43px, #212121);
+  @include title('Gotham', 36px, 43px, $quinary-black);
   font-weight: bold;
   text-align: left;
 }
 
 .title-description {
-  @include title('Gotham', 14px, 13px, #e21c48);
+  @include title('Gotham', 14px, 13px, $quinary-red);
   font-weight: bold;
   margin-bottom: 10px !important;
 }
 
 .text-muted {
-  @include title('Gotham', 10px, 10px, #707782);
+  @include title('Gotham', 10px, 10px, $quinary-grey);
   text-transform: uppercase;
 }
 
 // footer
 .footer {
-  @include title('Roboto', 12px, 14px, #fff);
+  @include title('Roboto', 12px, 14px, $primary-white);
 
   &__title {
     width: fit-content;
     margin: 5px auto;
-    border-bottom: 1px solid #e21d47;
+    border-bottom: 1px solid $primary-red;
     padding-bottom: 5px;
     @media (min-width: 1024px) {
       margin: 5px 0;
@@ -91,14 +94,14 @@
     line-height: 12px;
 
     a {
-      color: #fff;
+      color: $primary-white;
     }
   }
 }
 
 .tutorial {
   &__content {
-    @include title('Gotham', 20px, 30px, #707782);
+    @include title('Gotham', 20px, 30px, $quinary-grey);
     text-align: center;
   }
 }
@@ -106,24 +109,24 @@
 /* admin styles */
 // projects
 .underline-title {
-  @include title('Gotham', 30px, 35px, #707782);
+  @include title('Gotham', 30px, 35px, $quinary-grey);
   text-transform: capitalize;
-  border-bottom: 2px solid #e21d47;
+  border-bottom: 2px solid $primary-red;
   width: fit-content;
 }
 .grid {
   &-header {
     &__title {
-      @include title('Gotham', 14px, 30px, #474747);
+      @include title('Gotham', 14px, 30px, $senary-black);
       text-align: center;
     }
   }
 
   &-content {
-    @include title('Roboto', 14px, 14px, #333333);
+    @include title('Roboto', 14px, 14px, $tertiary-black);
     text-align: center;
     &__name {
-      @include title('Roboto', 14px, 16px, #333333);
+      @include title('Roboto', 14px, 16px, $tertiary-black);
       text-align: center;
     }
     &__description {
@@ -133,7 +136,7 @@
     &__action {
       .action-text,
       .toggle-text {
-        @include title('Gotham', 10px, 15px, #e21d47);
+        @include title('Gotham', 10px, 15px, $primary-red);
         text-transform: capitalize;
         margin-top: 0;
       }
@@ -142,11 +145,11 @@
 }
 
 .check-row-title {
-  @include title('Roboto', 18px, 21px, #333333);
+  @include title('Roboto', 18px, 21px, $tertiary-black);
   text-transform: capitalize;
   font-weight: 500;
 }
 .check-row-font {
-  @include title('Roboto', 14px, 16px, #333333);
+  @include title('Roboto', 14px, 16px, $tertiary-black);
   font-weight: 500;
 }

@@ -1,9 +1,12 @@
+/*import colors*/
+@import './variables.scss';
+
 /* checkbox */
 .star {
   visibility: hidden;
   font-size: 22px;
   cursor: pointer;
-  color: #fff;
+  color: $primary-white;
   transform: translateY(-10px);
 }
 .star:before {
@@ -58,36 +61,36 @@
 }
 // custom color
 .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: #d4d4d4;
+  color: $senary-white;
   height: auto !important;
 }
 
 .mat-form-field-label {
-  color: #959595;
+  color: $octonary-grey;
 }
 
 // custom select
 .mat-select .mat-select-value-text {
-  color: #333333;
+  color: $tertiary-black;
 }
 .mat-select-arrow {
-  color: #686b6f;
+  color: $nonary-grey;
   &:active {
-    color: #000 !important;
+    color: $primary-black !important;
   }
 }
 // input disabled styles
 .mat-form-field-appearance-outline.mat-form-field-disabled
   .mat-form-field-outline {
-  color: #d4d4d4;
+  color: $senary-white;
 }
 
 .mat-form-field-appearance-outline.mat-form-field-disabled
   .mat-form-field-label {
-  color: #959595;
+  color: $octonary-grey;
 }
 .mat-input-element:disabled {
-  color: #959595;
+  color: $octonary-grey;
 }
 .mat-form-field-appearance-outline.mat-form-field-disabled
   .mat-form-field-outline {
@@ -99,7 +102,7 @@
   white-space: normal !important;
 }
 .mat-checkbox-frame {
-  border-color: #e21d47;
+  border-color: $primary-red;
 }
 .mat-checkbox-label {
   font-size: 12px;
@@ -113,10 +116,10 @@
 // checked style
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
 .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: #e21d47;
+  background-color: $primary-red;
 }
 .mat-checkbox-checkmark-path {
-  stroke: #fff !important;
+  stroke: $primary-white !important;
 }
 // checkbox disabled
 .mat-checkbox-disabled .mat-checkbox-label {
@@ -125,5 +128,5 @@
 
 //mat hit styles
 .mat-hint {
-  color: #828282;
+  color: $senary-white;
 }

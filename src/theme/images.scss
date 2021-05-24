@@ -1,3 +1,6 @@
+/*import colors*/
+@import './variables.scss';
+
 /* background images*/
 @mixin img-background($img, $width, $height, $position) {
   background: $img;
@@ -12,7 +15,7 @@
 /* icons */
 
 .arrow {
-  color: #6c6c6c;
+  color: $septenary-grey;
   margin-top: 2px;
   font-size: 16px !important;
   transition: all 0.4s;
@@ -40,7 +43,7 @@
   margin: 0;
 }
 .menu-icon {
-  color: #e21d47;
+  color: $primary-red;
 }
 
 // brand icons  for menu
