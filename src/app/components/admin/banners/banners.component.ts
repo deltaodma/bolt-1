@@ -223,10 +223,13 @@ export class BannersComponent implements OnInit {
       )
   }
 
-  updateBannerStatus(toogleStatus: MatSlideToggleChange) {
+  updateBannerStatus(toogleStatus: MatSlideToggleChange, banner_id?: string) {
     this.BannerStatus = 0
     if (toogleStatus.checked) {
       this.BannerStatus = 1
+      this.httpService.put(
+        environment.serverUrl + environment.banners.upload + banner_id,
+      )
     }
   }
 

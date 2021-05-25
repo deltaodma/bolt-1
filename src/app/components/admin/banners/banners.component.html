@@ -16,6 +16,11 @@
     <div class="banners-container row">
       <mat-card class="card" *ngFor="let banner of banner_list; let id = index">
         <img [src]="banner.image" alt="banner.name_en" />
+        <mat-slide-toggle
+          class="enable-toogle"
+          (change)="updateBannerStatus($event, banner.id)"
+          [checked]="banner.status == 1"
+        ></mat-slide-toggle>
         <mat-card-content>
           <div class="row">
             <p class="card__body__message menu-icon">

@@ -14,6 +14,7 @@
           appearance="outline"
           floatLabel="auto"
           class="fullInput input-bolt"
+          style="margin-left: 0;"
         >
           <mat-label *ngSwitchCase="'Esp'">
             Nombre
@@ -97,28 +98,27 @@
 
     <div class="grid">
       <div class="grid-header">
-        <div class="grid-header__title">
-          <span *ngSwitchCase="'Esp'">Usuario</span>
-          <span *ngSwitchCase="'Eng'">User</span>
+        <div class="grid-header__title" style="margin-left: 30px;">
+          <span>{{ lang == 'Esp' ? 'Usuario' : 'User' }}</span>
         </div>
-        <div class="grid-header__title">
+        <div class="grid-header__title" style="margin-left: 30px;">
           <span>ID</span>
         </div>
         <div class="grid-header__title">
-          <span *ngSwitchCase="'Esp'">Roles registrados</span>
-          <span *ngSwitchCase="'Eng'">Assigned roles</span>
+          <span>
+            {{ lang == 'Esp' ? 'Roles registrados' : 'Assigned roles' }}
+          </span>
         </div>
         <div class="grid-header__title">
-          <span *ngSwitchCase="'Esp'">Creado</span>
-          <span *ngSwitchCase="'Eng'">Created</span>
+          <span>{{ lang == 'Esp' ? 'Creado' : 'Created' }}</span>
         </div>
         <div class="grid-header__title">
-          <span *ngSwitchCase="'Esp'">Última modificación</span>
-          <span *ngSwitchCase="'Eng'">Last modification</span>
+          <span>
+            {{ lang == 'Esp' ? 'Última modificación' : 'Last modification' }}
+          </span>
         </div>
-        <div class="grid-header__title">
-          <span *ngSwitchCase="'Esp'">Acciones</span>
-          <span *ngSwitchCase="'Eng'">Actions</span>
+        <div class="grid-header__title" style="text-align: center;">
+          <span>{{ lang == 'Esp' ? 'Acciones' : 'Actions' }}</span>
         </div>
       </div>
 

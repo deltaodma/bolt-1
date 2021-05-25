@@ -39,18 +39,26 @@ h3 {
     padding: 0;
     transition: transform 0.4s;
     border-radius: 10px;
+    position: relative;
+
     img {
       width: 250px;
       height: 250px;
       border-radius: 10px 10px 0 0;
     }
+
+    .enable-toogle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
     .mat-card-content {
-      padding: 5px 10px;
+      padding: 5px 20px;
       .row {
         justify-content: flex-start;
         .menu-icon {
           margin-right: 10px;
-          color: #fff;
         }
       }
 
@@ -64,6 +72,7 @@ h3 {
       margin: 0;
       padding: 5px 10px;
       display: flex;
+      justify-content: flex-end;
       .menu-icon {
         margin: 0;
       }
@@ -186,4 +195,11 @@ h3 {
   .cancel {
     color: #e21d47;
   }
+}
+.mat-card {
+  background: #ffffff !important;
+  color: #707782;
+  box-shadow: 4px 4px 10px 1px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 4px 4px 10px 1px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 4px 4px 10px 1px rgba(0, 0, 0, 0.25);
 }

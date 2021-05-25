@@ -3,7 +3,9 @@ import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 
 import { MockProjects } from 'src/app/mocks/projects-mock'
+import { HttpService } from 'src/app/services/http.service'
 import { UiService } from 'src/app/services/ui.service'
+import { environment } from 'src/environments/environment'
 import { ModalConfirmationComponent } from '../../pop up/modal-confirmation/modal-confirmation.component'
 import { ModalNotificationComponent } from '../../pop up/modal-notification/modal-notification.component'
 
@@ -26,6 +28,7 @@ export class SidebarComponent implements OnInit {
     private router: Router,
     private ui: UiService,
     public dialog: MatDialog,
+    private httpService: HttpService,
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +49,11 @@ export class SidebarComponent implements OnInit {
       })
     })
     this.openSidebar()
+    this.httpService
+      .get(environment.serverUrl + environment.projects.getAll)
+      .subscribe((response: any) => {
+        console.log(response.body)
+      })
   }
 
   openSidebar() {

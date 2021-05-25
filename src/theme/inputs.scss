@@ -79,6 +79,14 @@
     color: $primary-black !important;
   }
 }
+.mat-select-panel {
+  background: $quaternary-white;
+}
+
+.mat-option,
+.mat-option.mat-active {
+  color: $senary-grey;
+}
 // input disabled styles
 .mat-form-field-appearance-outline.mat-form-field-disabled
   .mat-form-field-outline {
@@ -112,6 +120,9 @@
 }
 .mat-checkbox-inner-container {
   margin-top: 0px;
+}
+.mat-pseudo-checkbox {
+  color: $senary-grey;
 }
 // checked style
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,

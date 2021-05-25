@@ -38,7 +38,7 @@
   @include title('Gotham', 20px, 30px, $quinary-grey);
 }
 .form-title {
-  @include title('Gotham', 24px, 30px, $quinary-grey);
+  @include title('Gotham', 24px, 30px, $senary-grey);
   margin: 0 auto 10px 28px;
   align-self: flex-start;
   border-bottom: 2px solid $primary-red;
@@ -109,7 +109,7 @@
 /* admin styles */
 // projects
 .underline-title {
-  @include title('Gotham', 30px, 35px, $quinary-grey);
+  @include title('Gotham', 30px, 40px, $senary-grey);
   text-transform: capitalize;
   border-bottom: 2px solid $primary-red;
   width: fit-content;
@@ -118,7 +118,8 @@
   &-header {
     &__title {
       @include title('Gotham', 14px, 30px, $senary-black);
-      text-align: center;
+      text-align: left;
+      font-weight: bold;
     }
   }
 
