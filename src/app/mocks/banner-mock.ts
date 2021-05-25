@@ -12,6 +12,7 @@ export const Banners = [
     name_en: 'nombre en ingles',
     content_en: 'english text test',
     button_en: 'More information',
+    deleted_at: null,
   },
   {
     id: '1212sd12',
@@ -26,6 +27,7 @@ export const Banners = [
     name_en: 'nombre en ingles',
     content_en: 'english text test',
     button_en: 'More information',
+    deleted_at: null,
   },
   {
     id: '1212sdwas',
@@ -40,6 +42,7 @@ export const Banners = [
     name_en: 'nombre en ingles',
     content_en: 'english text test',
     button_en: 'More information',
+    deleted_at: null,
   },
   {
     id: '1212sdbdf',
@@ -54,5 +57,6 @@ export const Banners = [
     name_en: 'nombre en ingles',
     content_en: 'english text test',
     button_en: 'More information',
+    deleted_at: null,
   },
 ]

@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment'
 import { HttpService } from 'src/app/services/http.service'
 import { Banner } from 'src/app/model/banner.model'
 
+import { Banners } from 'src/app/mocks/banner-mock'
+
 @Component({
   selector: 'app-banners',
   templateUrl: './banners.component.html',
@@ -18,7 +20,7 @@ import { Banner } from 'src/app/model/banner.model'
 export class BannersComponent implements OnInit {
   public lang: string
   public bannerForm: FormGroup
-  public banner_list: Banner
+  public banner_list
   public open_form: boolean = false
   public redirec_option: boolean = false
   public sizeError: boolean = false
@@ -61,13 +63,13 @@ export class BannersComponent implements OnInit {
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
     this.initforms()
-
+    this.banner_list = Banners
     this.httpService
       .get(environment.serverUrl + environment.banners.getAll)
       .subscribe((response: any) => {
         if (response.status == 200) {
           console.log(response.body.items)
-          this.banner_list = response.body.items
+          // this.banner_list = response.body.items
         }
       })
   }

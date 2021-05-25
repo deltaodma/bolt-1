@@ -1,4 +1,4 @@
-import { SubMenu } from './SubMenu'
+import { SubMenu } from './SubMenu.model'
 
 export class Projects {
   // id: string
