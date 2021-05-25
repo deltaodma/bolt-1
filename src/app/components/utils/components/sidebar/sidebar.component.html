@@ -14,7 +14,7 @@
     </span>
   </button>
 
-  <mat-accordion id="accordion1" multi="false">
+  <mat-accordion multi="false">
     <!-- fav section -->
     <mat-expansion-panel
       hideToggle
@@ -22,19 +22,20 @@
       (closed)="arrowRotate(false, 'f')"
       id="extf"
       class="no-padding"
+      [disabled]="sideStatus"
+      [expanded]="sideStatus == true ? collapseAll : null"
     >
-      <mat-expansion-panel-header>
-        <i class="material-icons arrow" id="arrowEf">
+      <mat-expansion-panel-header
+        (click)="sideStatus == true ? openSidebar() : null"
+      >
+        <i class="material-icons arrow" id="arrowEf" *ngIf="!sideStatus">
           arrow_forward_ios
         </i>
         <span class="material-icons icon menu-icon" id="iconEf">
           star
         </span>
-        <div *ngSwitchCase="'Esp'">
-          Favoritos
-        </div>
-        <div *ngSwitchCase="'Eng'">
-          Favorites
+        <div *ngIf="!sideStatus">
+          {{ lang == 'Esp' ? 'Favoritos' : 'Favorites' }}
         </div>
       </mat-expansion-panel-header>
 
@@ -66,19 +67,20 @@
       hideToggle
       (opened)="arrowRotate(true, 'a')"
       (closed)="arrowRotate(false, 'a')"
+      [disabled]="sideStatus"
+      [expanded]="sideStatus == true ? collapseAll : null"
     >
-      <mat-expansion-panel-header>
-        <i class="material-icons arrow" id="arrowEa">
+      <mat-expansion-panel-header
+        (click)="sideStatus == true ? openSidebar() : null"
+      >
+        <i class="material-icons arrow" id="arrowEa" *ngIf="!sideStatus">
           arrow_forward_ios
         </i>
         <span class="material-icons icon menu-icon" id="iconEa">
           manage_accounts
         </span>
-        <div *ngSwitchCase="'Esp'">
-          Administrador
-        </div>
-        <div *ngSwitchCase="'Eng'">
-          Manager
+        <div *ngIf="!sideStatus">
+          {{ lang == 'Esp' ? 'Administrador' : 'Manager' }}
         </div>
       </mat-expansion-panel-header>
 
@@ -97,11 +99,8 @@
               <span class="material-icons icon">
                 account_tree
               </span>
-              <span *ngSwitchCase="'Esp'">
-                Proyectos
-              </span>
-              <span *ngSwitchCase="'Eng'">
-                Projects
+              <span>
+                {{ lang == 'Esp' ? 'Proyectos' : 'Projects' }}
               </span>
             </button>
 
@@ -121,11 +120,12 @@
                     <span class="material-icons icon">
                       post_add
                     </span>
-                    <div *ngSwitchCase="'Esp'">
-                      crear o modificar un projecto
-                    </div>
-                    <div *ngSwitchCase="'Eng'">
-                      create or modify projects
+                    <div *ngIf="!sideStatus">
+                      {{
+                        lang == 'Esp'
+                          ? 'crear o modificar un projecto'
+                          : 'create or modify projects'
+                      }}
                     </div>
                   </div>
                 </button>
@@ -185,10 +185,9 @@
                     </span>
 
                     <div *ngSwitchCase="'Esp'">
-                      Administrar roles
-                    </div>
-                    <div *ngSwitchCase="'Eng'">
-                      Manages roles
+                      {{
+                        lang == 'Esp' ? 'Administrar roles' : 'Manages roles'
+                      }}
                     </div>
                   </div>
                 </button>
@@ -228,11 +227,12 @@
                       collections
                     </span>
 
-                    <div *ngSwitchCase="'Esp'">
-                      Crear o modificar banners
-                    </div>
-                    <div *ngSwitchCase="'Eng'">
-                      Create or modify banners
+                    <div>
+                      {{
+                        lang == 'Esp'
+                          ? 'Crear o modificar banners'
+                          : 'Create or modify banners'
+                      }}
                     </div>
                   </div>
                 </button>
@@ -247,11 +247,8 @@
   <mat-divider></mat-divider>
 
   <h2 class="sidebar-title" *ngIf="prop.length > 0">
-    <div *ngSwitchCase="'Esp'">
-      Proyectos asignados
-    </div>
-    <div *ngSwitchCase="'Eng'">
-      Assigned projects
+    <div *ngIf="!sideStatus">
+      {{ lang == 'Esp' ? 'Proyectos asignados' : 'Assigned projects' }}
     </div>
   </h2>
 
@@ -263,26 +260,28 @@
       (closed)="arrowRotate(false, id)"
       [id]="'panel' + id"
       hideToggle
+      [disabled]="sideStatus"
+      [expanded]="sideStatus == true ? collapseAll : null"
     >
-      <mat-expansion-panel-header>
-        <i class="material-icons arrow" [id]="'arrowH' + id">
+      <mat-expansion-panel-header
+        (click)="sideStatus == true ? openSidebar() : null"
+      >
+        <i
+          class="material-icons arrow"
+          [id]="'arrowH' + id"
+          *ngIf="!sideStatus"
+        >
           arrow_forward_ios
         </i>
         <span class="material-icons icon menu-icon" [id]="'iconH' + id">
           {{ project.icon }}
         </span>
-        {{ lang == 'Esp' ? project.name_es : project.name_en }}
+        <span *ngIf="!sideStatus">
+          {{ lang == 'Esp' ? project.name_es : project.name_en }}
+        </span>
       </mat-expansion-panel-header>
       <div class="left-line">
         <div *ngFor="let menuItem of project.menu">
-          <button
-            *ngIf="menuItem.app_list.length == 0 && menuItem.state == true"
-            mat-button
-            disableRipple="true"
-          >
-            redireccion a: {{ menuItem.name_es }}
-          </button>
-
           <div *ngIf="menuItem.app_list.length > 0 && menuItem.state == true">
             <button
               [id]="menuItem.name_es"

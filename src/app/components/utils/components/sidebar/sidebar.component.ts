@@ -23,6 +23,7 @@ export class SidebarComponent implements OnInit {
   public sideStatus: boolean = false
   public prop = MockProjects
   public sideMemory: string
+  public collapseAll: boolean = false
 
   constructor(
     private router: Router,
@@ -59,25 +60,20 @@ export class SidebarComponent implements OnInit {
   openSidebar() {
     let innerArrow = document.querySelector('#arrowSide')
     let sidebar = document.querySelector('#sidebar')
-    let buttonSide = document.querySelector('#collapseSide')
 
     this.sideStatus = !this.sideStatus
     if (this.sideStatus) {
+      this.collapseAll = false
+
       sessionStorage.setItem('sidebarStatus', 'close')
 
-      sidebar.setAttribute('style', 'transform: translateX(-267px)')
-      buttonSide.setAttribute(
-        'style',
-        'width: 290px !important; border-radius: 0 5px 5px 0 !important;',
-      )
+      sidebar.setAttribute('style', 'width: 80px !important')
+
       innerArrow.setAttribute('style', 'transform: rotate(0deg) ')
     } else {
+      this.collapseAll = true
       sessionStorage.setItem('sidebarStatus', 'open')
-      sidebar.setAttribute('style', 'transform: translateX(0px)')
-      buttonSide.setAttribute(
-        'style',
-        'width: 267px !important;border-radius: 0 !important;',
-      )
+      sidebar.setAttribute('style', 'width: 267px !important')
       innerArrow.setAttribute('style', 'transform: rotate(180deg)')
     }
   }
