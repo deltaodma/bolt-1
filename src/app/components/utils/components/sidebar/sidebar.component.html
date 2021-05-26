@@ -164,11 +164,13 @@
                     <span class="material-icons icon">
                       person_add
                     </span>
-                    <div *ngSwitchCase="'Esp'">
-                      crear y modificar usuarios
-                    </div>
-                    <div *ngSwitchCase="'Eng'">
-                      create and modify users
+                    <div>
+                      {{
+                        lang == 'Esp'
+                          ? 'crear y modificar usuarios'
+                          : 'create
+                      and modify users'
+                      }}
                     </div>
                   </div>
                 </button>
@@ -184,7 +186,7 @@
                       people_alt
                     </span>
 
-                    <div *ngSwitchCase="'Esp'">
+                    <div>
                       {{
                         lang == 'Esp' ? 'Administrar roles' : 'Manages roles'
                       }}
