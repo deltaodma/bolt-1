@@ -6,6 +6,8 @@ import { UiService } from 'src/app/services/ui.service'
 
 import { ModalNotificationComponent } from '../../../pop up/modal-notification/modal-notification.component'
 import { DialogData } from '../../../pop up/modal-confirmation/modal-confirmation.component'
+import { HttpService } from 'src/app/services/http.service'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-rol-form',
@@ -18,6 +20,7 @@ export class RolFormComponent implements OnInit {
   public hide: boolean
   public password: string
   public lang: string
+  public role_list: any = []
 
   private errorMessage: any = {
     es: {
@@ -32,15 +35,30 @@ export class RolFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
     public ui: UiService,
+    public httpService: HttpService,
   ) {}
 
   ngOnInit(): void {
     this.initforms()
-    this.loadUser()
+    this.httpService
+      .get(environment.serverUrl + environment.roles.getAll)
+      .subscribe(
+        (response: any) => {
+          if (response.status >= 200 && response.status < 300) {
+            response.body.items.forEach((role) => {
+              this.role_list.push(
+                this.lang == 'Esp' ? role.name_es : role.name_en,
+              )
+              this.loadUser()
+            })
+          }
+        },
+        (err) => {},
+      )
   }
+
   initforms() {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    console.log(this.data['user']['user_id'])
     this.addNewRolForm = this.formBuilder.group({
       user_name: new FormControl(
         {
@@ -67,25 +85,51 @@ export class RolFormComponent implements OnInit {
       })
       return
     } else {
-      // TO DO POST REQUEST
-
-      console.log('put request')
-
-      this.closeModal()
-      this.ui.showModal(
-        ModalNotificationComponent,
-        '500px',
-        'auto',
-        '',
-        'backdrop',
-        {
-          message_es: `Los roles del usuario con nombre ${this.addNewRolForm.controls.user_name.value} fueron actualizados con éxito`,
-          message_en: `The roles of the user ${this.addNewRolForm.controls.user_name.value} were updated successfully`,
-        },
-      )
-      setTimeout(() => {
-        window.location.reload()
-      }, 3000)
+      let userData = {
+        name: this.data['user']['name'],
+        last_name: this.data['user']['last_name'],
+        country: this.data['user']['country'],
+        employee_code: this.data['user']['employee_code'],
+        status: this.data['user']['status'],
+        roles: this.addNewRolForm.controls.user_roles.value,
+      }
+      this.httpService
+        .put(
+          environment.serverUrl +
+            environment.users.putById +
+            this.data['user']['employee_code'],
+          userData,
+        )
+        .subscribe(
+          (response: any) => {
+            this.ui.showLoading()
+            if (response.status >= 200 && response.status < 300) {
+              this.ui.dismissLoading()
+              this.closeModal()
+              this.ui.showModal(
+                ModalNotificationComponent,
+                '500px',
+                'auto',
+                '',
+                'backdrop',
+                {
+                  message_es: `Los roles del usuario con nombre ${this.addNewRolForm.controls.user_name.value} fueron actualizados con éxito`,
+                  message_en: `The roles of the user ${this.addNewRolForm.controls.user_name.value} were updated successfully`,
+                },
+              )
+              setTimeout(() => {
+                window.location.reload()
+              }, 3000)
+            }
+          },
+          (err) => {
+            this.ui.dismissLoading()
+            this.httpError =
+              this.lang == 'Esp'
+                ? 'Ha ocurrido un error'
+                : 'An error has accoured'
+          },
+        )
     }
   }
 
@@ -109,10 +153,15 @@ export class RolFormComponent implements OnInit {
 
   loadUser() {
     if (this.data) {
+      let user_roles = []
+      this.data['user']['roles'].forEach((roles) => {
+        user_roles.push(this.lang == 'Esp' ? roles.name_es : roles.name_en)
+      })
       this.addNewRolForm.patchValue({
-        user_name: this.data['user']['user_name'],
-        user_id: this.data['user']['user_id'],
-        user_roles: this.data['user']['roles'],
+        user_name:
+          this.data['user']['name'] + ' ' + this.data['user']['last_name'],
+        user_id: this.data['user']['employee_code'],
+        user_roles: user_roles,
       })
     }
   }

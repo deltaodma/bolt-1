@@ -124,27 +124,31 @@
 
       <div *ngFor="let user of users; let id = index">
         <div class="grid-content">
-          <p class="grid-content__name">{{ user.user_name }}</p>
-          <p class="grid-content__name">{{ user.user_id }}</p>
+          <p class="grid-content__name">
+            {{ user.name + ' ' + user.last_name }}
+          </p>
+          <p class="grid-content__name">{{ user.employee_code }}</p>
           <div class="col">
             <p class="grid-content__description">
-              <i *ngFor="let rol of user.roles">{{ rol }}/</i>
+              <i *ngFor="let rol of user.roles">
+                {{ lang == 'Esp' ? rol.name_es : rol.name_en }}/
+              </i>
             </p>
           </div>
 
           <div class="col">
-            <p class="grid-content__name">{{ user.created.author }}</p>
-            <p class="grid-content__name">{{ user.created.author_id }}</p>
-            <p class="grid-content__name">{{ user.created.date }}</p>
+            <p class="grid-content__name">{{ user.created_at }}</p>
+            <p class="grid-content__name">{{ user.created_at }}</p>
+            <p class="grid-content__name">{{ user.created_at }}</p>
           </div>
           <div class="col">
             <p class="grid-content__name">
-              {{ user.last_modification.author }}
+              {{ user.updated_at }}
             </p>
             <p class="grid-content__name">
-              {{ user.last_modification.author_id }}
+              {{ user.updated_at }}
             </p>
-            <p class="grid-content__name">{{ user.last_modification.date }}</p>
+            <p class="grid-content__name">{{ user.updated_at }}</p>
           </div>
 
           <div class="grid-content__action">
@@ -153,7 +157,7 @@
                 [id]="user.id"
                 class="enable-toogle"
                 (change)="showConfirmation(user, 'habilitar', 'enable')"
-                [checked]="user.active"
+                [checked]="user.status == 1"
               ></mat-slide-toggle>
               <p class="toggle-text" *ngSwitchCase="'Esp'">
                 {{ user.active ? 'Deshabilitar' : 'Habilitar' }}
@@ -211,7 +215,7 @@
         mat-button
         class="paginator-button"
         (click)="updatePage('prev', true)"
-        [disabled]="active_count == 0"
+        [disabled]="active_count == 1"
       >
         <span style="transform: rotate(180deg);" class="material-icons">
           play_arrow

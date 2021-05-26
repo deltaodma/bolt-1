@@ -6,6 +6,8 @@ import { ModalConfirmationComponent } from 'src/app/components/utils/pop up/moda
 import { RolFormComponent } from 'src/app/components/utils/admin/roles-and-users/rol-form/rol-form.component'
 import { MockUsers } from 'src/app/mocks/user-mock'
 import { UiService } from 'src/app/services/ui.service'
+import { HttpService } from 'src/app/services/http.service'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-users',
@@ -14,11 +16,11 @@ import { UiService } from 'src/app/services/ui.service'
 })
 export class UsersComponent implements OnInit {
   public lang: string
-  public pages: number = 3
+  public pages: number
   public user_list: any = []
-  public users: any = MockUsers
+  public users: any
   public searchForm: FormGroup
-  public active_count = 0
+  public active_count = 1
 
   constructor(
     public activeRoute: ActivatedRoute,
@@ -26,11 +28,30 @@ export class UsersComponent implements OnInit {
     private formBuilder: FormBuilder,
     public ui: UiService,
     public dialog: MatDialog,
+    public httpService: HttpService,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
     this.initforms()
+
+    this.httpService
+      .get(environment.serverUrl + environment.users.getAll)
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
+          if (response.status >= 200 && response.status < 300) {
+            // this.pages = response.body.meta.totalPages
+            // this.active_count = response.body.meta.currentPage
+            this.ui.dismissLoading()
+            this.users = response.body.items
+            console.log(response.body.items)
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+        },
+      )
   }
 
   initforms() {
@@ -38,14 +59,34 @@ export class UsersComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       user_name: new FormControl('', []),
       country: new FormControl('', []),
-
       user_id: new FormControl('', []),
     })
   }
 
   searchUser() {
     //TO DO GET request
-    console.log('GET request find user')
+    if (this.searchForm.controls.user_id.value.length == 0) {
+      return
+    }
+    this.httpService
+      .get(
+        environment.serverUrl +
+          environment.users.getById +
+          this.searchForm.controls.user_id.value,
+      )
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
+          console.log(response)
+          if (response >= 200 && response < 300) {
+            this.ui.dismissLoading()
+            this.users = response.body.items
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+        },
+      )
   }
 
   // updateUser(target: any) {
@@ -67,24 +108,33 @@ export class UsersComponent implements OnInit {
 
   updateUserStatus(toogleStatus: boolean, target: any) {
     // TO DO PUT request
-    console.log('put app', toogleStatus, target)
-    let response = 200
-    if (response == 200) {
-      setTimeout(() => {
-        this.ui.dismissLoading()
-        window.location.reload()
-      }, 2000)
-    } else {
-      this.ui.dismissLoading()
-      //TO DO show http error
-    }
+    this.httpService
+      .put(
+        environment.serverUrl +
+          environment.users.updateStatusById +
+          target.employee_code,
+      )
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
+          if (response >= 200 && response < 300) {
+            this.ui.dismissLoading()
+            window.location.reload()
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+          window.location.reload()
+        },
+      )
   }
 
   showConfirmation(target: any, message_es: string, message_en: string) {
-    if (target.active == true) {
+    if (target.status == 1) {
       message_es = 'deshabilitar'
       message_en = 'disable'
     }
+
     const confDialog = this.dialog.open(ModalConfirmationComponent, {
       id: ModalConfirmationComponent.toString(),
       disableClose: true,
@@ -92,7 +142,7 @@ export class UsersComponent implements OnInit {
       width: '500px',
       height: 'auto',
       data: {
-        user_name: target.user_name,
+        user_name: target.name + ' ' + target.last_name,
         message_action_es: message_es,
         message_action_en: message_en,
       },

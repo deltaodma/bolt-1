@@ -44,6 +44,23 @@ export const environment = {
     deleteById: 'apps/',
     updateStatusById: 'apps/changestatus/',
   },
+  users: {
+    getAll: 'user',
+    getSaml: 'user/saml',
+    getById: 'user/',
+    post: 'user',
+    putById: 'user/',
+    deleteById: 'user/',
+    updateStatusById: 'user/changestatus/',
+  },
+  roles: {
+    getAll: 'roles',
+    getById: 'roles/',
+    post: 'roles',
+    putById: 'roles/',
+    deleteById: 'roles/',
+    updateStatusById: 'roles/changestatus/',
+  },
 }
 
 /*

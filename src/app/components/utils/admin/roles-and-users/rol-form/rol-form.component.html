@@ -58,18 +58,7 @@
       <mat-label>Roles</mat-label>
 
       <mat-select [formControl]="addNewRolForm.controls.user_roles" multiple>
-        <mat-option
-          *ngFor="
-        let option of [
-          'Administrador',
-          'Visitante',
-          'Manenimiento',
-          'Gestor',
-          'Auditor',
-        ]
-      "
-          [value]="option"
-        >
+        <mat-option *ngFor="let option of role_list" [value]="option">
           {{ option }}
         </mat-option>
       </mat-select>
@@ -78,7 +67,10 @@
         {{ getMessageform('user_roles') }}
       </mat-error>
     </mat-form-field>
-    <!-- <mat-error *ngIf="httpError">{{ httpError }}</mat-error> -->
+
+    <mat-error *ngIf="httpError" style="margin-bottom: 20px; font-size: 75%;">
+      {{ httpError }}
+    </mat-error>
 
     <button class="btn-submit-rol" (click)="saveProject()">
       <span *ngSwitchCase="'Esp'">Actualizar roles</span>
