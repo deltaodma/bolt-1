@@ -4,6 +4,8 @@ import { UiService } from 'src/app/services/ui.service'
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { ModalNotificationComponent } from '../../../pop up/modal-notification/modal-notification.component'
+import { HttpService } from 'src/app/services/http.service'
+import { environment } from 'src/environments/environment'
 export interface DialogData {
   project: object
 }
@@ -42,6 +44,7 @@ export class ModalProjectFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
     public ui: UiService,
+    public httpService: HttpService,
   ) {}
 
   ngOnInit(): void {
@@ -84,31 +87,77 @@ export class ModalProjectFormComponent implements OnInit {
         })
       return
     } else {
+      let projectData = {
+        icon: this.createProjectForm.controls.icon.value,
+        name_es: this.createProjectForm.controls.project_name_es.value,
+        name_en: this.createProjectForm.controls.project_name_en.value,
+        description_es: this.createProjectForm.controls.description_es.value,
+        description_en: this.createProjectForm.controls.description_en.value,
+        status: 1,
+      }
+
       if (!this.data) {
         // if neither data was received a new project is created
         // TO DO POST REQUEST
-
-        console.log('post request')
+        this.httpService
+          .post(environment.serverUrl + environment.projects.post, projectData)
+          .subscribe((response: any) => {
+            if (response.status >= 200 && response.status < 300) {
+              console.log(projectData)
+              this.showNotification()
+            } else {
+              this.httpError =
+                this.lang == 'Esp'
+                  ? 'Ha ocurrido un error'
+                  : 'An error has accoured'
+            }
+          })
       } else {
         // if any data was received the current project will be updated
         // TO DO POST REQUEST
+        let project_id = this.data.project['id']
         this.operation_es = 'actualizado'
         this.operation_en = 'updated'
-        console.log('put request')
+
+        this.httpService
+          .put(
+            environment.serverUrl + environment.projects.putById + project_id,
+            projectData,
+          )
+          .subscribe(
+            (response: any) => {
+              if (response.status >= 200 && response.status < 300) {
+                console.log(projectData)
+                this.showNotification()
+              }
+            },
+            (e) => {
+              this.httpError =
+                this.lang == 'Esp'
+                  ? 'Ha ocurrido un error'
+                  : 'An error has accoured'
+            },
+          )
       }
-      this.closeModal()
-      this.ui.showModal(
-        ModalNotificationComponent,
-        '500px',
-        'auto',
-        '',
-        'backdrop',
-        {
-          message_es: `El proyecto de nombre ${this.createProjectForm.controls.project_name_es.value} fue ${this.operation_es} con éxito`,
-          message_en: `The ${this.createProjectForm.controls.project_name_en.value} project was successfully ${this.operation_en}`,
-        },
-      )
     }
+  }
+  showNotification() {
+    this.closeModal()
+    this.ui.showModal(
+      ModalNotificationComponent,
+      '500px',
+      'auto',
+      '',
+      'backdrop',
+      {
+        message_es: `El proyecto de nombre ${this.createProjectForm.controls.project_name_es.value} fue ${this.operation_es} con éxito`,
+        message_en: `The ${this.createProjectForm.controls.project_name_en.value} project was successfully ${this.operation_en}`,
+      },
+    )
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 3000)
   }
 
   public getMessageform(controlName: any): string {

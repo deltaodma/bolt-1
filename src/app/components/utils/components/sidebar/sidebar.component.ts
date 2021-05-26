@@ -53,7 +53,7 @@ export class SidebarComponent implements OnInit {
     this.httpService
       .get(environment.serverUrl + environment.projects.getAll)
       .subscribe((response: any) => {
-        console.log(response.body)
+        // console.log(response.body)
       })
   }
 

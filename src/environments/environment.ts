@@ -20,6 +20,7 @@ export const environment = {
     deleteById: 'banners/',
   },
   projects: {
+    get: 'projects',
     getAll: 'projects/menu',
     post: 'projects',
     getById: 'projects/',

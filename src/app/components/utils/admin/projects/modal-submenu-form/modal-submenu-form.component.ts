@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { HttpService } from 'src/app/services/http.service'
 
 import { UiService } from 'src/app/services/ui.service'
+import { environment } from 'src/environments/environment'
 
 import { ModalNotificationComponent } from '../../../pop up/modal-notification/modal-notification.component'
+
+export interface DialogData {
+  project: object
+}
 
 @Component({
   selector: 'app-modal-submenu-form',
@@ -32,7 +39,12 @@ export class ModalSubmenuFormComponent implements OnInit {
     },
   }
 
-  constructor(private formBuilder: FormBuilder, public ui: UiService) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private formBuilder: FormBuilder,
+    public ui: UiService,
+    public httpService: HttpService,
+  ) {}
 
   ngOnInit(): void {
     this.initforms()
@@ -73,24 +85,43 @@ export class ModalSubmenuFormComponent implements OnInit {
       return
     } else {
       // TO DO POST REQUEST
+      let submenuData = {
+        name_es: this.createSubMenuForm.controls.submenu_name_es.value,
+        name_en: this.createSubMenuForm.controls.submenu_name_en.value,
+        description_es: this.createSubMenuForm.controls.description_es.value,
+        description_en: this.createSubMenuForm.controls.description_en.value,
+        project_id: this.data.project['id'],
+      }
 
-      console.log('put request')
-
-      this.closeModal()
-      this.ui.showModal(
-        ModalNotificationComponent,
-        '500px',
-        'auto',
-        '',
-        'backdrop',
-        {
-          message_es: `El submenu de nombre ${this.createSubMenuForm.controls.submenu_name_es.value} fue creado con éxito`,
-          message_en: `The ${this.createSubMenuForm.controls.submenu_name_en.value} project was successfully created`,
-        },
-      )
-      setTimeout(() => {
-        window.location.reload()
-      }, 3000)
+      this.httpService
+        .post(environment.serverUrl + environment.submenus.post, submenuData)
+        .subscribe(
+          (response: any) => {
+            if (response.status == 201) {
+              this.closeModal()
+              this.ui.showModal(
+                ModalNotificationComponent,
+                '500px',
+                'auto',
+                '',
+                'backdrop',
+                {
+                  message_es: `El submenu de nombre ${this.createSubMenuForm.controls.submenu_name_es.value} fue creado con éxito`,
+                  message_en: `The ${this.createSubMenuForm.controls.submenu_name_en.value} project was successfully created`,
+                },
+              )
+              setTimeout(() => {
+                window.location.reload()
+              }, 3000)
+            }
+          },
+          (e) => {
+            this.httpError =
+              this.lang == 'Esp'
+                ? 'Ha ocurrido un error'
+                : 'An error has accoured'
+          },
+        )
     }
   }
 

@@ -157,11 +157,13 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-error *ngIf="httpError">{{ httpError }}</mat-error>
+    <mat-error *ngIf="httpError" style="margin-bottom: 20px;">
+      {{ httpError }}
+    </mat-error>
 
     <button class="btn-submit-rol" (click)="saveProject()">
-      <span *ngSwitchCase="'Esp'">Añadir app asociada</span>
-      <span *ngSwitchCase="'Eng'">Add assoccieted app</span>
+      <span *ngSwitchCase="'Esp'">Crear proyecto</span>
+      <span *ngSwitchCase="'Eng'">Create proyect</span>
     </button>
   </form>
 </div>

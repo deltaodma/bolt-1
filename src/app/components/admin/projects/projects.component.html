@@ -74,7 +74,7 @@
                     [id]="activeItem.id"
                     class="enable-toogle"
                     (change)="projectStatus(activeItem, $event, 'disable')"
-                    [checked]="!activeItem.active"
+                    [checked]="!activeItem.status"
                   ></mat-slide-toggle>
                   <p class="toggle-text" *ngSwitchCase="'Esp'">Deshabilitar</p>
                   <p class="toggle-text" *ngSwitchCase="'Eng'">Disable</p>
@@ -94,7 +94,11 @@
                     edit
                   </span>
                 </button>
-                <button mat-button class="action-btn" (click)="createSubmenu()">
+                <button
+                  mat-button
+                  class="action-btn"
+                  (click)="createSubmenu(activeItem)"
+                >
                   <span class="plus-icon"></span>
                   <span
                     class="action-text"
@@ -115,7 +119,7 @@
             </div>
             <div class="col project-submenus" [id]="'box' + id">
               <div class="col">
-                <div class="row" *ngFor="let submenu of activeItem.menu">
+                <div class="row" *ngFor="let submenu of activeItem.submenus">
                   <mat-slide-toggle
                     [id]="submenu.id"
                     class="sub-toogle"
@@ -215,7 +219,11 @@
                     edit
                   </span>
                 </button>
-                <button mat-button class="action-btn" (click)="createSubmenu()">
+                <button
+                  mat-button
+                  class="action-btn"
+                  (click)="createSubmenu(inactiveItem)"
+                >
                   <span class="plus-icon"></span>
 
                   <span
@@ -237,7 +245,7 @@
             </div>
             <div class="col project-submenus" [id]="'box' + id">
               <div class="col">
-                <div class="row" *ngFor="let submenu of inactiveItem.menu">
+                <div class="row" *ngFor="let submenu of inactiveItem.submenus">
                   <mat-slide-toggle
                     [id]="submenu.id"
                     class="sub-toogle"
@@ -254,12 +262,13 @@
         </div>
       </mat-tab>
     </mat-tab-group>
+
     <div class="paginator row" *ngIf="pages">
       <button
         mat-button
         class="paginator-button"
         (click)="updatePage('start', true)"
-        [disabled]="active_count == 0"
+        [disabled]="active_count == 1"
       >
         <span style="transform: rotate(180deg);" class="material-icons">
           double_arrow
@@ -269,7 +278,7 @@
         mat-button
         class="paginator-button"
         (click)="updatePage('prev', true)"
-        [disabled]="active_count == 0"
+        [disabled]="active_count == 1"
       >
         <span style="transform: rotate(180deg);" class="material-icons">
           play_arrow

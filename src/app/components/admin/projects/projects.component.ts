@@ -8,6 +8,9 @@ import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmatio
 import { ModalProjectFormComponent } from '../../utils/admin/projects/modal-project-form/modal-project-form.component'
 import { ModalSubmenuFormComponent } from '../../utils/admin/projects/modal-submenu-form/modal-submenu-form.component'
 import { ModalNotificationComponent } from '../../utils/pop up/modal-notification/modal-notification.component'
+import { HttpService } from 'src/app/services/http.service'
+import { environment } from 'src/environments/environment'
+import { element } from 'protractor'
 
 @Component({
   selector: 'app-projects',
@@ -16,7 +19,8 @@ import { ModalNotificationComponent } from '../../utils/pop up/modal-notificatio
 })
 export class ProjectsComponent implements OnInit {
   public lang: string
-  public projects: any = MockProjects
+  public projects: any = []
+  // public projects: any = MockProjects
   public activeProjects: any = []
   public inactiveProjects: any = []
   public open: boolean = false
@@ -25,24 +29,35 @@ export class ProjectsComponent implements OnInit {
   public subMenuPermission: boolean
   public message_action_es: string = 'deshabilitar'
   public message_action_en: string = 'disable'
-  public active_count = 0
+  public active_count = 1
 
   constructor(
-    public ui: UiService,
-    public router: Router,
     public dialog: MatDialog,
+    public ui: UiService,
+    public httpService: HttpService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.pages = 6
-    this.projects.forEach((project) => {
-      if (project.active) {
-        this.activeProjects.push(project)
-      } else {
-        this.inactiveProjects.push(project)
-      }
-    })
+    this.httpService
+      .get(environment.serverUrl + environment.projects.getAll)
+      .subscribe((response: any) => {
+        if (response.status >= 200 && response.status < 300) {
+          // this.pages = response.body.meta.totalPages
+          // this.active_count = response.body.meta.currentPage
+          this.projects = response.body
+          console.log(response.body)
+
+          this.projects.forEach((project) => {
+            if (project.status == 1) {
+              this.activeProjects.push(project)
+            } else {
+              this.inactiveProjects.push(project)
+            }
+          })
+        }
+      })
   }
 
   openPanel(id?: number | string) {
@@ -96,31 +111,52 @@ export class ProjectsComponent implements OnInit {
 
       confDialog.afterClosed().subscribe((result) => {
         this.projectPermission = result
+        let status
         if (this.projectPermission) {
-          // TO DO http request update project status
-          // if 200
           if (action == 'enable') {
             this.message_action_es = 'habilitó'
             this.message_action_en = 'enabled'
+            status = 1
           } else {
             this.message_action_es = 'deshabilitó'
             this.message_action_en = 'disabled'
+            status = 0
           }
-          this.ui.showModal(
-            ModalNotificationComponent,
-            '500px',
-            'auto',
-            null,
-            'backdrop',
-            {
-              message_es: `Se ${this.message_action_es} con éxito el proyecto ${project.name_es}`,
-              message_en: `Successfully ${this.message_action_en} the project ${project.name_en}`,
-            },
-          )
-          // show loading and reload page to update data view
-          setTimeout(() => {
-            window.location.reload()
-          }, 3000)
+          let projectStatusData = {
+            icon: project['icon'],
+            name_es: project['name_es'],
+            name_en: project['name_en'],
+            description_es: project['description_es'],
+            description_en: project['description_en'],
+            status: status,
+          }
+          // TO DO http request update project status
+          // if 200
+          let project_id = project['id']
+          this.httpService
+            .put(
+              environment.serverUrl + environment.projects.putById + project_id,
+              projectStatusData,
+            )
+            .subscribe((response: any) => {
+              if (response.status >= 200 && response.status < 300) {
+                this.ui.showModal(
+                  ModalNotificationComponent,
+                  '500px',
+                  'auto',
+                  null,
+                  'backdrop',
+                  {
+                    message_es: `Se ${this.message_action_es} con éxito el proyecto ${project.name_es}`,
+                    message_en: `Successfully ${this.message_action_en} the project ${project.name_en}`,
+                  },
+                )
+                // show loading and reload page to update data view
+                setTimeout(() => {
+                  window.location.reload()
+                }, 3000)
+              }
+            })
         } else {
           window.location.reload()
         }
@@ -182,8 +218,10 @@ export class ProjectsComponent implements OnInit {
       )
     }
   }
-  createSubmenu() {
-    this.ui.showModal(ModalSubmenuFormComponent, '500px', 'auto', null, null)
+  createSubmenu(project?: any) {
+    this.ui.showModal(ModalSubmenuFormComponent, '500px', 'auto', null, null, {
+      project: project,
+    })
   }
 
   updatePage(page: string) {
