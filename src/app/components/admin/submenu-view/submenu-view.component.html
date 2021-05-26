@@ -13,15 +13,10 @@
   </button>
 
   <div class="inner-section section__1">
-    <h1 class="underline-title" *ngSwitchCase="'Esp'">
-      Sub menú - {{ submenu_data.name_es }}
-    </h1>
-    <h1 class="underline-title" *ngSwitchCase="'Eng'">
-      Sub menu - {{ submenu_data.name_en }}
-    </h1>
+    <h1 class="underline-title">Sub menú - {{ submenu_data_name }}</h1>
 
     <form
-      [formGroup]="createProjectForm"
+      [formGroup]="createSubmenuForm"
       class="form-section"
       autocomplete="off"
     >
@@ -50,7 +45,7 @@
               edit
             </span>
             <mat-error
-              *ngIf="createProjectForm.controls.submenu_name_es.errors"
+              *ngIf="createSubmenuForm.controls.submenu_name_es.errors"
             >
               {{ getMessageform('submenu_name_es') }}
             </mat-error>
@@ -74,7 +69,7 @@
               disabled
             />
 
-            <mat-error *ngIf="createProjectForm.controls.created_by.errors">
+            <mat-error *ngIf="createSubmenuForm.controls.created_by.errors">
               {{ getMessageform('created_by') }}
             </mat-error>
           </mat-form-field>
@@ -104,7 +99,7 @@
               edit
             </span>
             <mat-error
-              *ngIf="createProjectForm.controls.submenu_name_en.errors"
+              *ngIf="createSubmenuForm.controls.submenu_name_en.errors"
             >
               {{ getMessageform('submenu_name_en') }}
             </mat-error>
@@ -128,7 +123,7 @@
               disable
             />
 
-            <mat-error *ngIf="createProjectForm.controls.last_update.errors">
+            <mat-error *ngIf="createSubmenuForm.controls.last_update.errors">
               {{ getMessageform('last_update') }}
             </mat-error>
           </mat-form-field>
@@ -208,24 +203,30 @@
           <span *ngSwitchCase="'Eng'">Actions</span>
         </div>
       </div>
-
+      <p class="grid-content__name" *ngIf="app_list.length == 0">
+        {{
+          lang == 'Esp'
+            ? 'Aun no has asignado aplicaciones a este menú'
+            : 'You have not yet assigned apps to this menu'
+        }}
+      </p>
       <div *ngFor="let app of app_list; let id = index">
         <div class="grid-content">
-          <p class="grid-content__name">{{ app.item_name }}</p>
+          <p class="grid-content__name">{{ app.name_en }}</p>
           <div class="col">
-            <p class="grid-content__name">{{ app.created.author }}</p>
-            <p class="grid-content__name">{{ app.created.author_id }}</p>
-            <p class="grid-content__name">{{ app.created.date }}</p>
+            <p class="grid-content__name">{{ app.created_at }}</p>
+            <p class="grid-content__name">{{ app.created_at }}</p>
+            <p class="grid-content__name">{{ app.created_at }}</p>
           </div>
           <div class="col">
-            <p class="grid-content__name">{{ app.created.author }}</p>
-            <p class="grid-content__name">{{ app.created.author_id }}</p>
-            <p class="grid-content__name">{{ app.created.date }}</p>
+            <p class="grid-content__name">{{ app.updated_at }}</p>
+            <p class="grid-content__name">{{ app.updated_at }}</p>
+            <p class="grid-content__name">{{ app.updated_at }}</p>
           </div>
 
           <div class="row">
             <div [class]="app.item_icon + '-md'"></div>
-            <p class="grid-content__name">{{ app.item_icon }}</p>
+            <p class="grid-content__name">{{ app.updated_at }}</p>
           </div>
           <div>
             <p [title]="app.url" class="grid-content__description">

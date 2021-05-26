@@ -157,13 +157,17 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-error *ngIf="httpError" style="margin-bottom: 20px;">
+    <mat-error *ngIf="httpError" style="margin-bottom: 20px; font-size: 75%;">
       {{ httpError }}
     </mat-error>
 
     <button class="btn-submit-rol" (click)="saveProject()">
-      <span *ngSwitchCase="'Esp'">Crear proyecto</span>
-      <span *ngSwitchCase="'Eng'">Create proyect</span>
+      <span *ngSwitchCase="'Esp'">
+        {{ !this.data ? 'Crear proyecto' : 'Guardar cambios' }}
+      </span>
+      <span *ngSwitchCase="'Eng'">
+        {{ !this.data ? 'Create proyect' : 'Save changes' }}
+      </span>
     </button>
   </form>
 </div>

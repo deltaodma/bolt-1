@@ -28,11 +28,21 @@ export const environment = {
     deleteById: 'projects/',
   },
   submenus: {
-    getAll: 'apps',
+    get: 'submenus',
+    post: 'submenus',
+    getById: 'submenus/',
+    putById: 'submenus/',
+    deleteById: 'submenus/',
+    updateStatusById: 'submenus/changestatus/',
+  },
+  apps: {
+    get: 'apps',
+    getAssoc: 'apps/assoc',
     post: 'apps',
     getById: 'apps/',
     putById: 'apps/',
     deleteById: 'apps/',
+    updateStatusById: 'apps/changestatus/',
   },
 }
 

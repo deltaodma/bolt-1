@@ -12,8 +12,8 @@
       </span>
     </button>
 
-    <!-- active project -->
     <mat-tab-group>
+      <!-- active project -->
       <mat-tab>
         <ng-template mat-tab-label>
           <span class="material-icons icon">
@@ -36,6 +36,18 @@
               {{ this.lang == 'Esp' ? 'Acciones' : 'Actions' }}
             </div>
           </div>
+
+          <p
+            *ngIf="activeProjects.length == 0"
+            class="grid-content__description"
+            style="text-align: center;"
+          >
+            {{
+              lang == 'Esp'
+                ? 'No existe ningún protecto con estado activo'
+                : 'No project exist with active status '
+            }}
+          </p>
 
           <div
             class="background-transparent"
@@ -79,6 +91,23 @@
                   <p class="toggle-text" *ngSwitchCase="'Esp'">Deshabilitar</p>
                   <p class="toggle-text" *ngSwitchCase="'Eng'">Disable</p>
                 </div>
+
+                <button
+                  mat-button
+                  class="action-btn"
+                  (click)="deleteProject(activeItem)"
+                >
+                  <span class="material-icons menu-icon">
+                    delete_forever
+                  </span>
+                  <span class="action-text" *ngSwitchCase="'Esp'">
+                    Eliminar
+                  </span>
+                  <span class="action-text" *ngSwitchCase="'Eng'">
+                    Delete
+                  </span>
+                </button>
+
                 <button
                   mat-button
                   class="action-btn"
@@ -94,6 +123,7 @@
                     edit
                   </span>
                 </button>
+
                 <button
                   mat-button
                   class="action-btn"
@@ -133,7 +163,7 @@
                   <mat-slide-toggle
                     [id]="submenu.id"
                     class="sub-toogle"
-                    (change)="subMenuDisable(submenu.name_es, $event)"
+                    (change)="subMenuDisable(submenu, $event)"
                     [checked]="submenu.state"
                   ></mat-slide-toggle>
                   <a class="submenu-link" (click)="editSubMenu(submenu.id)">
@@ -169,6 +199,18 @@
               {{ this.lang == 'Esp' ? 'Acciones' : 'Actions' }}
             </div>
           </div>
+
+          <p
+            *ngIf="inactiveProjects.length == 0"
+            class="grid-content__description"
+            style="text-align: center;"
+          >
+            {{
+              lang == 'Esp'
+                ? 'No existe ningún protecto con estado inactivo'
+                : 'No project exist with inactive status '
+            }}
+          </p>
 
           <div
             class="background-transparent"
@@ -214,6 +256,23 @@
                   <p class="toggle-text" *ngSwitchCase="'Esp'">Habilitar</p>
                   <p class="toggle-text" *ngSwitchCase="'Eng'">Enable</p>
                 </div>
+
+                <button
+                  mat-button
+                  class="action-btn"
+                  (click)="deleteProject(activeItem)"
+                >
+                  <span class="material-icons menu-icon">
+                    delete_forever
+                  </span>
+                  <span class="action-text" *ngSwitchCase="'Esp'">
+                    Eliminar
+                  </span>
+                  <span class="action-text" *ngSwitchCase="'Eng'">
+                    Delete
+                  </span>
+                </button>
+
                 <button
                   mat-button
                   class="action-btn"

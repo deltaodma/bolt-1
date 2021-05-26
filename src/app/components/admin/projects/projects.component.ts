@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSlideToggleChange } from '@angular/material/slide-toggle'
 import { Router } from '@angular/router'
-import { MockProjects } from 'src/app/mocks/projects-mock'
 import { UiService } from 'src/app/services/ui.service'
 import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmation/modal-confirmation.component'
 import { ModalProjectFormComponent } from '../../utils/admin/projects/modal-project-form/modal-project-form.component'
@@ -10,7 +9,6 @@ import { ModalSubmenuFormComponent } from '../../utils/admin/projects/modal-subm
 import { ModalNotificationComponent } from '../../utils/pop up/modal-notification/modal-notification.component'
 import { HttpService } from 'src/app/services/http.service'
 import { environment } from 'src/environments/environment'
-import { element } from 'protractor'
 
 @Component({
   selector: 'app-projects',
@@ -42,22 +40,31 @@ export class ProjectsComponent implements OnInit {
     this.lang = localStorage.getItem('lang') || 'Esp'
     this.httpService
       .get(environment.serverUrl + environment.projects.getAll)
-      .subscribe((response: any) => {
-        if (response.status >= 200 && response.status < 300) {
-          // this.pages = response.body.meta.totalPages
-          // this.active_count = response.body.meta.currentPage
-          this.projects = response.body
-          console.log(response.body)
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
 
-          this.projects.forEach((project) => {
-            if (project.status == 1) {
-              this.activeProjects.push(project)
-            } else {
-              this.inactiveProjects.push(project)
-            }
-          })
-        }
-      })
+          if (response.status >= 200 && response.status < 300) {
+            this.ui.dismissLoading()
+            // this.pages = response.body.meta.totalPages
+            // this.active_count = response.body.meta.currentPage
+
+            this.projects = response.body
+            this.projects.forEach((project) => {
+              if (project.status == 1) {
+                this.activeProjects.push(project)
+              } else {
+                this.inactiveProjects.push(project)
+              }
+            })
+          } else {
+            this.ui.dismissLoading()
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+        },
+      )
   }
 
   openPanel(id?: number | string) {
@@ -130,8 +137,7 @@ export class ProjectsComponent implements OnInit {
             description_en: project['description_en'],
             status: status,
           }
-          // TO DO http request update project status
-          // if 200
+
           let project_id = project['id']
           this.httpService
             .put(
@@ -151,7 +157,6 @@ export class ProjectsComponent implements OnInit {
                     message_en: `Successfully ${this.message_action_en} the project ${project.name_en}`,
                   },
                 )
-                // show loading and reload page to update data view
                 setTimeout(() => {
                   window.location.reload()
                 }, 3000)
@@ -167,12 +172,15 @@ export class ProjectsComponent implements OnInit {
   subMenuDisable(submenuName, event: MatSlideToggleChange) {
     let message_es
     let message_en
+    let state
     if (event.checked == false) {
       message_es = 'deshabilitar'
       message_en = 'disable'
+      state = 0
     } else {
       message_es = 'habilitar'
       message_en = 'enable'
+      state = 1
     }
     const confDialog = this.dialog.open(ModalConfirmationComponent, {
       id: ModalConfirmationComponent.toString(),
@@ -181,7 +189,7 @@ export class ProjectsComponent implements OnInit {
       width: '500px',
       height: 'auto',
       data: {
-        submenu_name: submenuName,
+        submenu_name: submenuName.name_es,
         message_action_es: message_es,
         message_action_en: message_en,
       },
@@ -190,12 +198,24 @@ export class ProjectsComponent implements OnInit {
     confDialog.afterClosed().subscribe((result) => {
       this.projectPermission = result
       if (this.projectPermission) {
-        // TO DO http request update project status
-        this.ui.showLoading()
-        setTimeout(() => {
-          this.ui.dismissLoading()
-          window.location.reload()
-        }, 2000)
+        this.httpService
+          .put(
+            environment.serverUrl +
+              environment.submenus.updateStatusById +
+              submenuName.id,
+          )
+          .subscribe(
+            (response: any) => {
+              this.ui.showLoading()
+              if (response.status >= 200 && response.status < 300) {
+                this.ui.dismissLoading()
+                window.location.reload()
+              }
+            },
+            (err) => {
+              this.ui.dismissLoading()
+            },
+          )
       } else {
         window.location.reload()
       }
@@ -218,6 +238,51 @@ export class ProjectsComponent implements OnInit {
       )
     }
   }
+
+  deleteProject(project: any) {
+    let message_es = 'eliminar'
+    let message_en = 'delete'
+
+    const confDialog = this.dialog.open(ModalConfirmationComponent, {
+      id: ModalConfirmationComponent.toString(),
+      disableClose: true,
+      hasBackdrop: true,
+      width: '500px',
+      height: 'auto',
+      data: {
+        project_name: this.lang == 'Esp' ? project.name_es : project.name_en,
+        message_action_es: message_es,
+        message_action_en: message_en,
+      },
+    })
+
+    confDialog.afterClosed().subscribe((result) => {
+      this.projectPermission = result
+      if (this.projectPermission) {
+        this.httpService
+          .delete(
+            environment.serverUrl +
+              environment.projects.deleteById +
+              project.id,
+          )
+          .subscribe(
+            (response: any) => {
+              this.ui.showLoading()
+              if (response.status >= 200 && response.status < 300) {
+                this.ui.dismissLoading()
+                window.location.reload()
+              }
+            },
+            (err) => {
+              this.ui.dismissLoading()
+            },
+          )
+      } else {
+        window.location.reload()
+      }
+    })
+  }
+
   createSubmenu(project?: any) {
     this.ui.showModal(ModalSubmenuFormComponent, '500px', 'auto', null, null, {
       project: project,

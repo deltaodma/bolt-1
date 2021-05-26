@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
-import { MockProjects } from 'src/app/mocks/projects-mock'
+import { HttpService } from 'src/app/services/http.service'
 import { UiService } from 'src/app/services/ui.service'
+import { environment } from 'src/environments/environment'
 import { ModalAppAssoccComponent } from '../../utils/admin/projects/modal-app-assocc/modal-app-assocc.component'
 import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmation/modal-confirmation.component'
 
@@ -15,10 +16,11 @@ import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmatio
 export class SubmenuViewComponent implements OnInit {
   public lang: string
   public submenu_data: any
+  public submenu_data_name: string
   public submenu_id: any
   public app_list: any = []
-  public projects: any = MockProjects
-  public createProjectForm: FormGroup
+  public projects: any = []
+  public createSubmenuForm: FormGroup
 
   private errorMessage: any = {
     es: {
@@ -36,27 +38,46 @@ export class SubmenuViewComponent implements OnInit {
     private formBuilder: FormBuilder,
     public ui: UiService,
     public dialog: MatDialog,
+    public httpService: HttpService,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
     this.submenu_id = this.activeRoute.snapshot.params.id
-
-    this.projects.forEach((proj) => {
-      proj.menu.forEach((sub) => {
-        if (sub.id == this.submenu_id) {
-          this.submenu_data = sub
-          this.app_list = sub.app_list
-        }
-      })
-    })
+    this.ui.showLoading()
     this.initforms()
-    this.loadProject()
+
+    this.httpService
+      .get(environment.serverUrl + environment.projects.getAll)
+      .subscribe(
+        (response: any) => {
+          if (response.status >= 200 && response.status < 300) {
+            // this.pages = response.body.meta.totalPages
+            // this.active_count = response.body.meta.currentPage
+            this.ui.dismissLoading()
+            this.projects = response.body
+            this.projects.forEach((proj) => {
+              proj.submenus.forEach((sub) => {
+                if (sub.id == this.submenu_id) {
+                  this.submenu_data = sub
+                  this.submenu_data_name =
+                    this.lang == 'Esp' ? sub.name_es : sub.name_en
+                  this.app_list = sub.apps
+                }
+              })
+            })
+            this.loadProject()
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+        },
+      )
   }
 
   initforms() {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.createProjectForm = this.formBuilder.group({
+    this.createSubmenuForm = this.formBuilder.group({
       submenu_name_es: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
@@ -86,33 +107,53 @@ export class SubmenuViewComponent implements OnInit {
   }
 
   updateSubmenu(target: any): void {
-    // TO DO PUT req
-    console.log('put request', target)
-    let response = 400
-    if (response == 200) {
-      setTimeout(() => {
-        this.ui.dismissLoading()
-        window.location.reload()
-      }, 2000)
-    } else {
-      this.ui.dismissLoading()
-      //TO DO show http error
+    let submenuData = {
+      project_id: target.id,
+      name_es: this.createSubmenuForm.controls.submenu_name_es.value,
+      name_en: this.createSubmenuForm.controls.submenu_name_en.value,
+      description_en: 'target.description_en',
+      description_es: 'target.description_es',
+      updated_by: target.updated_by,
+      created_by: target.created_by,
+      status: target.status,
     }
+    this.httpService
+      .put(
+        environment.serverUrl + environment.submenus.putById + target.id,
+        submenuData,
+      )
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
+          if (response.status >= 200 && response.status < 300) {
+            this.ui.dismissLoading()
+            window.location.reload()
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+        },
+      )
   }
 
   deletedSubmenu(target: any) {
-    // TO DO DELETE req
-    console.log('delete request', target)
-    let response = 200
-    if (response == 200) {
-      setTimeout(() => {
-        this.ui.dismissLoading()
-        window.location.reload()
-      }, 2000)
-    } else {
-      this.ui.dismissLoading()
-      //TO DO show http error
-    }
+    this.httpService
+      .delete(
+        environment.serverUrl + environment.submenus.deleteById + target.id,
+      )
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
+          if (response.status >= 200 && response.status < 300) {
+            this.router.navigate(['admin/projects'])
+            window.location.reload()
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+          window.location.reload()
+        },
+      )
   }
 
   updateAppAssoc(app?: any) {
@@ -126,18 +167,30 @@ export class SubmenuViewComponent implements OnInit {
   }
 
   updateAppStatus(toogleStatus: boolean, target: any) {
-    // TO DO PUT request
-    console.log('put app', toogleStatus, target)
-    let response = 200
-    if (response == 200) {
-      setTimeout(() => {
-        this.ui.dismissLoading()
-        window.location.reload()
-      }, 2000)
+    let status
+    if (toogleStatus) {
+      status = 1
     } else {
-      this.ui.dismissLoading()
-      //TO DO show http error
+      status = 0
     }
+
+    // TO DO PUT request
+    this.httpService
+      .put(
+        environment.serverUrl + environment.apps.updateStatusById + target.id,
+      )
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
+          if (response.status >= 200 && response.status < 300) {
+            this.ui.dismissLoading()
+            window.location.reload()
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+        },
+      )
   }
 
   showConfirmation(
@@ -180,11 +233,11 @@ export class SubmenuViewComponent implements OnInit {
           this.deletedSubmenu(target)
         } else if (operation == 'updateSubmenu') {
           if (
-            this.createProjectForm.controls.submenu_name_en.invalid ||
-            this.createProjectForm.controls.submenu_name_es.invalid
+            this.createSubmenuForm.controls.submenu_name_en.invalid ||
+            this.createSubmenuForm.controls.submenu_name_es.invalid
           ) {
             ;(<any>Object)
-              .values(this.createProjectForm.controls)
+              .values(this.createSubmenuForm.controls)
               .forEach((control) => {
                 control.markAsTouched()
               })
@@ -204,7 +257,7 @@ export class SubmenuViewComponent implements OnInit {
 
   public getMessageform(controlName: any): string {
     let error = ''
-    const control = this.createProjectForm.get(controlName)
+    const control = this.createSubmenuForm.get(controlName)
     if (control.touched && control.errors) {
       if (this.lang == 'Esp') {
         error = this.errorMessage['es'][controlName]
@@ -218,9 +271,11 @@ export class SubmenuViewComponent implements OnInit {
 
   loadProject() {
     if (this.submenu_data) {
-      this.createProjectForm.patchValue({
+      this.createSubmenuForm.patchValue({
         submenu_name_es: this.submenu_data['name_es'],
         submenu_name_en: this.submenu_data['name_en'],
+        created_by: this.submenu_data['created_by'],
+        last_update: this.submenu_data['updated_by'],
       })
     }
   }

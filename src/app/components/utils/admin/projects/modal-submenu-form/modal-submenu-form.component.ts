@@ -91,6 +91,7 @@ export class ModalSubmenuFormComponent implements OnInit {
         description_es: this.createSubMenuForm.controls.description_es.value,
         description_en: this.createSubMenuForm.controls.description_en.value,
         project_id: this.data.project['id'],
+        status: 1,
       }
 
       this.httpService
