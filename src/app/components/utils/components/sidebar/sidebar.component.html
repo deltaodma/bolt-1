@@ -1,5 +1,5 @@
 <!-- sidebar -->
-<aside class="flex-column box-shadow" id="sidebar" [ngSwitch]="lang">
+<aside class="flex-column box-shadow" id="sidebar">
   <!-- hide/show sidebar button -->
   <button
     mat-button
@@ -62,7 +62,7 @@
 
     <!-- admin section -->
     <mat-expansion-panel
-      *ngIf="role == 'admin'"
+      *ngIf="isAdmin"
       id="exta"
       hideToggle
       (opened)="arrowRotate(true, 'a')"
@@ -294,11 +294,8 @@
               disableRipple="true"
               class="colapsable-menu"
             >
-              <span *ngSwitchCase="'Esp'">
-                {{ menuItem.name_es }}
-              </span>
-              <span *ngSwitchCase="'Eng'">
-                {{ menuItem.name_es }}
+              <span>
+                {{ lang == 'Esp' ? menuItem.name_es : menuItem.name_en }}
               </span>
             </button>
 

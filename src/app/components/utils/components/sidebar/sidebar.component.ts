@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 
 import { MockProjects } from 'src/app/mocks/projects-mock'
+import { AuthService } from 'src/app/services/auth.service'
 import { HttpService } from 'src/app/services/http.service'
 import { UiService } from 'src/app/services/ui.service'
 import { environment } from 'src/environments/environment'
@@ -19,7 +20,8 @@ export class SidebarComponent implements OnInit {
   public arrowType: string = 'arrow_forward_ios'
   public checked: boolean = false
   public favList: any = []
-  public role: string = 'admin'
+  public isAdmin: boolean = false
+  public isAuth: boolean = false
   public sideStatus: boolean = false
   public prop = MockProjects
   public sideMemory: string
@@ -30,11 +32,15 @@ export class SidebarComponent implements OnInit {
     private ui: UiService,
     public dialog: MatDialog,
     private httpService: HttpService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
+    this.isAdmin = this.authService.isAdministrator()
+    this.isAuth = this.authService.isAuthenticated()
     this.sideMemory = sessionStorage.getItem('sidebarStatus') || 'open'
+
     if (this.sideMemory == 'close') {
       this.sideStatus = false
     } else {
