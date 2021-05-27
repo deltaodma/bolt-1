@@ -6,7 +6,6 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle'
 
 import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmation/modal-confirmation.component'
 import { UiService } from 'src/app/services/ui.service'
-import { environment } from 'src/environments/environment'
 import { HttpService } from 'src/app/services/http.service'
 import { Banner } from 'src/app/model/banner.model'
 
@@ -61,7 +60,6 @@ export class BannersComponent implements OnInit, OnDestroy {
     private ui: UiService,
     private dialog: MatDialog,
     private bannerService: BannersService,
-    private httpService: HttpService,
   ) {}
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSlideToggleChange } from '@angular/material/slide-toggle'
 import { Router } from '@angular/router'
@@ -9,16 +9,18 @@ import { ModalSubmenuFormComponent } from '../../utils/admin/projects/modal-subm
 import { ModalNotificationComponent } from '../../utils/pop up/modal-notification/modal-notification.component'
 import { HttpService } from 'src/app/services/http.service'
 import { environment } from 'src/environments/environment'
+import { ProjectsService } from 'src/app/services/projects.service'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, OnDestroy {
+  private projSubs: Subscription
   public lang: string
   public projects: any = []
-  // public projects: any = MockProjects
   public activeProjects: any = []
   public inactiveProjects: any = []
   public open: boolean = false
@@ -31,40 +33,24 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    public ui: UiService,
-    public httpService: HttpService,
+    private ui: UiService,
     private router: Router,
+    private httpService: HttpService,
+    private projectService: ProjectsService,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.httpService
-      .get(environment.serverUrl + environment.projects.getAll)
-      .subscribe(
-        (response: any) => {
-          this.ui.showLoading()
-
-          if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
-            // this.pages = response.body.meta.totalPages
-            // this.active_count = response.body.meta.currentPage
-
-            this.projects = response.body
-            this.projects.forEach((project) => {
-              if (project.status == 1) {
-                this.activeProjects.push(project)
-              } else {
-                this.inactiveProjects.push(project)
-              }
-            })
-          } else {
-            this.ui.dismissLoading()
-          }
-        },
-        (err) => {
-          this.ui.dismissLoading()
-        },
-      )
+    this.projSubs = this.projectService.fullProjects$.subscribe((projects) => {
+      projects.forEach((project) => {
+        if (project.status == 1) {
+          this.activeProjects.push(project)
+        } else {
+          this.inactiveProjects.push(project)
+        }
+      })
+    })
+    this.projectService.getFullData()
   }
 
   openPanel(id?: number | string) {
@@ -138,30 +124,12 @@ export class ProjectsComponent implements OnInit {
             status: status,
           }
 
-          let project_id = project['id']
-          this.httpService
-            .put(
-              environment.serverUrl + environment.projects.putById + project_id,
-              projectStatusData,
-            )
-            .subscribe((response: any) => {
-              if (response.status >= 200 && response.status < 300) {
-                this.ui.showModal(
-                  ModalNotificationComponent,
-                  '500px',
-                  'auto',
-                  null,
-                  'backdrop',
-                  {
-                    message_es: `Se ${this.message_action_es} con éxito el proyecto ${project.name_es}`,
-                    message_en: `Successfully ${this.message_action_en} the project ${project.name_en}`,
-                  },
-                )
-                setTimeout(() => {
-                  window.location.reload()
-                }, 3000)
-              }
-            })
+          this.projectService.updateStatus(
+            project,
+            projectStatusData,
+            this.message_action_es,
+            this.message_action_en,
+          )
         } else {
           window.location.reload()
         }
@@ -259,24 +227,7 @@ export class ProjectsComponent implements OnInit {
     confDialog.afterClosed().subscribe((result) => {
       this.projectPermission = result
       if (this.projectPermission) {
-        this.httpService
-          .delete(
-            environment.serverUrl +
-              environment.projects.deleteById +
-              project.id,
-          )
-          .subscribe(
-            (response: any) => {
-              this.ui.showLoading()
-              if (response.status >= 200 && response.status < 300) {
-                this.ui.dismissLoading()
-                window.location.reload()
-              }
-            },
-            (err) => {
-              this.ui.dismissLoading()
-            },
-          )
+        this.projectService.delete(project.id)
       } else {
         window.location.reload()
       }
@@ -309,5 +260,9 @@ export class ProjectsComponent implements OnInit {
     this.router.navigate([`admin/projects/submenu/${submenuId}`], {
       queryParamsHandling: 'preserve',
     })
+  }
+
+  ngOnDestroy() {
+    this.projSubs.unsubscribe()
   }
 }

@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { ModalNotificationComponent } from '../../../pop up/modal-notification/modal-notification.component'
 import { HttpService } from 'src/app/services/http.service'
 import { environment } from 'src/environments/environment'
+import { ProjectsService } from 'src/app/services/projects.service'
 export interface DialogData {
   project: object
 }
@@ -45,6 +46,7 @@ export class ModalProjectFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     public ui: UiService,
     public httpService: HttpService,
+    public projectService: ProjectsService,
   ) {}
 
   ngOnInit(): void {
@@ -98,46 +100,18 @@ export class ModalProjectFormComponent implements OnInit {
 
       if (!this.data) {
         // if neither data was received a new project is created
-        // TO DO POST REQUEST
-        this.httpService
-          .post(environment.serverUrl + environment.projects.post, projectData)
-          .subscribe((response: any) => {
-            if (response.status >= 200 && response.status < 300) {
-              console.log(projectData)
-              this.showNotification()
-            } else {
-              this.httpError =
-                this.lang == 'Esp'
-                  ? 'Ha ocurrido un error'
-                  : 'An error has accoured'
-            }
-          })
+        this.projectService.postData(projectData, this.showNotification())
       } else {
-        // if any data was received the current project will be updated
-        // TO DO POST REQUEST
+        // if data was received the current project will be updated
         let project_id = this.data.project['id']
         this.operation_es = 'actualizado'
         this.operation_en = 'updated'
 
-        this.httpService
-          .put(
-            environment.serverUrl + environment.projects.putById + project_id,
-            projectData,
-          )
-          .subscribe(
-            (response: any) => {
-              if (response.status >= 200 && response.status < 300) {
-                console.log(projectData)
-                this.showNotification()
-              }
-            },
-            (e) => {
-              this.httpError =
-                this.lang == 'Esp'
-                  ? 'Ha ocurrido un error'
-                  : 'An error has accoured'
-            },
-          )
+        this.projectService.updateData(
+          project_id,
+          projectData,
+          this.showNotification(),
+        )
       }
     }
   }

@@ -23,19 +23,22 @@ export class BannersService {
       .get(environment.serverUrl + environment.banners.getAll)
       .subscribe(
         (response: any) => {
+          this.ui.showLoading()
           if (response.status >= 200 && response.status < 300) {
+            this.ui.dismissLoading()
             this._banners = []
             response.body.items.forEach((banner) => {
               this._banners.push(banner)
             })
             this._bannersSbj.next(this._banners)
-            console.log(this._banners)
           } else {
             // TODO :: logic for error
+            this.ui.dismissLoading()
           }
         },
         (error) => {
           // TODO :: logic for error
+          this.ui.dismissLoading()
         },
       )
   }
