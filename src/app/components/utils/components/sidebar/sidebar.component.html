@@ -248,10 +248,8 @@
 
   <mat-divider></mat-divider>
 
-  <h2 class="sidebar-title" *ngIf="prop.length > 0">
-    <div *ngIf="!sideStatus">
-      {{ lang == 'Esp' ? 'Proyectos asignados' : 'Assigned projects' }}
-    </div>
+  <h2 class="sidebar-title" *ngIf="prop.length > 0 && !sideStatus">
+    {{ lang == 'Esp' ? 'Proyectos asignados' : 'Assigned projects' }}
   </h2>
 
   <!-- projects section -->
