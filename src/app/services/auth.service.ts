@@ -14,7 +14,7 @@ export class AuthService {
   private tokenTimer: any
   private isAuth: boolean = true
   public userId: string
-  public isAdmin: boolean = false
+  public isAdmin: boolean = true
 
   constructor(private http: HttpClient, private router: Router) {}
 
