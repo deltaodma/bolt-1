@@ -15,11 +15,15 @@
       Hi {{ profile?.givenName || this.userName }}!
     </p>
 
-    <div class="select">
-      <select (change)="changeLang($event.target.value)" class="select-font">
-        <option value="Esp" [selected]="lang == 'Esp'">Esp</option>
-        <option value="Eng" [selected]="lang == 'Eng'">Eng</option>
-      </select>
-    </div>
+    <mat-form-field appearance="outlined">
+      <mat-select (selectionChange)="changeLang($event)" [value]="lang">
+        <mat-option value="Esp">
+          Esp
+        </mat-option>
+        <mat-option value="Eng">
+          Eng
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 </mat-toolbar>

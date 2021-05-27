@@ -32,8 +32,10 @@ h3 {
   max-width: 1440px;
   overflow-x: auto;
   padding: 25px 0;
+  justify-content: flex-start;
   .card {
     width: 260px;
+    min-width: 260px;
     margin: 0 10px;
     padding: 0;
     transition: transform 0.4s;

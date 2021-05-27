@@ -31,71 +31,16 @@ mat-toolbar {
   }
 }
 
-select {
-  /* Reset Select */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-  outline: 0;
-  box-shadow: none;
-  border: 0 !important;
-  flex: 1;
-  padding: 0 0.5em;
-  color: #fff;
-  cursor: pointer;
-  /* Remove IE arrow */
-  &::-ms-expand {
-    display: none;
-  }
-
-  // custom view
+.mat-form-field {
   background: linear-gradient(180deg, #eb2228 0%, #dc1a5e 100%);
   border-radius: 0px 0px 10px 10px;
   width: 75px;
   height: 62px;
-
-  // option styles
-  option {
-    outline: none;
-    box-shadow: none;
-    border: none !important;
-    font-size: 24px;
-    padding: 10px 5px;
-    background: rgba(0, 0, 0, 0.7);
-    opacity: 0.91;
-
-    @supports (backdrop-filter: blur(4px)) {
-      backdrop-filter: blur(4px);
-    }
-  }
-}
-
-/* Custom Select */
-.select {
-  position: relative;
-  display: flex;
-  overflow: hidden;
   margin: 0 77px auto 60px;
-
-  /* Arrow */
-  &::after {
-    content: '\25BC';
-    position: absolute;
-    top: 0;
-    right: -5px;
-    padding: 15px 10px;
-    transform: scale(0.6);
-    background: transparent;
-    cursor: pointer;
-    pointer-events: none;
-    -webkit-transition: 0.25s all ease;
-    -o-transition: 0.25s all ease;
-    transition: 0.25s all ease;
-  }
-
-  /* Transition */
-  &:hover::after {
-    transform: scale(0.7);
-  }
+}
+::ng-deep .mat-form-field-wrapper {
+  padding: 10px;
+}
+::ng-deep .mat-select .mat-select-value-text {
+  color: #ffffff;
 }
