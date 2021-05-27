@@ -225,9 +225,11 @@
 
       <div *ngFor="let role of roles; let id = index">
         <div class="grid-content">
-          <p class="grid-content__name">{{ role.role_name_es }}</p>
+          <p class="grid-content__name">
+            {{ lang == 'Esp' ? role.name_es : role.name_en }}
+          </p>
           <p class="grid-content__description">
-            {{ role.role_description_es }}
+            {{ lang == 'Esp' ? role.description_es : role.description_en }}
           </p>
           <div class="col">
             <p class="grid-content__description">

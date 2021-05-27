@@ -33,6 +33,7 @@ h3 {
   overflow-x: auto;
   padding: 25px 0;
   .card {
+    width: 260px;
     margin: 0 10px;
     padding: 0;
     transition: transform 0.4s;
@@ -40,7 +41,7 @@ h3 {
     position: relative;
 
     img {
-      width: 250px;
+      width: 100%;
       height: 250px;
       border-radius: 10px 10px 0 0;
     }
@@ -53,17 +54,20 @@ h3 {
 
     .mat-card-content {
       padding: 5px 20px;
-      .row {
-        justify-content: flex-start;
+      .col {
+        align-items: flex-start;
         .menu-icon {
           margin-right: 10px;
+          font-weight: bold;
         }
       }
 
-      .card__body__message {
+      .card__body__message,
+      .menu-icon {
         font-family: 'Gotham';
-        font-size: 14px;
-        line-height: 16px;
+        font-size: 18px;
+        line-height: 18px;
+        color: #707782;
       }
     }
     .mat-card-actions {
@@ -73,6 +77,9 @@ h3 {
       justify-content: flex-end;
       .menu-icon {
         margin: 0;
+        padding: 0;
+        width: 35px;
+        min-width: 35px;
       }
     }
     &:hover {

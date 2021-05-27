@@ -10,6 +10,8 @@ import { MockProjectsByRole } from 'src/app/mocks/projects-by-role-mock'
 import { MockProjects } from 'src/app/mocks/projects-mock'
 
 import { UiService } from 'src/app/services/ui.service'
+import { environment } from 'src/environments/environment'
+import { HttpService } from 'src/app/services/http.service'
 
 @Component({
   selector: 'app-roles',
@@ -19,8 +21,8 @@ import { UiService } from 'src/app/services/ui.service'
 export class RolesComponent implements OnInit {
   public lang: string
   public pages: number = 3
-  public roles: any = MockRoles
-  public projects
+  public roles: any
+  public projects: any
   public createRolForm: FormGroup
   public active_count = 0
   public showForm: boolean = false
@@ -52,11 +54,23 @@ export class RolesComponent implements OnInit {
     private formBuilder: FormBuilder,
     public ui: UiService,
     public dialog: MatDialog,
+    public httpService: HttpService,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
     this.projects = MockProjects
+    this.httpService
+      .get(environment.serverUrl + environment.roles.getAll)
+      .subscribe(
+        (response: any) => {
+          if (response.status >= 200 && response.status < 300) {
+            this.roles = response.body.items
+            console.log(response)
+          }
+        },
+        (err) => {},
+      )
     this.initforms()
   }
 

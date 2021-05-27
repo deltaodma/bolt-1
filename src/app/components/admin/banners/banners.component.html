@@ -22,7 +22,7 @@
           [checked]="banner.status == 1"
         ></mat-slide-toggle>
         <mat-card-content>
-          <div class="row">
+          <div class="col" style="margin-bottom: 10px;">
             <p class="card__body__message menu-icon">
               {{ lang == 'Esp' ? 'Nombre: ' : 'Name: ' }}
             </p>
@@ -30,7 +30,7 @@
               {{ lang == 'Esp' ? banner.content_es : banner.content_en }}
             </p>
           </div>
-          <div class="row">
+          <div class="col">
             <p class="card__body__message menu-icon">
               {{ lang == 'Esp' ? 'Estado: ' : 'State: ' }}
             </p>
