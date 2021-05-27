@@ -71,8 +71,9 @@
 
 // custom select
 .mat-select .mat-select-value-text {
-  color: $tertiary-black;
+  color: $tertiary-black !important;
 }
+
 .mat-select-arrow {
   color: $nonary-grey;
   &:active {

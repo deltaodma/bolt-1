@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { HttpService } from 'src/app/services/http.service'
 import { UiService } from 'src/app/services/ui.service'
+import { environment } from 'src/environments/environment'
 import { ModalNotificationComponent } from '../modal-notification/modal-notification.component'
 
 @Component({
@@ -16,10 +18,43 @@ export class ModalRolFormComponent implements OnInit {
   public hide: boolean
   public password: string
   public lang: string
+  public projects: any = []
+  private errorMessage: any = {
+    es: {
+      user: 'usuario inválido',
+      id: 'id inválido',
+      project: 'Seleccione un proyecto',
+      country: 'Seleccione un país',
+    },
+    en: {
+      user: 'invalid user',
+      id: 'invalid id',
+      project: 'Select a project',
+      country: 'Select  a country',
+    },
+  }
 
-  constructor(private formBuilder: FormBuilder, public ui: UiService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    public ui: UiService,
+    public httpService: HttpService,
+  ) {}
 
   ngOnInit(): void {
+    this.httpService
+      .get(environment.serverUrl + environment.projects.get)
+      .subscribe(
+        (response: any) => {
+          if (response.status >= 200 && response.status < 300) {
+            this.projects = response.body.items
+          } else {
+            console.log('Error')
+          }
+        },
+        (err) => {
+          console.log(err)
+        },
+      )
     this.initforms()
   }
   initforms() {
@@ -43,50 +78,61 @@ export class ModalRolFormComponent implements OnInit {
       })
       return
     }
-    this.closeModal()
-    this.ui.showModal(
-      ModalNotificationComponent,
-      '500px',
-      'auto',
-      '',
-      'backdrop',
-      {
-        message_es:
-          'Su solicitud fue enviada con éxito en el momento en el que se genere el rol será notificado por medio de su correo',
-        message_en:
-          'Your request was sent successfully at the time the role is generated will be notified by mail',
-      },
-    )
+    // TO DO :: create endpoint and aim it
+    let requestData = {
+      user: this.userRolForm.controls.user.value,
+      id: this.userRolForm.controls.id.value,
+      project: this.userRolForm.controls.project.value,
+      country: this.userRolForm.controls.country.value,
+    }
+    console.log(requestData)
+
+    this.httpService
+      .post(environment.serverUrl + environment.users, requestData)
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
+          if (response.status >= 200 && response.status < 300) {
+            this.closeModal()
+            this.ui.dismissLoading()
+            this.ui.showModal(
+              ModalNotificationComponent,
+              '500px',
+              'auto',
+              '',
+              'backdrop',
+              {
+                message_es:
+                  'Su solicitud fue enviada con éxito en el momento en el que se genere el rol será notificado por medio de su correo',
+                message_en:
+                  'Your request was sent successfully at the time the role is generated will be notified by mail',
+              },
+            )
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+          this.httpError =
+            this.lang == 'Esp'
+              ? 'Ha ocurrido un error'
+              : 'An error has accoured'
+          console.log(err)
+        },
+      )
   }
 
-  public getMessageform(item: any): string {
-    if (this.lang == 'Esp') {
-      if (item.hasError('user')) {
-        return 'usuario inválido'
+  public getMessageform(controlName: any): string {
+    let error = ''
+    const control = this.userRolForm.get(controlName)
+    if (control.touched && control.errors) {
+      if (this.lang == 'Esp') {
+        error = this.errorMessage['es'][controlName]
       }
-      if (item.hasError('id')) {
-        return 'id inválido'
-      }
-      if (item.hasError('project')) {
-        return 'Seleccione un proyecto'
-      }
-      if (item.hasError('country')) {
-        return 'Seleccione un país'
-      }
-    } else {
-      if (item.hasError('user')) {
-        return 'invalid user'
-      }
-      if (item.hasError('id')) {
-        return 'invalid id'
-      }
-      if (item.hasError('project')) {
-        return 'Selecct a project'
-      }
-      if (item.hasError('country')) {
-        return 'select  a country'
+      if (this.lang == 'Eng') {
+        error = this.errorMessage['en'][controlName]
       }
     }
+    return error
   }
 
   closeModal() {

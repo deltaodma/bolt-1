@@ -12,12 +12,20 @@
       </p>
       <ul>
         <li class="footer__text">
-          <a *ngSwitchCase="'Esp'" href="#" rel="noreferrer noopener">
+          <p
+            *ngSwitchCase="'Esp'"
+            (click)="openForm()"
+            style="text-decoration: underline;"
+          >
             Generar solicitud
-          </a>
-          <a *ngSwitchCase="'Eng'" href="#" rel="noreferrer noopener">
+          </p>
+          <p
+            *ngSwitchCase="'Eng'"
+            (click)="openForm()"
+            style="text-decoration: underline;"
+          >
             Generate request
-          </a>
+          </p>
         </li>
       </ul>
     </div>

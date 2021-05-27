@@ -41,6 +41,6 @@ mat-toolbar {
 ::ng-deep .mat-form-field-wrapper {
   padding: 10px;
 }
-::ng-deep .mat-select .mat-select-value-text {
-  color: #ffffff;
+:host ::ng-deep .mat-select .mat-select-value-text {
+  color: #ffffff !important;
 }

@@ -33,7 +33,10 @@
         maxlength="15"
       />
 
-      <mat-error *ngIf="userRolForm.controls.user.errors">
+      <mat-error
+        style="margin-top: 10px;"
+        *ngIf="userRolForm.controls.user.errors"
+      >
         ingrese un usuario
       </mat-error>
     </mat-form-field>
@@ -59,7 +62,10 @@
         maxlength="30"
       />
 
-      <mat-error *ngIf="userRolForm.controls.id.errors">
+      <mat-error
+        style="margin-top: 10px;"
+        *ngIf="userRolForm.controls.id.errors"
+      >
         ingrese un ID
       </mat-error>
     </mat-form-field>
@@ -79,11 +85,18 @@
         vpn_key
       </span>
       <mat-select [formControl]="userRolForm.controls.project">
-        <mat-option value="valid">valid</mat-option>
-        <mat-option value="invalid">invalid</mat-option>
+        <mat-option
+          *ngFor="let project of projects"
+          [value]="lang == 'Esp' ? project.name_es : project.name_en"
+        >
+          {{ lang == 'Esp' ? project.name_es : project.name_en }}
+        </mat-option>
       </mat-select>
 
-      <mat-error *ngIf="userRolForm.controls.project.errors">
+      <mat-error
+        style="margin-top: 10px;"
+        *ngIf="userRolForm.controls.project.errors"
+      >
         seleccione un proyecto
       </mat-error>
     </mat-form-field>
@@ -101,18 +114,36 @@
         public
       </span>
       <mat-select [formControl]="userRolForm.controls.country">
-        <mat-option value="option">Option</mat-option>
+        <mat-option value="Argentina">Argentina</mat-option>
+        <mat-option value="Colombia">Colombia</mat-option>
+        <mat-option value="Ecuador">Ecuador</mat-option>
+        <mat-option value="Perú">Perú</mat-option>
+        <mat-option value="Chile">Chile</mat-option>
+        <mat-option value="México">México</mat-option>
+        <mat-option value="Brasil">Brasil</mat-option>
+        <mat-option value="España">
+          {{ lang == 'Esp' ? 'España' : 'Spain' }}
+        </mat-option>
+        <mat-option value="Usa">
+          {{ lang == 'Esp' ? 'Estados unidos' : 'United States' }}
+        </mat-option>
       </mat-select>
 
-      <mat-error *ngIf="userRolForm.controls.country.errors">
+      <mat-error
+        style="margin-top: 10px;"
+        *ngIf="userRolForm.controls.country.errors"
+      >
         seleccione un país
       </mat-error>
     </mat-form-field>
 
-    <mat-error *ngIf="httpError">{{ httpError }}</mat-error>
+    <mat-error style="font-size: 75%;" *ngIf="httpError">
+      {{ httpError }}
+    </mat-error>
 
     <button
       class="btn-submit-rol"
+      style="margin-top: 20px;"
       (click)="loginUser()"
       block="block"
       [ngClass]="{ 'button-disabled': userRolForm.invalid }"
