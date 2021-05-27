@@ -28,8 +28,11 @@
     >
       <div class="content">
         <div *ngSwitchCase="'Esp'" class="col">
-          <h2 class="banner__text">
-            {{ slide.name_es }}
+          <h2
+            class="banner__text"
+            *ngFor="let text of slide.name_es.split(' ')"
+          >
+            {{ text }}
           </h2>
 
           <button mat-button class="banner__btn" (click)="redirectTo(slide)">

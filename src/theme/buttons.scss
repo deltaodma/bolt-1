@@ -76,6 +76,7 @@
 
 .banner__btn {
   @include btn(152px, 36px, $octonary-red, $primary-white, Arial, 14px, 16px);
+  margin-top: 25px !important;
 }
 
 .bolt-btn-outline {
