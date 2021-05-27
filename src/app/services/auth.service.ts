@@ -14,11 +14,15 @@ export class AuthService {
   private tokenTimer: any
   private isAuth: boolean = true
   public userId: string
+  public isAdmin: boolean = true
 
   constructor(private http: HttpClient, private router: Router) {}
 
   public isAuthenticated(): boolean {
     return this.isAuth
+  }
+  public isAdministrator(): boolean {
+    return this.isAdmin
   }
 
   public getToken() {

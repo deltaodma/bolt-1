@@ -8,21 +8,23 @@ import { SubmenuViewComponent } from './components/admin/submenu-view/submenu-vi
 import { LoginComponent } from './components/utils/login/login.component'
 import { RolesComponent } from './components/admin/roles/roles/roles.component'
 import { UsersComponent } from './components/admin/roles/users/users.component'
+import { AuthGuard } from './services/auth.guard'
+import { AdminGuard } from './services/admin.guard'
 
 const routes: Routes = [
   // { path: '', component: LoginComponent },
   {
     path: 'home',
     component: HomeComponent,
-    // canActivate: [MsalGuard]
   },
   {
     path: 'app-view/:id',
     component: EmbedViewComponent,
-    // canActivate: [MsalGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'admin',
+    canActivate: [AuthGuard, AdminGuard],
     children: [
       {
         path: 'projects', // child route path

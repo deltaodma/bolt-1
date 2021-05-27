@@ -5,6 +5,11 @@
 export const environment = {
   production: false,
   serverUrl: 'https://bolt-back.herokuapp.com/api/v1/',
+
+  auth: {
+    get: 'auth/login',
+  },
+
   login: {
     resource: '/oauth/token?_format=json',
   },
