@@ -19,7 +19,7 @@ export const environment = {
   banners: {
     getAll: 'banners',
     post: 'banners',
-    upload: 'upload',
+    upload: 'banners/changestatus/',
     getById: 'banners/',
     putById: 'banners/',
     deleteById: 'banners/',

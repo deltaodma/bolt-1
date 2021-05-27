@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { MatDialog } from '@angular/material/dialog'
@@ -11,13 +11,16 @@ import { HttpService } from 'src/app/services/http.service'
 import { Banner } from 'src/app/model/banner.model'
 
 import { Banners } from 'src/app/mocks/banner-mock'
+import { Subscription } from 'rxjs'
+import { BannersService } from 'src/app/services/banners.service'
 
 @Component({
   selector: 'app-banners',
   templateUrl: './banners.component.html',
   styleUrls: ['./banners.component.scss'],
 })
-export class BannersComponent implements OnInit {
+export class BannersComponent implements OnInit, OnDestroy {
+  private bannerSubs: Subscription
   public lang: string
   public bannerForm: FormGroup
   public banner_list
@@ -55,24 +58,22 @@ export class BannersComponent implements OnInit {
   }
   constructor(
     private formBuilder: FormBuilder,
-    public ui: UiService,
-    public dialog: MatDialog,
+    private ui: UiService,
+    private dialog: MatDialog,
+    private bannerService: BannersService,
     private httpService: HttpService,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
     this.initforms()
-    this.banner_list = Banners
-    this.httpService
-      .get(environment.serverUrl + environment.banners.getAll)
-      .subscribe((response: any) => {
-        if (response.status == 200) {
-          console.log(response.body.items)
-          // this.banner_list = response.body.items
-        }
-      })
+    // this.banner_list = Banners
+    this.bannerSubs = this.bannerService.banners$.subscribe((banner) => {
+      this.banner_list = banner
+    })
+    this.bannerService.getDataBanners()
   }
+
   initforms() {
     this.bannerForm = this.formBuilder.group({
       banner_name_es: new FormControl('', [
@@ -174,63 +175,16 @@ export class BannersComponent implements OnInit {
       status: this.BannerStatus,
     }
 
-    this.httpService
-      .post(environment.serverUrl + environment.banners.post, dataForm)
-      .subscribe(
-        (response: any) => {
-          this.ui.showLoading()
-          if (response.status == 200) {
-            this.ui.dismissLoading()
-            console.log('An error has occured during the post request')
-            window.location.reload()
-          } else {
-            this.ui.dismissLoading()
-            console.log('An error has occured during the post request')
-          }
-        },
-        (error) => {
-          // TODO :: logic for error
-          console.log('An error has occured during the post request: ' + error)
-        },
-      )
+    this.bannerService.update(dataForm)
     console.log(dataForm)
   }
 
   deleteBanner(target) {
-    // TO DO HTTP DELETE request
-    this.httpService
-      .delete(
-        environment.serverUrl + environment.banners.deleteById + target.id,
-      )
-      .subscribe(
-        (response: any) => {
-          if (response.status == 200) {
-            this.ui.dismissLoading()
-            console.log('banner deleted successfully')
-            window.location.reload()
-          } else {
-            //  TO DO show http error
-            this.ui.dismissLoading()
-            console.log('An error has occured during the delete request')
-          }
-        },
-        (error) => {
-          // TODO :: logic for error
-          console.log(
-            'An error has occured during the delete request: ' + error,
-          )
-        },
-      )
+    this.bannerService.delete(target.id)
   }
 
   updateBannerStatus(toogleStatus: MatSlideToggleChange, banner_id?: string) {
-    this.BannerStatus = 0
-    if (toogleStatus.checked) {
-      this.BannerStatus = 1
-      this.httpService.put(
-        environment.serverUrl + environment.banners.upload + banner_id,
-      )
-    }
+    this.bannerService.changeStatus(banner_id)
   }
 
   cancel() {
@@ -321,5 +275,9 @@ export class BannersComponent implements OnInit {
       this.pdfFile = null
       this.sizeErrorPdf = false
     }
+  }
+
+  ngOnDestroy() {
+    this.bannerSubs.unsubscribe()
   }
 }
