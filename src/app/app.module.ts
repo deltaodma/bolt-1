@@ -32,9 +32,10 @@ import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatCheckboxModule } from '@angular/material/checkbox'
-import { MatRadioModule } from '@angular/material/radio';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { MatRadioModule } from '@angular/material/radio'
+import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
+import { AuthInterceptor } from './interceptors/auth.interceptor'
 
 @NgModule({
   declarations: [
@@ -71,10 +72,14 @@ import { environment } from '../environments/environment'
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [HttpService, AuthService],
+  providers: [
+    HttpService,
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

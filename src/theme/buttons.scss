@@ -45,6 +45,7 @@
 // rol form button
 .btn-submit-rol {
   @include btn(203px, 36px, $octonary-red, $primary-white, Arial, 14px, 16px);
+  margin-top: 20px;
 }
 // sidebar
 .rounded {
