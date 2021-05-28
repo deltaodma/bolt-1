@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { ModalAlertComponent } from '../../utils/pop up/modal-alert/modal-alert.component'
 import { UiService } from 'src/app/services/ui.service'
 import { TutorialComponent } from '../../utils/components/tutorial/tutorial.component'
+import { AuthService } from 'src/app/services/auth.service'
 
 @Component({
   selector: 'app-home',
@@ -21,16 +22,50 @@ export class HomeComponent implements OnInit {
   public date = new Date().toLocaleDateString()
   public favList: any = []
 
-  constructor(private router: Router, public ui: UiService) {}
+  constructor(
+    private router: Router,
+    private ui: UiService,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
+    var token = localStorage.getItem('token')
+    if (!token) {
+      // get url data
+      function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&')
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url)
+        if (!results) return null
+        if (!results[2]) return ''
+        return decodeURIComponent(results[2].replace(/\+/g, ' '))
+      }
+      var authData = getParameterByName('SamlReq')
+      var decodedAuthData = JSON.parse(atob(authData))
+      console.log(decodedAuthData)
+      // create user auth data
+      token = decodedAuthData.access_token
+      const userId = decodedAuthData.user.id
+      const expirationDate = new Date(
+        new Date().getTime() + decodedAuthData.expiresIn * 1000,
+      )
+      // save auth data in local storage
+      this.authService.saveAuthData(token, expirationDate, userId)
+      // set session timer
+      // this.authService.setAuthTimer(decodedAuthData.expiresIn)
+      // set true auth status listenner
+      this.authService.setListenner()
+    }
+
     this.ui.dismissLoading()
     this.lang = localStorage.getItem('lang') || 'Esp'
+
     this.banners.forEach((singleBanner) => {
       if (singleBanner.status) {
         this.bannerList = [...this.bannerList, singleBanner]
       }
     })
+
     if (this.user && this.user.length > 0) {
       this.prop.forEach((project) => {
         project.menu.forEach((subM) => {

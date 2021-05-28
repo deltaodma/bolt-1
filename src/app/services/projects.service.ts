@@ -26,20 +26,22 @@ export class ProjectsService {
     return this._fullProjects
   }
 
-  getFullData() {
+  getFullData(page?: number) {
+    if (!page) {
+      page = 1
+    }
     this.httpService
-      .get(environment.serverUrl + environment.projects.getAll)
+      .get(
+        environment.serverUrl + environment.projects.getAll + '?page=' + page,
+      )
       .subscribe(
         (response: any) => {
           this.ui.showLoading()
 
           if (response.status >= 200 && response.status < 300) {
             this.ui.dismissLoading()
-            this._fullProjects = []
+            this._fullProjects = response.body
 
-            response.body.forEach((projects) => {
-              this._fullProjects.push(projects)
-            })
             this._fullProjectsSbj.next(this._fullProjects)
           } else {
             // TODO :: logic for error

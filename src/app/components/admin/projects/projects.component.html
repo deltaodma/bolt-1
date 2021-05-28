@@ -40,7 +40,7 @@
           <p
             *ngIf="activeProjects.length == 0"
             class="grid-content__description"
-            style="text-align: center;"
+            style="text-align: center; margin-top: 10px;"
           >
             {{
               lang == 'Esp'
@@ -204,7 +204,7 @@
           <p
             *ngIf="inactiveProjects.length == 0"
             class="grid-content__description"
-            style="text-align: center;"
+            style="text-align: center; margin-top: 10px;"
           >
             {{
               lang == 'Esp'
@@ -348,7 +348,7 @@
       <button
         mat-button
         class="paginator-button"
-        (click)="updatePage('start', true)"
+        (click)="updatePage('start')"
         [disabled]="active_count == 1"
       >
         <span style="transform: rotate(180deg);" class="material-icons">
@@ -358,7 +358,7 @@
       <button
         mat-button
         class="paginator-button"
-        (click)="updatePage('prev', true)"
+        (click)="updatePage('prev')"
         [disabled]="active_count == 1"
       >
         <span style="transform: rotate(180deg);" class="material-icons">
@@ -374,7 +374,7 @@
       <button
         mat-button
         class="paginator-button"
-        (click)="updatePage('next', true)"
+        (click)="updatePage('next')"
         [disabled]="active_count == pages"
       >
         <span class="material-icons">
@@ -384,7 +384,7 @@
       <button
         mat-button
         class="paginator-button"
-        (click)="updatePage('last', true)"
+        (click)="updatePage('last')"
         [disabled]="active_count == pages"
       >
         <span class="material-icons">

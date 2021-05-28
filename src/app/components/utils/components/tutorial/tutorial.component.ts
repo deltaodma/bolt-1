@@ -8,7 +8,7 @@ import { UiService } from 'src/app/services/ui.service'
 })
 export class TutorialComponent implements OnInit {
   public step: number = 1
-  public admin: boolean = false
+  public admin: boolean = true
   public lang: string
   constructor(private ui: UiService) {}
 

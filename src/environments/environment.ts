@@ -7,7 +7,7 @@ export const environment = {
   serverUrl: 'https://bolt-back.herokuapp.com/api/v1/',
 
   auth: {
-    get: 'auth/login',
+    get: 'auth/saml',
   },
 
   login: {

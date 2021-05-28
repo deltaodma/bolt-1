@@ -14,7 +14,11 @@
       </span>
       Hi {{ profile?.givenName || this.userName }}!
     </p>
-
+    <button mat-button [disableRipple]="true" (click)="logout()">
+      <span class="material-icons">
+        logout
+      </span>
+    </button>
     <mat-form-field appearance="outlined">
       <mat-select (selectionChange)="changeLang($event)" [value]="lang">
         <mat-option value="Esp">

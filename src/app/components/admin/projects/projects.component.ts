@@ -41,16 +41,28 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.projSubs = this.projectService.fullProjects$.subscribe((projects) => {
-      projects.forEach((project) => {
-        if (project.status == 1) {
-          this.activeProjects.push(project)
-        } else {
-          this.inactiveProjects.push(project)
-        }
-      })
-    })
-    this.projectService.getFullData()
+    this.getData(this.active_count)
+  }
+
+  getData(page: number) {
+    this.projSubs = this.projectService.fullProjects$.subscribe(
+      (projects: any) => {
+        this.pages = projects.meta.totalPages
+        this.active_count = projects.meta.currentPage
+        this.projects = projects.items
+
+        this.activeProjects = []
+        this.inactiveProjects = []
+        this.projects.forEach((project) => {
+          if (project.status == 1) {
+            this.activeProjects.push(project)
+          } else {
+            this.inactiveProjects.push(project)
+          }
+        })
+      },
+    )
+    this.projectService.getFullData(page)
   }
 
   openPanel(id?: number | string) {
@@ -253,7 +265,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     if (page == 'last') {
       this.active_count = this.pages
     }
-    // TO DO active elements GET request
+    this.getData(this.active_count)
   }
 
   editSubMenu(submenuId: string) {

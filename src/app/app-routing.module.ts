@@ -12,7 +12,7 @@ import { AuthGuard } from './services/auth.guard'
 import { AdminGuard } from './services/admin.guard'
 
 const routes: Routes = [
-  // { path: '', component: LoginComponent },
+  { path: '', component: LoginComponent },
   {
     path: 'home',
     component: HomeComponent,

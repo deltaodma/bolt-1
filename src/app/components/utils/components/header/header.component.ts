@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http'
 import { AfterContentChecked, Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { AuthService } from 'src/app/services/auth.service'
 
 type ProfileType = {
   givenName?: string
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   public lang: string
   profile!: ProfileType
   public userName: string = 'Cristhopher'
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
@@ -32,5 +32,9 @@ export class HeaderComponent implements OnInit {
 
   routerHome() {
     this.router.navigate(['home'])
+  }
+
+  logout() {
+    this.authService.logout()
   }
 }

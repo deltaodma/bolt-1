@@ -85,7 +85,9 @@ export class ModalSubmenuFormComponent implements OnInit {
       return
     } else {
       // TO DO POST REQUEST
+      let user_id = localStorage.getItem('userId')
       let submenuData = {
+        created_by: user_id,
         name_es: this.createSubMenuForm.controls.submenu_name_es.value,
         name_en: this.createSubMenuForm.controls.submenu_name_en.value,
         description_es: this.createSubMenuForm.controls.description_es.value,

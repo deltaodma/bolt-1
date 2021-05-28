@@ -56,11 +56,11 @@ export class SidebarComponent implements OnInit {
       })
     })
     this.openSidebar()
-    this.httpService
-      .get(environment.serverUrl + environment.projects.getAll)
-      .subscribe((response: any) => {
-        // console.log(response.body)
-      })
+    // this.httpService
+    //   .get(environment.serverUrl + environment.projects.getAll)
+    //   .subscribe((response: any) => {
+    //     // console.log(response.body)
+    //   })
   }
 
   openSidebar() {
