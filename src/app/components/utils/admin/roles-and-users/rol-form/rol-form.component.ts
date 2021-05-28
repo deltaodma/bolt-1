@@ -8,6 +8,7 @@ import { ModalNotificationComponent } from '../../../pop up/modal-notification/m
 import { DialogData } from '../../../pop up/modal-confirmation/modal-confirmation.component'
 import { HttpService } from 'src/app/services/http.service'
 import { environment } from 'src/environments/environment'
+import { UsersService } from 'src/app/services/users.service'
 
 @Component({
   selector: 'app-rol-form',
@@ -36,6 +37,7 @@ export class RolFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     public ui: UiService,
     public httpService: HttpService,
+    public userService: UsersService,
   ) {}
 
   ngOnInit(): void {
@@ -78,14 +80,14 @@ export class RolFormComponent implements OnInit {
     })
   }
 
-  saveProject(): void {
+  saveRoles(): void {
     if (this.addNewRolForm.invalid) {
       ;(<any>Object).values(this.addNewRolForm.controls).forEach((control) => {
         control.markAsTouched()
       })
       return
     } else {
-      let userData = {
+      let userRoles = {
         name: this.data['user']['name'],
         last_name: this.data['user']['last_name'],
         country: this.data['user']['country'],
@@ -93,43 +95,7 @@ export class RolFormComponent implements OnInit {
         status: this.data['user']['status'],
         roles: this.addNewRolForm.controls.user_roles.value,
       }
-      this.httpService
-        .put(
-          environment.serverUrl +
-            environment.users.putById +
-            this.data['user']['employee_code'],
-          userData,
-        )
-        .subscribe(
-          (response: any) => {
-            this.ui.showLoading()
-            if (response.status >= 200 && response.status < 300) {
-              this.ui.dismissLoading()
-              this.closeModal()
-              this.ui.showModal(
-                ModalNotificationComponent,
-                '500px',
-                'auto',
-                '',
-                'backdrop',
-                {
-                  message_es: `Los roles del usuario con nombre ${this.addNewRolForm.controls.user_name.value} fueron actualizados con éxito`,
-                  message_en: `The roles of the user ${this.addNewRolForm.controls.user_name.value} were updated successfully`,
-                },
-              )
-              setTimeout(() => {
-                window.location.reload()
-              }, 3000)
-            }
-          },
-          (err) => {
-            this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
-          },
-        )
+      this.userService.updateUserRoles(userRoles, this.closeModal())
     }
   }
 

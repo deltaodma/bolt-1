@@ -38,7 +38,7 @@ mat-toolbar {
   height: 62px;
   margin: 0 77px auto 60px;
 }
-::ng-deep .mat-form-field-wrapper {
+:host ::ng-deep .mat-form-field-wrapper {
   padding: 10px;
 }
 :host ::ng-deep .mat-select .mat-select-value-text {

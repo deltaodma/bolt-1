@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ModalConfirmationComponent } from 'src/app/components/utils/pop up/modal-confirmation/modal-confirmation.component'
 import { RolFormComponent } from 'src/app/components/utils/admin/roles-and-users/rol-form/rol-form.component'
-import { MockUsers } from 'src/app/mocks/user-mock'
 import { UiService } from 'src/app/services/ui.service'
 import { HttpService } from 'src/app/services/http.service'
 import { environment } from 'src/environments/environment'
+import { Subscription } from 'rxjs'
+import { UsersService } from 'src/app/services/users.service'
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
+  private userSubs: Subscription
   public lang: string
   public pages: number
   public user_list: any = []
@@ -29,29 +31,20 @@ export class UsersComponent implements OnInit {
     public ui: UiService,
     public dialog: MatDialog,
     public httpService: HttpService,
+    public userService: UsersService,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
     this.initforms()
 
-    this.httpService
-      .get(environment.serverUrl + environment.users.getAll)
-      .subscribe(
-        (response: any) => {
-          this.ui.showLoading()
-          if (response.status >= 200 && response.status < 300) {
-            // this.pages = response.body.meta.totalPages
-            // this.active_count = response.body.meta.currentPage
-            this.ui.dismissLoading()
-            this.users = response.body.items
-            console.log(response.body.items)
-          }
-        },
-        (err) => {
-          this.ui.dismissLoading()
-        },
-      )
+    this.userSubs = this.userService.users$.subscribe((users: any) => {
+      this.pages = users.meta.totalPages
+      this.active_count = users.meta.currentPage
+      this.users = users.items
+      console.log(users)
+    })
+    this.userService.getFullData()
   }
 
   initforms() {
@@ -68,25 +61,15 @@ export class UsersComponent implements OnInit {
     if (this.searchForm.controls.user_id.value.length == 0) {
       return
     }
-    this.httpService
-      .get(
-        environment.serverUrl +
-          environment.users.getById +
-          this.searchForm.controls.user_id.value,
-      )
-      .subscribe(
-        (response: any) => {
-          this.ui.showLoading()
-          console.log(response)
-          if (response >= 200 && response < 300) {
-            this.ui.dismissLoading()
-            this.users = response.body.items
-          }
-        },
-        (err) => {
-          this.ui.dismissLoading()
-        },
-      )
+    let user_data = this.searchForm.controls.user_id.value
+
+    this.userSubs = this.userService.users$.subscribe((users: any) => {
+      this.pages = users.meta.totalPages
+      this.active_count = users.meta.currentPage
+      this.users = users.items
+      console.log(users)
+    })
+    this.userService.searchUsers(user_data)
   }
 
   // updateUser(target: any) {
@@ -106,27 +89,8 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  updateUserStatus(toogleStatus: boolean, target: any) {
-    // TO DO PUT request
-    this.httpService
-      .put(
-        environment.serverUrl +
-          environment.users.updateStatusById +
-          target.employee_code,
-      )
-      .subscribe(
-        (response: any) => {
-          this.ui.showLoading()
-          if (response >= 200 && response < 300) {
-            this.ui.dismissLoading()
-            window.location.reload()
-          }
-        },
-        (err) => {
-          this.ui.dismissLoading()
-          window.location.reload()
-        },
-      )
+  updateUserStatus(target: any) {
+    this.userService.updateStatus(target.employee_code)
   }
 
   showConfirmation(target: any, message_es: string, message_en: string) {
@@ -151,8 +115,7 @@ export class UsersComponent implements OnInit {
     confDialog.afterClosed().subscribe((result) => {
       if (result) {
         this.ui.showLoading()
-        let toogle = !target.active
-        this.updateUserStatus(toogle, target)
+        this.updateUserStatus(target)
       } else {
         window.location.reload()
       }
@@ -173,5 +136,9 @@ export class UsersComponent implements OnInit {
       this.active_count = this.pages
     }
     // TO DO active elements GET request
+  }
+
+  ngOnDestroy() {
+    this.userSubs.unsubscribe()
   }
 }
