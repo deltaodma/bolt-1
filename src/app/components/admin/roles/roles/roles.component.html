@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="container" [ngSwitch]="lang">
-  <!-- search bar -->
+  <!-- role form -->
   <div class="inner-section section__1" *ngIf="showForm">
     <h1 class="underline-title" *ngSwitchCase="'Esp'">Crear rol</h1>
     <h1 class="underline-title" *ngSwitchCase="'Eng'">Create rol</h1>
@@ -27,7 +27,7 @@
               id="rol_name_en"
               formControlName="rol_name_en"
               type="text"
-              minlength="6"
+              minlength="4"
               maxlength="30"
             />
             <mat-error *ngIf="createRolForm.controls.rol_name_en.errors">
@@ -100,7 +100,7 @@
               id="rol_name_es"
               formControlName="rol_name_es"
               type="text"
-              minlength="6"
+              minlength="4"
               maxlength="30"
             />
             <mat-error *ngIf="createRolForm.controls.rol_name_es.errors">
@@ -135,12 +135,14 @@
 
       <div class="row row__3" *ngFor="let project of projectResume">
         <div class="col">
-          <h2 class="check-row-title">{{ project.name }}</h2>
+          <h2 class="check-row-title">
+            {{ this.lang == 'Esp' ? project.name_es : project.name_en }}
+          </h2>
           <p *ngSwitchCase="'Esp'" class="text-muted">Sub menús</p>
           <p *ngSwitchCase="'Eng'" class="text-muted">Sub menus</p>
 
           <div class="row row-check">
-            <div class="col" *ngFor="let submenu of project.menu">
+            <div class="col" *ngFor="let submenu of project.submenus">
               <div *ngIf="submenu.state">
                 <mat-checkbox
                   class="check-row-font"
@@ -149,7 +151,7 @@
                 >
                   {{ lang == 'Esp' ? submenu.name_es : submenu.name_en }}
                 </mat-checkbox>
-                <ul *ngFor="let app of submenu.app_list; let i = index">
+                <ul *ngFor="let app of submenu.apps; let i = index">
                   <li>
                     <div
                       [id]="'blocker' + app.id"
@@ -193,7 +195,7 @@
     <div class="row">
       <h2 class="form-title">Roles</h2>
 
-      <button class="bolt-btn-filled" (click)="createRol()">
+      <button class="bolt-btn-filled" (click)="getRoles(true)">
         <span *ngSwitchCase="'Esp'">Crear nuevo rol</span>
         <span *ngSwitchCase="'Eng'">Create new rol</span>
       </button>
@@ -245,13 +247,13 @@
                 [id]="role.id"
                 class="enable-toogle"
                 (change)="showConfirmation(role, 'habilitar', 'enable')"
-                [checked]="role.active"
+                [checked]="role.status == 1"
               ></mat-slide-toggle>
               <p class="toggle-text" *ngSwitchCase="'Esp'">
-                {{ role.active ? 'Deshabilitar' : 'Habilitar' }}
+                {{ role.status == 0 ? 'Deshabilitar' : 'Habilitar' }}
               </p>
               <p class="toggle-text" *ngSwitchCase="'Eng'">
-                {{ role.active ? 'Disable' : 'Enable' }}
+                {{ role.status == 0 ? 'Disable' : 'Enable' }}
               </p>
             </div>
 
@@ -276,7 +278,7 @@
         mat-button
         class="paginator-button"
         (click)="updatePage('start', true)"
-        [disabled]="active_count == 0"
+        [disabled]="active_count == 1"
       >
         <span style="transform: rotate(180deg);" class="material-icons">
           double_arrow
@@ -286,7 +288,7 @@
         mat-button
         class="paginator-button"
         (click)="updatePage('prev', true)"
-        [disabled]="active_count == 0"
+        [disabled]="active_count == 1"
       >
         <span style="transform: rotate(180deg);" class="material-icons">
           play_arrow

@@ -160,10 +160,10 @@
                 [checked]="user.status == 1"
               ></mat-slide-toggle>
               <p class="toggle-text" *ngSwitchCase="'Esp'">
-                {{ user.active ? 'Deshabilitar' : 'Habilitar' }}
+                {{ user.status == 1 ? 'Deshabilitar' : 'Habilitar' }}
               </p>
               <p class="toggle-text" *ngSwitchCase="'Eng'">
-                {{ user.active ? 'Disable' : 'Enable' }}
+                {{ user.status == 1 ? 'Disable' : 'Enable' }}
               </p>
             </div>
             <!-- <button mat-button class="action-btn" (click)="updateUser(user)">

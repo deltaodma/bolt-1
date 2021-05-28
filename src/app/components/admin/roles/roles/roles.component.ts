@@ -1,24 +1,27 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 
 import { MatDialog } from '@angular/material/dialog'
 
 import { ModalConfirmationComponent } from 'src/app/components/utils/pop up/modal-confirmation/modal-confirmation.component'
-import { MockRoles } from 'src/app/mocks/roles-mock'
 import { MockProjectsByRole } from 'src/app/mocks/projects-by-role-mock'
-import { MockProjects } from 'src/app/mocks/projects-mock'
 
 import { UiService } from 'src/app/services/ui.service'
-import { environment } from 'src/environments/environment'
+
 import { HttpService } from 'src/app/services/http.service'
+import { Subscription } from 'rxjs'
+import { RolesService } from 'src/app/services/roles.service'
+import { ProjectsService } from 'src/app/services/projects.service'
 
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.scss'],
 })
-export class RolesComponent implements OnInit {
+export class RolesComponent implements OnInit, OnDestroy {
+  private rolesSubs: Subscription
+  private projSubs: Subscription
   public lang: string
   public pages: number = 3
   public roles: any
@@ -30,7 +33,9 @@ export class RolesComponent implements OnInit {
   public projectNames = []
   public allowed_apps = []
   public editionActive: boolean = false
-
+  public create: boolean = true
+  public role_id: string = null
+  public role_status: number = 1
   private errorMessage: any = {
     es: {
       rol_name_es: 'Ingrese un nombre de proyecto en español',
@@ -50,27 +55,24 @@ export class RolesComponent implements OnInit {
 
   constructor(
     public activeRoute: ActivatedRoute,
-    private router: Router,
     private formBuilder: FormBuilder,
     public ui: UiService,
     public dialog: MatDialog,
     public httpService: HttpService,
+    public rolesService: RolesService,
+    public projectService: ProjectsService,
   ) {}
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.projects = MockProjects
-    this.httpService
-      .get(environment.serverUrl + environment.roles.getAll)
-      .subscribe(
-        (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
-            this.roles = response.body.items
-            console.log(response)
-          }
-        },
-        (err) => {},
-      )
+    // this.projects = MockProjects
+    this.getRoles()
+    this.projSubs = this.projectService.fullProjects$.subscribe((projects) => {
+      this.projects = projects
+      console.log(projects)
+    })
+    this.projectService.getFullData()
+
     this.initforms()
   }
 
@@ -78,12 +80,12 @@ export class RolesComponent implements OnInit {
     this.createRolForm = this.formBuilder.group({
       rol_name_es: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(4),
         Validators.maxLength(30),
       ]),
       rol_name_en: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(4),
         Validators.maxLength(30),
       ]),
       description_es: new FormControl('', [
@@ -108,11 +110,10 @@ export class RolesComponent implements OnInit {
       })
       return
     }
-    this.showForm = false
-    //TO DO POST request
     let dataForm = {
-      rol_name_es: this.createRolForm.controls.rol_name_es.value,
-      rol_name_en: this.createRolForm.controls.rol_name_en.value,
+      status: this.role_status,
+      name_es: this.createRolForm.controls.rol_name_es.value,
+      name_en: this.createRolForm.controls.rol_name_en.value,
       description_es: this.createRolForm.controls.description_es.value,
       description_en: this.createRolForm.controls.description_en.value,
       role_projects: {
@@ -120,54 +121,69 @@ export class RolesComponent implements OnInit {
         apps: this.allowed_apps,
       },
     }
+    if (this.create) {
+      // TO DO:: POST REQUEST
+      console.log(this.create)
+
+      this.rolesService.postData(dataForm)
+    } else {
+      // TO DO:: PUT REQUEST
+      this.rolesService.updateData(this.role_id, dataForm)
+    }
+    this.showForm = false
+    //TO DO POST request
+    console.log(this.create)
+
     console.log('POST request save role', dataForm)
-    window.location.reload()
   }
 
-  createRol() {
-    this.showForm = true
-    this.projects = MockProjects
+  getRoles(open?: boolean) {
+    if (open) {
+      this.showForm = true
+      this.create = true
+    }
+    this.rolesSubs = this.rolesService.roles$.subscribe((roles: any) => {
+      this.pages = roles.meta.totalPages
+      this.active_count = roles.meta.currentPage
+      this.roles = roles.items
+    })
+    this.rolesService.getFullData()
   }
 
   editRole(target: any) {
+    this.create = false
     this.showForm = true
-    this.projects = MockProjectsByRole
+    this.role_id = target.id
+    this.role_status = target.status
+    // this.projects = MockProjectsByRole
+    console.log(target)
 
-    target.role_projects.forEach((element) => {
-      this.projectNames = [...this.projectNames, element.name]
-    })
+    // target.role_projects.forEach((element) => {
+    //   this.projectNames = [...this.projectNames, element.name]
+    // })
 
     this.createRolForm.patchValue({
-      rol_name_es: target['role_name_es'],
-      rol_name_en: target['role_name_en'],
-      description_es: target['role_description_es'],
-      description_en: target['role_description_en'],
-      role_projects: this.projectNames,
+      rol_name_es: target['name_es'],
+      rol_name_en: target['name_en'],
+      description_es: target['description_es'],
+      description_en: target['description_en'],
+      // role_projects: this.projectNames,
     })
     this.readProjectsSelected(this.projectNames)
   }
 
   cancel() {
     this.showForm = false
+    this.create = true
+    this.role_id = null
     this.projectNames = []
     this.projectResume = []
     this.createRolForm.reset('')
     this.createRolForm.markAsUntouched()
   }
 
-  updateRoleStatus(toogleStatus: boolean, target: any) {
-    // TO DO PUT request
-    console.log('put app', toogleStatus, target)
-    let response = 200
-    if (response == 200) {
-      setTimeout(() => {
-        this.ui.dismissLoading()
-        window.location.reload()
-      }, 2000)
-    } else {
-      this.ui.dismissLoading()
-      //TO DO show http error
-    }
+  updateRoleStatus(target: any) {
+    this.rolesService.updateStatus(target.id)
   }
 
   showConfirmation(target: any, message_es: string, message_en: string) {
@@ -182,7 +198,7 @@ export class RolesComponent implements OnInit {
       width: '500px',
       height: 'auto',
       data: {
-        role_name: target.role_name_es,
+        role_name: this.lang == 'Esp' ? target.name_es : target.name_en,
         message_action_es: message_es,
         message_action_en: message_en,
       },
@@ -191,8 +207,7 @@ export class RolesComponent implements OnInit {
     confDialog.afterClosed().subscribe((result) => {
       if (result) {
         this.ui.showLoading()
-        let toogle = !target.active
-        this.updateRoleStatus(toogle, target)
+        this.updateRoleStatus(target)
       } else {
         window.location.reload()
       }
@@ -266,5 +281,10 @@ export class RolesComponent implements OnInit {
       this.active_count = this.pages
     }
     // TO DO active elements GET request
+  }
+
+  ngOnDestroy() {
+    this.rolesSubs.unsubscribe()
+    this.projSubs.unsubscribe()
   }
 }

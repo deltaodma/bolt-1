@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { ModalConfirmationComponent } from 'src/app/components/utils/pop up/modal-confirmation/modal-confirmation.component'
 import { RolFormComponent } from 'src/app/components/utils/admin/roles-and-users/rol-form/rol-form.component'
 import { UiService } from 'src/app/services/ui.service'
-import { HttpService } from 'src/app/services/http.service'
-import { environment } from 'src/environments/environment'
 import { Subscription } from 'rxjs'
 import { UsersService } from 'src/app/services/users.service'
 
@@ -26,11 +24,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   constructor(
     public activeRoute: ActivatedRoute,
-    private router: Router,
     private formBuilder: FormBuilder,
     public ui: UiService,
     public dialog: MatDialog,
-    public httpService: HttpService,
     public userService: UsersService,
   ) {}
 
