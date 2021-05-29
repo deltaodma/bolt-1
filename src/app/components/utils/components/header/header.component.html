@@ -6,13 +6,13 @@
       <span class="material-icons menu-icon">
         bolt
       </span>
-      Hola {{ profile?.givenName || this.userName }}!
+      Hola {{ this.userName }}!
     </p>
     <p *ngSwitchCase="'Eng'" class="greeting title-header">
       <span class="material-icons menu-icon">
         bolt
       </span>
-      Hi {{ profile?.givenName || this.userName }}!
+      Hi {{ this.userName }}!
     </p>
     <button mat-button [disableRipple]="true" (click)="logout()">
       <span class="material-icons">

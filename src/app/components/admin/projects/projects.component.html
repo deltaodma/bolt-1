@@ -165,7 +165,7 @@
                     [id]="submenu.id"
                     class="sub-toogle"
                     (change)="subMenuDisable(submenu, $event)"
-                    [checked]="submenu.state"
+                    [checked]="submenu.status == 1"
                   ></mat-slide-toggle>
                   <a class="submenu-link" (click)="editSubMenu(submenu.id)">
                     {{ submenu.name_es }}

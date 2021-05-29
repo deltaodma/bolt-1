@@ -16,11 +16,16 @@ type ProfileType = {
 })
 export class HeaderComponent implements OnInit {
   public lang: string
-  profile!: ProfileType
-  public userName: string = 'Cristhopher'
+  public userName: string
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    if (userData) {
+      this.userName = userData.name
+    } else {
+      this.userName = ''
+    }
     this.lang = localStorage.getItem('lang') || 'Esp'
   }
 

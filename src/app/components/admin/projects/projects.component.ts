@@ -252,6 +252,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     })
   }
 
+  editSubMenu(submenuId: string) {
+    this.router.navigate([`admin/projects/submenu/${submenuId}`], {
+      queryParamsHandling: 'preserve',
+    })
+  }
+
   updatePage(page: string) {
     if (page == 'start') {
       this.active_count = 0
@@ -266,12 +272,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       this.active_count = this.pages
     }
     this.getData(this.active_count)
-  }
-
-  editSubMenu(submenuId: string) {
-    this.router.navigate([`admin/projects/submenu/${submenuId}`], {
-      queryParamsHandling: 'preserve',
-    })
   }
 
   ngOnDestroy() {

@@ -49,10 +49,12 @@ export class HomeComponent implements OnInit {
       const expirationDate = new Date(
         new Date().getTime() + decodedAuthData.expiresIn * 1000,
       )
+      //save main user info
+      localStorage.setItem('userData', JSON.stringify(decodedAuthData.user))
       // save auth data in local storage
       this.authService.saveAuthData(token, expirationDate, userId)
       // set session timer
-      // this.authService.setAuthTimer(decodedAuthData.expiresIn)
+      this.authService.setAuthTimer(decodedAuthData.expiresIn)
       // set true auth status listenner
       this.authService.setListenner()
     }
