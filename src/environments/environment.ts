@@ -30,6 +30,7 @@ export const environment = {
     post: 'projects',
     getById: 'projects/',
     putById: 'projects/',
+    updateStatusById: 'projects/changestatus/',
     deleteById: 'projects/',
   },
   submenus: {

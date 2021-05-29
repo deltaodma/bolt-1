@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { HttpService } from 'src/app/services/http.service'
+import { SubmenusService } from 'src/app/services/submenus.service'
 
 import { UiService } from 'src/app/services/ui.service'
 import { environment } from 'src/environments/environment'
@@ -43,7 +44,7 @@ export class ModalSubmenuFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private formBuilder: FormBuilder,
     public ui: UiService,
-    public httpService: HttpService,
+    public submenuService: SubmenusService,
   ) {}
 
   ngOnInit(): void {
@@ -95,36 +96,7 @@ export class ModalSubmenuFormComponent implements OnInit {
         project_id: this.data.project['id'],
         status: 1,
       }
-
-      this.httpService
-        .post(environment.serverUrl + environment.submenus.post, submenuData)
-        .subscribe(
-          (response: any) => {
-            if (response.status == 201) {
-              this.closeModal()
-              this.ui.showModal(
-                ModalNotificationComponent,
-                '500px',
-                'auto',
-                '',
-                'backdrop',
-                {
-                  message_es: `El submenu de nombre ${this.createSubMenuForm.controls.submenu_name_es.value} fue creado con éxito`,
-                  message_en: `The ${this.createSubMenuForm.controls.submenu_name_en.value} project was successfully created`,
-                },
-              )
-              setTimeout(() => {
-                window.location.reload()
-              }, 3000)
-            }
-          },
-          (e) => {
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
-          },
-        )
+      this.submenuService.postData(submenuData, this.closeModal())
     }
   }
 

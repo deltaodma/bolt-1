@@ -7,10 +7,9 @@ import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmatio
 import { ModalProjectFormComponent } from '../../utils/admin/projects/modal-project-form/modal-project-form.component'
 import { ModalSubmenuFormComponent } from '../../utils/admin/projects/modal-submenu-form/modal-submenu-form.component'
 import { ModalNotificationComponent } from '../../utils/pop up/modal-notification/modal-notification.component'
-import { HttpService } from 'src/app/services/http.service'
-import { environment } from 'src/environments/environment'
 import { ProjectsService } from 'src/app/services/projects.service'
 import { Subscription } from 'rxjs'
+import { SubmenusService } from 'src/app/services/submenus.service'
 
 @Component({
   selector: 'app-projects',
@@ -30,13 +29,14 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   public message_action_es: string = 'deshabilitar'
   public message_action_en: string = 'disable'
   public active_count = 1
+  public total_items: number
 
   constructor(
     public dialog: MatDialog,
     private ui: UiService,
     private router: Router,
-    private httpService: HttpService,
     private projectService: ProjectsService,
+    private submenuService: SubmenusService,
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +50,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         this.pages = projects.meta.totalPages
         this.active_count = projects.meta.currentPage
         this.projects = projects.items
+        this.total_items = projects.meta.totalItems
 
         this.activeProjects = []
         this.inactiveProjects = []
@@ -127,18 +128,9 @@ export class ProjectsComponent implements OnInit, OnDestroy {
             this.message_action_en = 'disabled'
             status = 0
           }
-          let projectStatusData = {
-            icon: project['icon'],
-            name_es: project['name_es'],
-            name_en: project['name_en'],
-            description_es: project['description_es'],
-            description_en: project['description_en'],
-            status: status,
-          }
 
           this.projectService.updateStatus(
             project,
-            projectStatusData,
             this.message_action_es,
             this.message_action_en,
           )
@@ -178,24 +170,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     confDialog.afterClosed().subscribe((result) => {
       this.projectPermission = result
       if (this.projectPermission) {
-        this.httpService
-          .put(
-            environment.serverUrl +
-              environment.submenus.updateStatusById +
-              submenuName.id,
-          )
-          .subscribe(
-            (response: any) => {
-              this.ui.showLoading()
-              if (response.status >= 200 && response.status < 300) {
-                this.ui.dismissLoading()
-                window.location.reload()
-              }
-            },
-            (err) => {
-              this.ui.dismissLoading()
-            },
-          )
+        if (event.checked == false) {
+          message_es = 'deshabilitó'
+          message_en = 'disabled'
+          state = 0
+        } else {
+          message_es = 'habilitó'
+          message_en = 'enabled'
+          state = 1
+        }
+        this.submenuService.updateStatus(submenuName, message_es, message_en)
       } else {
         window.location.reload()
       }
@@ -239,9 +223,9 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     confDialog.afterClosed().subscribe((result) => {
       this.projectPermission = result
       if (this.projectPermission) {
-        this.projectService.delete(project.id)
-      } else {
-        window.location.reload()
+        message_es = 'eliminó'
+        message_en = 'deleted'
+        this.projectService.delete(project, message_es, message_en)
       }
     })
   }

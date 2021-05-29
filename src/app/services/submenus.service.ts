@@ -8,50 +8,18 @@ import { UiService } from './ui.service'
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectsService {
+export class SubmenusService {
   public lang: string
   public httpError: string
 
-  private _fullProjects: any[] = []
-  private _fullProjectsSbj = new Subject<any[]>()
-  public fullProjects$ = this._fullProjectsSbj.asObservable()
-
-  private _simpleProjects: any[] = []
-  private _simpleProjectsSbj = new Subject<any[]>()
-  public simpleProjects$ = this._simpleProjectsSbj.asObservable()
+  private _submenus: any[] = []
+  private _submenusSbj = new Subject<any[]>()
+  public submenus$ = this._submenusSbj.asObservable()
 
   constructor(private httpService: HttpService, private ui: UiService) {}
 
   getFullBanners() {
-    return this._fullProjects
-  }
-
-  getSimpleData() {
-    this.httpService
-      .get(environment.serverUrl + environment.projects.get)
-      .subscribe(
-        (response: any) => {
-          this.ui.showLoading()
-
-          if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
-            this._simpleProjects = []
-            response.body.forEach((projects) => {
-              this._simpleProjects.push(projects)
-            })
-            console.log(this._simpleProjects)
-
-            this._simpleProjectsSbj.next(this._simpleProjects)
-          } else {
-            // TODO :: logic for error
-            this.ui.dismissLoading()
-          }
-        },
-        (error) => {
-          // TODO :: logic for error
-          this.ui.dismissLoading()
-        },
-      )
+    return this._submenus
   }
 
   getFullData(page?: number) {
@@ -59,18 +27,16 @@ export class ProjectsService {
       page = 1
     }
     this.httpService
-      .get(
-        environment.serverUrl + environment.projects.getAll + '?page=' + page,
-      )
+      .get(environment.serverUrl + environment.submenus.get + '?page=' + page)
       .subscribe(
         (response: any) => {
           this.ui.showLoading()
 
           if (response.status >= 200 && response.status < 300) {
             this.ui.dismissLoading()
-            this._fullProjects = response.body
+            this._submenus = response.body.items
 
-            this._fullProjectsSbj.next(this._fullProjects)
+            this._submenusSbj.next(this._submenus)
           } else {
             // TODO :: logic for error
             this.ui.dismissLoading()
@@ -91,44 +57,105 @@ export class ProjectsService {
       )
   }
 
-  postData(projectData: any, fun: any) {
+  getById(id: string) {
     this.httpService
-      .post(environment.serverUrl + environment.projects.post, projectData)
-      .subscribe((response: any) => {
-        if (response.status >= 200 && response.status < 300) {
-          fun
-        } else {
+      .get(environment.serverUrl + environment.submenus.getById + id)
+      .subscribe(
+        (response: any) => {
+          this.ui.showLoading()
+
+          if (response.status >= 200 && response.status < 300) {
+            this.ui.dismissLoading()
+            this._submenus = response.body
+            this._submenusSbj.next(this._submenus)
+          } else {
+            // TODO :: logic for error
+            this.ui.dismissLoading()
+            this.httpError =
+              this.lang == 'Esp'
+                ? 'Ha ocurrido un error'
+                : 'An error has accoured'
+          }
+        },
+        (error) => {
+          // TODO :: logic for error
+          this.ui.dismissLoading()
           this.httpError =
             this.lang == 'Esp'
               ? 'Ha ocurrido un error'
               : 'An error has accoured'
-        }
-      })
+        },
+      )
   }
 
-  updateData(project_id: string, projectData: any, fun: any) {
+  postData(submenuData, fun) {
     this.httpService
-      .put(
-        environment.serverUrl + environment.projects.putById + project_id,
-        projectData,
-      )
-      .subscribe((response: any) => {
-        if (response.status >= 200 && response.status < 300) {
-          fun
-        } else {
+      .post(environment.serverUrl + environment.submenus.post, submenuData)
+      .subscribe(
+        (response: any) => {
+          if (response.status == 201) {
+            fun
+            this.ui.showModal(
+              ModalNotificationComponent,
+              '500px',
+              'auto',
+              '',
+              'backdrop',
+              {
+                message_es: `El submenu de nombre ${submenuData.name_es} fue creado con éxito`,
+                message_en: `The ${submenuData.name_en} submenu was successfully created`,
+              },
+            )
+            setTimeout(() => {
+              window.location.reload()
+            }, 3000)
+          }
+        },
+        (e) => {
           this.httpError =
             this.lang == 'Esp'
               ? 'Ha ocurrido un error'
               : 'An error has accoured'
-        }
-      })
+        },
+      )
+  }
+
+  updateData(target: any, submenuData: any, msg_es: string, msg_en: string) {
+    this.httpService
+      .put(
+        environment.serverUrl + environment.submenus.putById + target.id,
+        submenuData,
+      )
+      .subscribe(
+        (response: any) => {
+          if (response.status >= 200 && response.status < 300) {
+            this.ui.showModal(
+              ModalNotificationComponent,
+              '500px',
+              'auto',
+              null,
+              'backdrop',
+              {
+                message_es: `Se ${msg_es} con éxito el submenú ${target.name_es}`,
+                message_en: `Successfully ${msg_en} the submenu ${target.name_en}`,
+              },
+            )
+            setTimeout(() => {
+              window.location.reload()
+            }, 3000)
+          }
+        },
+        (err) => {
+          this.ui.dismissLoading()
+        },
+      )
   }
 
   updateStatus(target: any, msg_es: string, msg_en: string) {
     this.httpService
       .put(
         environment.serverUrl +
-          environment.projects.updateStatusById +
+          environment.submenus.updateStatusById +
           target.id,
       )
       .subscribe(
@@ -141,8 +168,8 @@ export class ProjectsService {
               null,
               'backdrop',
               {
-                message_es: `Se ${msg_es} con éxito el proyecto ${target.name_es}`,
-                message_en: `Successfully ${msg_en} the project ${target.name_en}`,
+                message_es: `Se ${msg_es} con éxito el submenú ${target.name_es}`,
+                message_en: `Successfully ${msg_en} the submenu ${target.name_en}`,
               },
             )
             setTimeout(() => {
@@ -159,10 +186,11 @@ export class ProjectsService {
   delete(target: any, msg_es: string, msg_en: string) {
     this.httpService
       .delete(
-        environment.serverUrl + environment.projects.deleteById + target.id,
+        environment.serverUrl + environment.submenus.deleteById + target.id,
       )
       .subscribe(
         (response: any) => {
+          this.ui.showLoading()
           if (response.status >= 200 && response.status < 300) {
             this.ui.showModal(
               ModalNotificationComponent,
@@ -176,12 +204,12 @@ export class ProjectsService {
               },
             )
             setTimeout(() => {
-              window.location.reload()
+              window.history.back()
             }, 3000)
           }
         },
         (err) => {
-          window.location.reload()
+          this.ui.dismissLoading()
         },
       )
   }
