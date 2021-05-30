@@ -57,6 +57,7 @@ export class HomeComponent implements OnInit {
       this.authService.setAuthTimer(decodedAuthData.expiresIn)
       // set true auth status listenner
       this.authService.setListenner()
+      this.router.navigate(['/home'])
     }
 
     this.ui.dismissLoading()

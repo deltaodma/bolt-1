@@ -131,6 +131,10 @@
     &__name {
       @include title('Roboto', 14px, 16px, $tertiary-black);
       text-align: center;
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
     &__description {
       text-align: left;

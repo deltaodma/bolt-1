@@ -11,7 +11,7 @@
       back
     </span>
   </button>
-
+  <!-- sub menu data -->
   <div class="inner-section section__1">
     <h1 class="underline-title">Sub menú - {{ submenu_data_name }}</h1>
 
@@ -223,7 +223,10 @@
             <p class="grid-content__name">
               ID: {{ app.user_created?.employee_code }}
             </p>
-            <p class="grid-content__name">{{ app.user_created?.created_at }}</p>
+            <p class="grid-content__name">
+              {{ app.created_at | date: 'shortDate' }}
+              {{ app.created_at | date: 'mediumTime' }}
+            </p>
           </div>
 
           <div class="col">
@@ -264,6 +267,7 @@
             type="password"
             [value]="app.password"
             disabled
+            style="text-align: left;"
           />
           <div class="grid-content__action">
             <div class="col">
@@ -288,18 +292,6 @@
               </p>
             </div>
 
-            <button mat-button class="action-btn" (click)="deleteApp(app)">
-              <span class="material-icons menu-icon">
-                delete_forever
-              </span>
-              <span class="action-text" *ngSwitchCase="'Esp'">
-                Eliminar
-              </span>
-              <span class="action-text" *ngSwitchCase="'Eng'">
-                Delete
-              </span>
-            </button>
-
             <button mat-button class="action-btn" (click)="updateAppAssoc(app)">
               <span class="material-icons menu-icon">
                 edit
@@ -309,6 +301,18 @@
               </span>
               <span class="action-text" *ngSwitchCase="'Eng'">
                 edit
+              </span>
+            </button>
+
+            <button mat-button class="action-btn" (click)="deleteApp(app)">
+              <span class="material-icons menu-icon">
+                delete_forever
+              </span>
+              <span class="action-text" *ngSwitchCase="'Esp'">
+                Eliminar
+              </span>
+              <span class="action-text" *ngSwitchCase="'Eng'">
+                Delete
               </span>
             </button>
           </div>

@@ -20,7 +20,10 @@ export class SubmenusService {
 
   getObservableData(id: string): Observable<any> {
     return this.httpService.get(
-      environment.serverUrl + environment.submenus.getById + id,
+      environment.serverUrl +
+        environment.submenus.getById +
+        id +
+        '?limit=10000',
     )
   }
 

@@ -95,22 +95,6 @@
                 <button
                   mat-button
                   class="action-btn"
-                  (click)="deleteProject(activeItem)"
-                >
-                  <span class="material-icons menu-icon">
-                    delete_forever
-                  </span>
-                  <span class="action-text" *ngSwitchCase="'Esp'">
-                    Eliminar
-                  </span>
-                  <span class="action-text" *ngSwitchCase="'Eng'">
-                    Delete
-                  </span>
-                </button>
-
-                <button
-                  mat-button
-                  class="action-btn"
                   (click)="createProject(activeItem)"
                 >
                   <span class="material-icons menu-icon">
@@ -121,6 +105,22 @@
                   </span>
                   <span class="action-text" *ngSwitchCase="'Eng'">
                     edit
+                  </span>
+                </button>
+
+                <button
+                  mat-button
+                  class="action-btn"
+                  (click)="deleteProject(activeItem)"
+                >
+                  <span class="material-icons menu-icon">
+                    delete_forever
+                  </span>
+                  <span class="action-text" *ngSwitchCase="'Esp'">
+                    Eliminar
+                  </span>
+                  <span class="action-text" *ngSwitchCase="'Eng'">
+                    Delete
                   </span>
                 </button>
 
@@ -261,6 +261,22 @@
                 <button
                   mat-button
                   class="action-btn"
+                  (click)="createProject(inactiveItem)"
+                >
+                  <span class="material-icons menu-icon">
+                    edit
+                  </span>
+                  <span class="action-text" *ngSwitchCase="'Esp'">
+                    editar
+                  </span>
+                  <span class="action-text" *ngSwitchCase="'Eng'">
+                    edit
+                  </span>
+                </button>
+
+                <button
+                  mat-button
+                  class="action-btn"
                   (click)="deleteProject(inactiveItem)"
                 >
                   <span class="material-icons menu-icon">
@@ -274,21 +290,6 @@
                   </span>
                 </button>
 
-                <button
-                  mat-button
-                  class="action-btn"
-                  (click)="createProject(inactiveItem)"
-                >
-                  <span class="material-icons menu-icon">
-                    edit
-                  </span>
-                  <span class="action-text" *ngSwitchCase="'Esp'">
-                    editar
-                  </span>
-                  <span class="action-text" *ngSwitchCase="'Eng'">
-                    edit
-                  </span>
-                </button>
                 <button
                   mat-button
                   class="action-btn"
@@ -344,6 +345,7 @@
       </mat-tab>
     </mat-tab-group>
 
+    <!-- paginator -->
     <div class="paginator row" *ngIf="pages">
       <button
         mat-button

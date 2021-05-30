@@ -19,7 +19,9 @@ export class AppsService {
   constructor(private httpService: HttpService, private ui: UiService) {}
 
   getObservableData(): Observable<any> {
-    return this.httpService.get(environment.serverUrl + environment.apps.get)
+    return this.httpService.get(
+      environment.serverUrl + environment.apps.get + '?limit=10000',
+    )
   }
 
   getData(page?: number) {
@@ -56,7 +58,6 @@ export class AppsService {
         },
       )
   }
-  getById(id: string) {}
 
   postData(appData, fun) {
     this.httpService
@@ -153,8 +154,6 @@ export class AppsService {
   }
 
   delete(target: any, msg_es: string, msg_en: string) {
-    console.log(target)
-
     this.httpService
       .delete(environment.serverUrl + environment.apps.deleteById + target.id)
       .subscribe(
