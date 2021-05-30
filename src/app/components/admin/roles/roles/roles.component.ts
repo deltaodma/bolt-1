@@ -13,6 +13,7 @@ import { HttpService } from 'src/app/services/http.service'
 import { Subscription } from 'rxjs'
 import { RolesService } from 'src/app/services/roles.service'
 import { ProjectsService } from 'src/app/services/projects.service'
+import { MockProjects } from 'src/app/mocks/projects-mock'
 
 @Component({
   selector: 'app-roles',
@@ -22,20 +23,33 @@ import { ProjectsService } from 'src/app/services/projects.service'
 export class RolesComponent implements OnInit, OnDestroy {
   private rolesSubs: Subscription
   private projSubs: Subscription
+
+  public createRolForm: FormGroup
   public lang: string
+
   public pages: number = 3
+  public role_status: number = 1
+  public current_items: number
+  public items_length: number
+  public active_count: number = 0
+
   public roles: any
   public projects: any
-  public createRolForm: FormGroup
-  public active_count = 0
-  public showForm: boolean = false
+
   public projectResume = []
+  public projectsId = []
   public projectNames = []
+  public allowed_submenus = []
   public allowed_apps = []
+
+  public showForm: boolean = false
   public editionActive: boolean = false
   public create: boolean = true
+
   public role_id: string = null
-  public role_status: number = 1
+  public message_action_es: string = 'deshabilitar'
+  public message_action_en: string = 'disable'
+
   private errorMessage: any = {
     es: {
       rol_name_es: 'Ingrese un nombre de proyecto en español',
@@ -65,14 +79,8 @@ export class RolesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    // this.projects = MockProjects
+    this.getProjectsList()
     this.getRoles()
-    this.projSubs = this.projectService.fullProjects$.subscribe((projects) => {
-      this.projects = projects
-      console.log(projects)
-    })
-    this.projectService.getFullData()
-
     this.initforms()
   }
 
@@ -103,54 +111,126 @@ export class RolesComponent implements OnInit, OnDestroy {
     })
   }
 
-  saveRole() {
+  getProjectsList() {
+    this.projSubs = this.projectService.fullProjects$.subscribe(
+      (projects: any) => {
+        this.projects = projects.items
+      },
+    )
+    this.projectService.getData(1, 1000)
+  }
+  getRoles(page?: number) {
+    this.rolesSubs = this.rolesService.roles$.subscribe((roles: any) => {
+      this.pages = roles.meta.totalPages
+      this.active_count = roles.meta.currentPage
+      this.current_items = roles.meta.totalItems
+      this.roles = roles.items
+      this.items_length = this.roles.length
+    })
+    this.rolesService.getData(page)
+  }
+
+  openForm(open?: boolean) {
+    if (open) {
+      this.showForm = true
+      this.create = true
+    }
+  }
+
+  cancel() {
+    this.showForm = false
+    this.create = true
+    this.role_id = null
+    this.projectNames = []
+    this.projectResume = []
+    this.createRolForm.reset('')
+    this.createRolForm.markAsUntouched()
+  }
+
+  updateRole(operation: string) {
     if (this.createRolForm.invalid) {
       ;(<any>Object).values(this.createRolForm.controls).forEach((control) => {
         control.markAsTouched()
       })
       return
     }
+    let user_id = localStorage.getItem('userId')
+    this.projectResume.forEach((projectSelected) => {
+      this.projectsId = [...this.projectsId, projectSelected.id]
+    })
     let dataForm = {
       status: this.role_status,
       name_es: this.createRolForm.controls.rol_name_es.value,
       name_en: this.createRolForm.controls.rol_name_en.value,
       description_es: this.createRolForm.controls.description_es.value,
       description_en: this.createRolForm.controls.description_en.value,
-      role_projects: {
-        projects: this.projectResume,
-        apps: this.allowed_apps,
-      },
+      created_by: user_id,
+      projects: this.projectsId,
+      submenus: this.allowed_submenus,
+      apps: this.allowed_apps,
     }
-    if (this.create) {
-      // TO DO:: POST REQUEST
-      console.log(this.create)
+    console.log(dataForm)
 
+    if (!operation) {
       this.rolesService.postData(dataForm)
     } else {
+      this.message_action_es = 'actualizó'
+      this.message_action_en = 'updated'
       // TO DO:: PUT REQUEST
-      this.rolesService.updateData(this.role_id, dataForm)
+      this.rolesService.updateData(
+        this.role_id,
+        dataForm,
+        this.message_action_es,
+        this.message_action_en,
+      )
     }
-    this.showForm = false
-    //TO DO POST request
-    console.log(this.create)
-
-    console.log('POST request save role', dataForm)
   }
 
-  getRoles(open?: boolean) {
-    if (open) {
-      this.showForm = true
-      this.create = true
+  updateRoleStatus(role, event) {
+    let roleName = this.lang == 'Esp' ? role.name_es : role.name_en
+
+    if (event.checked) {
+      this.message_action_es = 'habilitar'
+      this.message_action_en = 'enable'
+    } else {
+      this.message_action_es = 'deshabilitar'
+      this.message_action_en = 'disable'
     }
-    this.rolesSubs = this.rolesService.roles$.subscribe((roles: any) => {
-      this.pages = roles.meta.totalPages
-      this.active_count = roles.meta.currentPage
-      this.roles = roles.items
+
+    const confDialog = this.dialog.open(ModalConfirmationComponent, {
+      id: ModalConfirmationComponent.toString(),
+      disableClose: true,
+      hasBackdrop: true,
+      width: '500px',
+      height: 'auto',
+      data: {
+        role_name: roleName,
+        message_action_es: this.message_action_es,
+        message_action_en: this.message_action_en,
+      },
     })
-    this.rolesService.getFullData()
+
+    confDialog.afterClosed().subscribe((result) => {
+      if (result) {
+        if (event.checked) {
+          this.message_action_es = 'habilitó'
+          this.message_action_en = 'enabled'
+        } else {
+          this.message_action_es = 'deshabilitó'
+          this.message_action_en = 'disabled'
+        }
+        this.rolesService.updateStatus(
+          role,
+          this.message_action_es,
+          this.message_action_en,
+        )
+      } else {
+        window.location.reload()
+      }
+    })
   }
 
-  editRole(target: any) {
+  loadRole(target: any) {
     this.create = false
     this.showForm = true
     this.role_id = target.id
@@ -172,25 +252,10 @@ export class RolesComponent implements OnInit, OnDestroy {
     this.readProjectsSelected(this.projectNames)
   }
 
-  cancel() {
-    this.showForm = false
-    this.create = true
-    this.role_id = null
-    this.projectNames = []
-    this.projectResume = []
-    this.createRolForm.reset('')
-    this.createRolForm.markAsUntouched()
-  }
+  deleteRole(role: any) {
+    let message_es = 'eliminar'
+    let message_en = 'delete'
 
-  updateRoleStatus(target: any) {
-    this.rolesService.updateStatus(target.id)
-  }
-
-  showConfirmation(target: any, message_es: string, message_en: string) {
-    if (target.active == true) {
-      message_es = 'deshabilitar'
-      message_en = 'disable'
-    }
     const confDialog = this.dialog.open(ModalConfirmationComponent, {
       id: ModalConfirmationComponent.toString(),
       disableClose: true,
@@ -198,7 +263,7 @@ export class RolesComponent implements OnInit, OnDestroy {
       width: '500px',
       height: 'auto',
       data: {
-        role_name: this.lang == 'Esp' ? target.name_es : target.name_en,
+        role_name: this.lang == 'Esp' ? role.name_es : role.name_en,
         message_action_es: message_es,
         message_action_en: message_en,
       },
@@ -206,10 +271,9 @@ export class RolesComponent implements OnInit, OnDestroy {
 
     confDialog.afterClosed().subscribe((result) => {
       if (result) {
-        this.ui.showLoading()
-        this.updateRoleStatus(target)
-      } else {
-        window.location.reload()
+        message_es = 'eliminó'
+        message_en = 'deleted'
+        this.rolesService.delete(role, message_es, message_en)
       }
     })
   }
@@ -219,18 +283,29 @@ export class RolesComponent implements OnInit, OnDestroy {
     // TO DO GET request to obtain projects by rol
     this.projects.forEach((singleProject) => {
       projects_selected.forEach((nameProject) => {
-        if (nameProject == singleProject.name_en) {
+        if (
+          nameProject == singleProject.name_en ||
+          nameProject == singleProject.name_es
+        ) {
           this.projectResume = [...this.projectResume, singleProject]
         }
       })
     })
   }
 
-  updateCheckboxStatus(checkboxStatus: boolean, submenu: any) {
+  allowSubmenuAccess(checkboxStatus: boolean, submenu: any) {
     let checkbox
     let blocker
+    this.allowed_submenus = [
+      ...this.allowed_submenus,
+      {
+        projects_id: submenu.project_id,
+        submenu_id: submenu.id,
+        access: checkboxStatus,
+      },
+    ]
 
-    submenu.app_list.forEach((app) => {
+    submenu.apps.forEach((app) => {
       checkbox = document.getElementById(submenu.id + app.id)
       blocker = document.getElementById('blocker' + app.id)
       checkbox.classList.add('mat-checkbox-disabled')
@@ -244,11 +319,11 @@ export class RolesComponent implements OnInit, OnDestroy {
     })
   }
 
-  allowAccess(checkboxStatus: boolean, parent: any, target: any) {
+  allowAppAccess(checkboxStatus: boolean, app: any) {
     if (checkboxStatus) {
       this.allowed_apps = [
         ...this.allowed_apps,
-        { parent: parent, chlid: target },
+        { submenu_id: app.submenu_id, app_id: app.id, access: checkboxStatus },
       ]
     }
   }
@@ -280,7 +355,7 @@ export class RolesComponent implements OnInit, OnDestroy {
     if (page == 'last') {
       this.active_count = this.pages
     }
-    // TO DO active elements GET request
+    this.getRoles(this.active_count)
   }
 
   ngOnDestroy() {

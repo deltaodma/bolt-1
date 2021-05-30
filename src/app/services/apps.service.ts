@@ -59,7 +59,7 @@ export class AppsService {
       )
   }
 
-  postData(appData, fun) {
+  postData(appData: any, fun: any) {
     this.httpService
       .post(environment.serverUrl + environment.apps.post, appData)
       .subscribe(

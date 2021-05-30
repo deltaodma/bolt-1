@@ -17,6 +17,79 @@
             floatLabel="auto"
             class="fullInput input-bolt"
           >
+            <mat-label *ngSwitchCase="'Esp'">Nombre (Español)</mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Name (Spanish)</mat-label>
+
+            <input
+              matInput
+              id="rol_name_es"
+              formControlName="rol_name_es"
+              type="text"
+              minlength="4"
+              maxlength="30"
+            />
+            <mat-error *ngIf="createRolForm.controls.rol_name_es.errors">
+              {{ getMessageform('rol_name_es') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="true"
+            floatLabel="auto"
+            class="fullInput"
+          >
+            <mat-label *ngSwitchCase="'Esp'">
+              Descripción (Español)
+            </mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Description (Spanish)</mat-label>
+
+            <textarea
+              matInput
+              formControlName="description_es"
+              minlength="6"
+              maxlength="100"
+            ></textarea>
+
+            <mat-error *ngIf="createRolForm.controls.description_es.errors">
+              {{ getMessageform('description_es') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            hideRequiredMarker="true"
+            floatLabel="auto"
+            class="fullInput"
+          >
+            <mat-label *ngSwitchCase="'Esp'">Proyecto</mat-label>
+            <mat-label *ngSwitchCase="'Eng'">Project</mat-label>
+
+            <mat-select
+              [formControl]="createRolForm.controls.role_projects"
+              multiple
+              (selectionChange)="readProjectsSelected($event.value)"
+            >
+              <mat-option
+                *ngFor="let option of projects"
+                [value]="option?.name_en"
+              >
+                {{ lang == 'Esp' ? option?.name_es : option?.name_en }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="createRolForm.controls.role_projects.errors">
+              {{ getMessageform('role_projects') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field
+            hideRequiredMarker="true"
+            appearance="outline"
+            floatLabel="auto"
+            class="fullInput input-bolt"
+          >
             <mat-label *ngSwitchCase="'Esp'">
               Nombre (inglés)
             </mat-label>
@@ -57,79 +130,6 @@
               {{ getMessageform('description_en') }}
             </mat-error>
           </mat-form-field>
-
-          <mat-form-field
-            appearance="outline"
-            hideRequiredMarker="true"
-            floatLabel="auto"
-            class="fullInput"
-          >
-            <mat-label *ngSwitchCase="'Esp'">Proyecto</mat-label>
-            <mat-label *ngSwitchCase="'Eng'">Project</mat-label>
-
-            <mat-select
-              [formControl]="createRolForm.controls.role_projects"
-              multiple
-              (selectionChange)="readProjectsSelected($event.value)"
-            >
-              <mat-option
-                *ngFor="let option of projects"
-                [value]="option?.name_en"
-              >
-                {{ lang == 'Esp' ? option?.name_es : option?.name_en }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="createRolForm.controls.role_projects.errors">
-              {{ getMessageform('role_projects') }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="col">
-          <mat-form-field
-            hideRequiredMarker="true"
-            appearance="outline"
-            floatLabel="auto"
-            class="fullInput input-bolt"
-          >
-            <mat-label *ngSwitchCase="'Esp'">Nombre (Español)</mat-label>
-            <mat-label *ngSwitchCase="'Eng'">Name (Spanish)</mat-label>
-
-            <input
-              matInput
-              id="rol_name_es"
-              formControlName="rol_name_es"
-              type="text"
-              minlength="4"
-              maxlength="30"
-            />
-            <mat-error *ngIf="createRolForm.controls.rol_name_es.errors">
-              {{ getMessageform('rol_name_es') }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field
-            appearance="outline"
-            hideRequiredMarker="true"
-            floatLabel="auto"
-            class="fullInput"
-          >
-            <mat-label *ngSwitchCase="'Esp'">
-              Descripción (Español)
-            </mat-label>
-            <mat-label *ngSwitchCase="'Eng'">Description (Spanish)</mat-label>
-
-            <textarea
-              matInput
-              formControlName="description_es"
-              minlength="6"
-              maxlength="100"
-            ></textarea>
-
-            <mat-error *ngIf="createRolForm.controls.description_es.errors">
-              {{ getMessageform('description_es') }}
-            </mat-error>
-          </mat-form-field>
         </div>
       </div>
 
@@ -143,11 +143,11 @@
 
           <div class="row row-check">
             <div class="col" *ngFor="let submenu of project.submenus">
-              <div *ngIf="submenu.state">
+              <div *ngIf="submenu.status == 1">
                 <mat-checkbox
                   class="check-row-font"
                   [checked]="submenu?.access"
-                  (change)="updateCheckboxStatus($event.checked, submenu)"
+                  (change)="allowSubmenuAccess($event.checked, submenu)"
                 >
                   {{ lang == 'Esp' ? submenu.name_es : submenu.name_en }}
                 </mat-checkbox>
@@ -160,10 +160,10 @@
                     <mat-checkbox
                       [id]="submenu.id + app.id"
                       class="check-row-font"
-                      (change)="allowAccess($event.checked, submenu.id, app)"
+                      (change)="allowAppAccess($event.checked, app)"
                       [checked]="app?.access"
                     >
-                      {{ app.item_name }}
+                      {{ lang == 'Esp' ? app.name_es : app.name_en }}
                     </mat-checkbox>
                   </li>
                 </ul>
@@ -176,12 +176,13 @@
       <div class="row row__2">
         <button
           class="bolt-btn-filled"
-          (click)="saveRole()"
+          (click)="create ? updateRole() : updateRole('update')"
           style="margin-right: 20px;"
         >
           <span *ngSwitchCase="'Esp'">Guardar</span>
           <span *ngSwitchCase="'Eng'">Save</span>
         </button>
+
         <button class="bolt-btn-filled" (click)="cancel()">
           <span *ngSwitchCase="'Esp'">Cancelar</span>
           <span *ngSwitchCase="'Eng'">Cancel</span>
@@ -195,7 +196,7 @@
     <div class="row">
       <h2 class="form-title">Roles</h2>
 
-      <button class="bolt-btn-filled" (click)="getRoles(true)">
+      <button class="bolt-btn-filled" (click)="openForm(true)">
         <span *ngSwitchCase="'Esp'">Crear nuevo rol</span>
         <span *ngSwitchCase="'Eng'">Create new rol</span>
       </button>
@@ -246,18 +247,18 @@
               <mat-slide-toggle
                 [id]="role.id"
                 class="enable-toogle"
-                (change)="showConfirmation(role, 'habilitar', 'enable')"
+                (change)="updateRoleStatus(role, $event)"
                 [checked]="role.status == 1"
               ></mat-slide-toggle>
               <p class="toggle-text" *ngSwitchCase="'Esp'">
-                {{ role.status == 0 ? 'Deshabilitar' : 'Habilitar' }}
+                {{ role.status == 1 ? 'Deshabilitar' : 'Habilitar' }}
               </p>
               <p class="toggle-text" *ngSwitchCase="'Eng'">
-                {{ role.status == 0 ? 'Disable' : 'Enable' }}
+                {{ role.status == 1 ? 'Disable' : 'Enable' }}
               </p>
             </div>
 
-            <button mat-button class="action-btn" (click)="editRole(role)">
+            <button mat-button class="action-btn" (click)="loadRole(role)">
               <span class="material-icons menu-icon">
                 edit
               </span>
@@ -268,16 +269,29 @@
                 edit
               </span>
             </button>
+
+            <button mat-button class="action-btn" (click)="deleteRole(role)">
+              <span class="material-icons menu-icon">
+                delete_forever
+              </span>
+              <span class="action-text" *ngSwitchCase="'Esp'">
+                Eliminar
+              </span>
+              <span class="action-text" *ngSwitchCase="'Eng'">
+                Delete
+              </span>
+            </button>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- paginator -->
     <div class="paginator row" *ngIf="pages">
       <button
         mat-button
         class="paginator-button"
-        (click)="updatePage('start', true)"
+        (click)="updatePage('start')"
         [disabled]="active_count == 1"
       >
         <span style="transform: rotate(180deg);" class="material-icons">
@@ -287,7 +301,7 @@
       <button
         mat-button
         class="paginator-button"
-        (click)="updatePage('prev', true)"
+        (click)="updatePage('prev')"
         [disabled]="active_count == 1"
       >
         <span style="transform: rotate(180deg);" class="material-icons">
@@ -295,15 +309,15 @@
         </span>
       </button>
       <p *ngSwitchCase="'Esp'">
-        Mostrando {{ roles.length }} de {{ roles.length }} resultados
+        Mostrando {{ items_length }} de {{ current_items }} resultados
       </p>
       <p *ngSwitchCase="'Eng'">
-        Showing {{ roles.length }} of {{ roles.length }} results
+        Showing {{ items_length }} of {{ current_items }} results
       </p>
       <button
         mat-button
         class="paginator-button"
-        (click)="updatePage('next', true)"
+        (click)="updatePage('next')"
         [disabled]="active_count == pages"
       >
         <span class="material-icons">
@@ -313,7 +327,7 @@
       <button
         mat-button
         class="paginator-button"
-        (click)="updatePage('last', true)"
+        (click)="updatePage('last')"
         [disabled]="active_count == pages"
       >
         <span class="material-icons">

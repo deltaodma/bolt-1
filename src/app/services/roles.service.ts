@@ -3,6 +3,7 @@ import { Subject } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { HttpService } from './http.service'
 import { UiService } from './ui.service'
+import { ModalNotificationComponent } from '../components/utils/pop up/modal-notification/modal-notification.component'
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +18,12 @@ export class RolesService {
 
   constructor(private httpService: HttpService, private ui: UiService) {}
 
-  getFullData() {
+  getData(page?: number) {
+    if (!page) {
+      page = 1
+    }
     this.httpService
-      .get(environment.serverUrl + environment.roles.getAll)
+      .get(environment.serverUrl + environment.roles.getAll + '?page=' + page)
       .subscribe(
         (response: any) => {
           this.ui.showLoading()
@@ -47,15 +51,27 @@ export class RolesService {
       )
   }
 
-  postData(projectData: any) {
+  postData(roleData: any) {
     this.httpService
-      .post(environment.serverUrl + environment.roles.post, projectData)
+      .post(environment.serverUrl + environment.roles.post, roleData)
       .subscribe(
         (response: any) => {
           this.ui.showLoading()
           if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
-            window.location.reload()
+            this.ui.showModal(
+              ModalNotificationComponent,
+              '500px',
+              'auto',
+              '',
+              'backdrop',
+              {
+                message_es: `La aplicación de nombre ${roleData.name_es} fue creada con éxito`,
+                message_en: `The ${roleData.name_en} app was successfully created`,
+              },
+            )
+            setTimeout(() => {
+              // window.location.reload()
+            }, 3000)
           } else {
             this.ui.dismissLoading()
             this.httpError =
@@ -74,17 +90,34 @@ export class RolesService {
       )
   }
 
-  updateData(project_id: string, projectData: any) {
+  updateData(
+    role_id: string,
+    projectData: any,
+    msg_es: string,
+    msg_en: string,
+  ) {
     this.httpService
       .put(
-        environment.serverUrl + environment.roles.putById + project_id,
+        environment.serverUrl + environment.roles.putById + role_id,
         projectData,
       )
       .subscribe(
         (response: any) => {
           if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
-            window.location.reload()
+            this.ui.showModal(
+              ModalNotificationComponent,
+              '500px',
+              'auto',
+              null,
+              'backdrop',
+              {
+                message_es: `Se ${msg_es} con éxito el rol ${projectData.name_es}`,
+                message_en: `Successfully ${msg_en} the role ${projectData.name_en}`,
+              },
+            )
+            setTimeout(() => {
+              window.location.reload()
+            }, 3000)
           } else {
             this.ui.dismissLoading()
             this.httpError =
@@ -103,49 +136,60 @@ export class RolesService {
       )
   }
 
-  updateStatus(target_id: string) {
+  updateStatus(target: any, msg_es: string, msg_en: string) {
     this.httpService
       .put(
-        environment.serverUrl + environment.roles.updateStatusById + target_id,
+        environment.serverUrl + environment.roles.updateStatusById + target.id,
       )
       .subscribe(
         (response: any) => {
           if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
-            window.location.reload()
-          } else {
-            // TODO :: logic for error
-            this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
+            this.ui.showModal(
+              ModalNotificationComponent,
+              '500px',
+              'auto',
+              null,
+              'backdrop',
+              {
+                message_es: `Se ${msg_es} con éxito el rol ${target.name_es}`,
+                message_en: `Successfully ${msg_en} the role ${target.name_en}`,
+              },
+            )
+            setTimeout(() => {
+              window.location.reload()
+            }, 3000)
           }
         },
-        (error) => {
-          // TODO :: logic for error
-          this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
+        (err) => {
+          window.location.reload()
         },
       )
   }
 
-  delete(target_id: string) {
+  delete(target: any, msg_es: string, msg_en: string) {
     this.httpService
-      .delete(environment.serverUrl + environment.roles.deleteById + target_id)
+      .delete(environment.serverUrl + environment.roles.deleteById + target.id)
       .subscribe(
         (response: any) => {
-          this.ui.showLoading()
           if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
-            window.location.reload()
+            this.ui.showModal(
+              ModalNotificationComponent,
+              '500px',
+              'auto',
+              null,
+              'backdrop',
+              {
+                message_es: `Se ${msg_es} con éxito el rol ${target.name_es}`,
+                message_en: `Successfully ${msg_en} the role ${target.name_en}`,
+              },
+            )
+            setTimeout(() => {
+              window.location.reload()
+            }, 3000)
           }
         },
         (err) => {
-          this.ui.dismissLoading()
+          window.location.reload()
         },
       )
   }

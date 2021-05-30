@@ -63,7 +63,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         })
       },
     )
-    this.projectService.getFullData(page)
+    this.projectService.getData(page)
   }
 
   openPanel(id?: number | string) {

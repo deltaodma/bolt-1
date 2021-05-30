@@ -22,7 +22,7 @@ export class ProjectsService {
 
   constructor(private httpService: HttpService, private ui: UiService) {}
 
-  getFullBanners() {
+  getAll() {
     return this._fullProjects
   }
 
@@ -54,13 +54,18 @@ export class ProjectsService {
       )
   }
 
-  getFullData(page?: number) {
+  getData(page?: number, limit?: number) {
     if (!page) {
       page = 1
     }
     this.httpService
       .get(
-        environment.serverUrl + environment.projects.getAll + '?page=' + page,
+        environment.serverUrl +
+          environment.projects.getAll +
+          '?page=' +
+          page +
+          '?limit=' +
+          limit,
       )
       .subscribe(
         (response: any) => {
