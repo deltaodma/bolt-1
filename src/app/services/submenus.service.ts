@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Subject } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { ModalNotificationComponent } from '../components/utils/pop up/modal-notification/modal-notification.component'
 import { HttpService } from './http.service'
@@ -18,8 +18,10 @@ export class SubmenusService {
 
   constructor(private httpService: HttpService, private ui: UiService) {}
 
-  getFullBanners() {
-    return this._submenus
+  getObservableData(id: string): Observable<any> {
+    return this.httpService.get(
+      environment.serverUrl + environment.submenus.getById + id,
+    )
   }
 
   getFullData(page?: number) {
@@ -32,7 +34,7 @@ export class SubmenusService {
         (response: any) => {
           this.ui.showLoading()
 
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.dismissLoading()
             this._submenus = response.body.items
 
@@ -64,7 +66,7 @@ export class SubmenusService {
         (response: any) => {
           this.ui.showLoading()
 
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.dismissLoading()
             this._submenus = response.body
             this._submenusSbj.next(this._submenus)

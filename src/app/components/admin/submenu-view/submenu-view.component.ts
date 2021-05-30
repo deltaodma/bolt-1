@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute } from '@angular/router'
-import { Subscription } from 'rxjs'
+import { forkJoin, Subscription } from 'rxjs'
 import { AppsService } from 'src/app/services/apps.service'
+import { HttpService } from 'src/app/services/http.service'
 import { SubmenusService } from 'src/app/services/submenus.service'
 import { UiService } from 'src/app/services/ui.service'
 import { ModalAppAssoccComponent } from '../../utils/admin/projects/modal-app-assocc/modal-app-assocc.component'
@@ -45,6 +46,7 @@ export class SubmenuViewComponent implements OnInit {
     public dialog: MatDialog,
     private submenuService: SubmenusService,
     private appService: AppsService,
+    private httpService: HttpService,
   ) {}
 
   ngOnInit(): void {
@@ -55,15 +57,19 @@ export class SubmenuViewComponent implements OnInit {
   }
 
   getData() {
-    this.subSbc = this.submenuService.submenus$.subscribe((submenu: any) => {
+    let appSubs = this.appService.getObservableData()
+    let subSubs = this.submenuService.getObservableData(this.submenu_id)
+    this.ui.showLoading()
+    forkJoin({ submenus: subSubs, apps: appSubs }).subscribe((res: any) => {
+      this.ui.dismissLoading()
+      let submenu = res.submenus.body
       this.submenu_data = submenu
       this.submenu_data_name =
         this.lang == 'Esp' ? submenu.name_es : submenu.name_en
       this.submenu_apps = submenu.apps
-      this.loadProject()
-    })
 
-    this.appSbc = this.appService.apps$.subscribe((apps: any) => {
+      let apps = res.apps.body.items
+
       apps.forEach((app) => {
         this.submenu_apps.forEach((appsAssoc) => {
           if (app.id == appsAssoc.id) {
@@ -71,9 +77,8 @@ export class SubmenuViewComponent implements OnInit {
           }
         })
       })
+      this.loadProject()
     })
-    this.appService.getData()
-    this.submenuService.getById(this.submenu_id)
   }
 
   initforms() {

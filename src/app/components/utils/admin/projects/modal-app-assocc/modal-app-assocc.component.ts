@@ -77,8 +77,8 @@ export class ModalAppAssoccComponent implements OnInit {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.getAppTypes()
     this.initforms()
+    this.getAppTypes()
     this.loadProject()
   }
 

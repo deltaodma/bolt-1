@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Subject } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { ModalNotificationComponent } from '../components/utils/pop up/modal-notification/modal-notification.component'
 import { HttpService } from './http.service'
@@ -18,6 +18,10 @@ export class AppsService {
 
   constructor(private httpService: HttpService, private ui: UiService) {}
 
+  getObservableData(): Observable<any> {
+    return this.httpService.get(environment.serverUrl + environment.apps.get)
+  }
+
   getData(page?: number) {
     if (!page) {
       page = 1
@@ -28,7 +32,7 @@ export class AppsService {
         (response: any) => {
           this.ui.showLoading()
 
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.dismissLoading()
             this._apps = response.body.items
 
