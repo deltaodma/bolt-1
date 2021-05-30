@@ -7,11 +7,11 @@
       (click)="closeModal()"
     ></span>
   </div>
-  <div style="width: 100%;" *ngIf="!this.data">
+  <div style="width: 100%;" *ngIf="!data['app']">
     <h2 class="form-title" *ngSwitchCase="'Esp'">Añadir app asociada</h2>
     <h2 class="form-title" *ngSwitchCase="'Eng'">Add associated app</h2>
   </div>
-  <div style="width: 100%;" *ngIf="this.data">
+  <div style="width: 100%;" *ngIf="data['app']">
     <h2 class="form-title" *ngSwitchCase="'Esp'">Editar app asociada</h2>
     <h2 class="form-title" *ngSwitchCase="'Eng'">Edit associated app</h2>
   </div>
@@ -73,39 +73,42 @@
       floatLabel="auto"
       class="fullInput"
     >
-      <mat-label *ngSwitchCase="'Esp'">Tipo de aplicación</mat-label>
-      <mat-label *ngSwitchCase="'Eng'">Application type</mat-label>
+      <mat-label *ngSwitchCase="'Esp'">icono</mat-label>
+      <mat-label *ngSwitchCase="'Eng'">icon</mat-label>
 
-      <mat-select [formControl]="updateAppAssocForm.controls.item_type">
+      <mat-select
+        [formControl]="updateAppAssocForm.controls.icon"
+        [(ngModel)]="selectedValue"
+        (selectionChange)="changeType()"
+      >
         <mat-select-trigger>
           <div class="row">
             <div
-              [class]="this.updateAppAssocForm.controls.item_type.value + '-md'"
+              [class]="
+                this.updateAppAssocForm.controls.icon.value
+                  ? this.updateAppAssocForm.controls.icon.value
+                      .split(' ')[0]
+                      .toLowerCase() + '-md'
+                  : null
+              "
             ></div>
-            <p>{{ this.updateAppAssocForm.controls.item_type.value }}</p>
+            <p>{{ this.updateAppAssocForm.controls.icon.value }}</p>
           </div>
         </mat-select-trigger>
-        <mat-option
-          *ngFor="
-            let option of [
-              'shiny',
-              'power',
-              'tableau',
-            ]
-          "
-          [value]="option"
-        >
+        <mat-option *ngFor="let option of appTypes" [value]="option.name">
           <div class="row">
-            <div [class]="option + '-md'"></div>
+            <div
+              [class]="option.name.split(' ')[0].toLowerCase() + '-md'"
+            ></div>
             <p>
-              {{ option }}
+              {{ option.name }}
             </p>
           </div>
         </mat-option>
       </mat-select>
 
-      <mat-error *ngIf="updateAppAssocForm.controls.item_type.errors">
-        {{ getMessageform('item_type') }}
+      <mat-error *ngIf="updateAppAssocForm.controls.icon.errors">
+        {{ getMessageform('icon') }}
       </mat-error>
     </mat-form-field>
 
@@ -131,7 +134,7 @@
       </mat-error>
     </mat-form-field>
 
-    <div class="form-advice" *ngIf="data">
+    <div class="form-advice" *ngIf="data && selectedValue == 'Power BI'">
       <div class="separator"></div>
       <h2 class="form-title">
         {{ lang == 'Esp' ? 'Usuario y contraseña' : 'User and password' }}
@@ -153,6 +156,7 @@
       appearance="outline"
       floatLabel="auto"
       class="fullInput input-bolt"
+      *ngIf="selectedValue == 'Power BI' ? true : false"
     >
       <mat-label *ngSwitchCase="'Esp'">Usuario</mat-label>
       <mat-label *ngSwitchCase="'Eng'">User</mat-label>
@@ -162,7 +166,7 @@
         id="user"
         formControlName="user"
         type="text"
-        required
+        [required]="selectedValue == 'Power BI' ? true : false"
         maxlength="30"
       />
 
@@ -171,7 +175,11 @@
       </mat-error>
     </mat-form-field>
 
-    <form [formGroup]="passwordsForm" autocomplete="off">
+    <form
+      [formGroup]="passwordsForm"
+      autocomplete="off"
+      *ngIf="selectedValue == 'Power BI' ? true : false"
+    >
       <mat-form-field
         hideRequiredMarker="true"
         appearance="outline"
@@ -186,7 +194,7 @@
           id="password"
           formControlName="password"
           [type]="!hide ? 'password' : 'text'"
-          required
+          [required]="selectedValue == 'Power BI' ? true : false"
           maxlength="30"
         />
         <span matSuffix class="material-icons menu-icon" (click)="hide = !hide">
@@ -212,7 +220,7 @@
           id="password_confirm"
           formControlName="password_confirm"
           [type]="!hide2 ? 'password' : 'text'"
-          required
+          [required]="selectedValue == 'Power BI' ? true : false"
           maxlength="30"
           [errorStateMatcher]="matcher"
         />
@@ -236,11 +244,11 @@
 
     <!-- <mat-error *ngIf="httpError">{{ httpError }}</mat-error> -->
 
-    <button *ngIf="!data" class="btn-submit-rol" (click)="uploadApp()">
+    <button *ngIf="!data['app']" class="btn-submit-rol" (click)="uploadApp()">
       <span *ngSwitchCase="'Esp'">Añadir app asociada</span>
       <span *ngSwitchCase="'Eng'">Add assoccieted app</span>
     </button>
-    <button *ngIf="data" class="btn-submit-rol" (click)="uploadApp()">
+    <button *ngIf="data['app']" class="btn-submit-rol" (click)="uploadApp()">
       <span *ngSwitchCase="'Esp'">Editar app asociada</span>
       <span *ngSwitchCase="'Eng'">Edit assoccieted app</span>
     </button>

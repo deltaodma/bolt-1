@@ -152,6 +152,7 @@
             showConfirmation(submenu_data, 'updateSubmenu', 'guardar', 'save')
           "
           class="bolt-btn-filled"
+          [disabled]="!this.createSubmenuForm.dirty"
         >
           <span *ngSwitchCase="'Esp'">Guardar cambios</span>
           <span *ngSwitchCase="'Eng'">Save changes</span>
@@ -160,7 +161,7 @@
     </form>
   </div>
 
-  <!-- dashboard section -->
+  <!-- apps assoc section -->
   <div class="inner-section section__2">
     <div class="row">
       <h2 *ngSwitchCase="'Esp'" class="form-title">App asociadas</h2>
@@ -191,14 +192,14 @@
           <span>Link</span>
         </div>
         <div class="grid-header__title">
-          <span *ngSwitchCase="'Esp'">Usuairo</span>
+          <span *ngSwitchCase="'Esp'">Usuario</span>
           <span *ngSwitchCase="'Eng'">User</span>
         </div>
         <div class="grid-header__title">
           <span *ngSwitchCase="'Esp'">Contraseña</span>
           <span *ngSwitchCase="'Eng'">password</span>
         </div>
-        <div class="grid-header__title">
+        <div class="grid-header__title" style="text-align: center;">
           <span *ngSwitchCase="'Esp'">Acciones</span>
           <span *ngSwitchCase="'Eng'">Actions</span>
         </div>
@@ -212,28 +213,51 @@
       </p>
       <div *ngFor="let app of app_list; let id = index">
         <div class="grid-content">
-          <p class="grid-content__name">{{ app.name_en }}</p>
+          <p class="grid-content__name" style="text-align: left;">
+            {{ lang == 'Esp' ? app.name_es : app.name_en }}
+          </p>
           <div class="col">
-            <p class="grid-content__name">{{ app.created_at }}</p>
-            <p class="grid-content__name">{{ app.created_at }}</p>
-            <p class="grid-content__name">{{ app.created_at }}</p>
+            <p class="grid-content__name">
+              {{ app.user_created?.name }} {{ app.user_created?.last_name }}
+            </p>
+            <p class="grid-content__name">
+              ID: {{ app.user_created?.employee_code }}
+            </p>
+            <p class="grid-content__name">{{ app.user_created?.created_at }}</p>
           </div>
+
           <div class="col">
-            <p class="grid-content__name">{{ app.updated_at }}</p>
-            <p class="grid-content__name">{{ app.updated_at }}</p>
-            <p class="grid-content__name">{{ app.updated_at }}</p>
+            <p class="grid-content__name">
+              {{ app.user_update?.name }} {{ app.user_update?.last_name }}
+            </p>
+            <p class="grid-content__name">
+              ID: {{ app.user_update?.employee_code }}
+            </p>
+            <p class="grid-content__name">
+              {{ app.updated_at | date: 'shortDate' }}
+              {{ app.updated_at | date: 'mediumTime' }}
+            </p>
           </div>
 
           <div class="row">
-            <div [class]="app.item_icon + '-md'"></div>
-            <p class="grid-content__name">{{ app.updated_at }}</p>
+            <div
+              [class]="app.type.name.split(' ')[0].toLowerCase() + '-md'"
+            ></div>
+            <p
+              class="grid-content__name"
+              style="margin-left: 10px; text-transform: capitalize;"
+            >
+              {{ app.type.name }}
+            </p>
           </div>
           <div>
             <p [title]="app.url" class="grid-content__description">
               {{ app.url }}
             </p>
           </div>
-          <p class="grid-content__name">{{ app.user }}</p>
+          <p class="grid-content__name" style="text-align: left;">
+            {{ app.username }}
+          </p>
           <input
             mat-input
             class="grid-content__name"
@@ -254,15 +278,28 @@
                     'enable'
                   )
                 "
-                [checked]="app.active"
+                [checked]="app.status == 1"
               ></mat-slide-toggle>
               <p class="toggle-text" *ngSwitchCase="'Esp'">
-                {{ app.active ? 'Deshabilitar' : 'Habilitar' }}
+                {{ app.status == 1 ? 'Deshabilitar' : 'Habilitar' }}
               </p>
               <p class="toggle-text" *ngSwitchCase="'Eng'">
-                {{ app.active ? 'Disable' : 'Enable' }}
+                {{ app.status == 1 ? 'Disable' : 'Enable' }}
               </p>
             </div>
+
+            <button mat-button class="action-btn" (click)="deleteApp(app)">
+              <span class="material-icons menu-icon">
+                delete_forever
+              </span>
+              <span class="action-text" *ngSwitchCase="'Esp'">
+                Eliminar
+              </span>
+              <span class="action-text" *ngSwitchCase="'Eng'">
+                Delete
+              </span>
+            </button>
+
             <button mat-button class="action-btn" (click)="updateAppAssoc(app)">
               <span class="material-icons menu-icon">
                 edit

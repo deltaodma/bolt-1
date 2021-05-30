@@ -3,10 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
-import { HttpService } from 'src/app/services/http.service'
+import { AppsService } from 'src/app/services/apps.service'
 import { SubmenusService } from 'src/app/services/submenus.service'
 import { UiService } from 'src/app/services/ui.service'
-import { environment } from 'src/environments/environment'
 import { ModalAppAssoccComponent } from '../../utils/admin/projects/modal-app-assocc/modal-app-assocc.component'
 import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmation/modal-confirmation.component'
 
@@ -16,11 +15,13 @@ import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmatio
   styleUrls: ['./submenu-view.component.scss'],
 })
 export class SubmenuViewComponent implements OnInit {
-  public subSvc: Subscription
+  public subSbc: Subscription
+  public appSbc: Subscription
   public lang: string
   public submenu_data: any
   public submenu_data_name: string
   public submenu_id: any
+  public submenu_apps: any = []
   public app_list: any = []
   public projects: any = []
   public createSubmenuForm: FormGroup
@@ -40,10 +41,10 @@ export class SubmenuViewComponent implements OnInit {
   constructor(
     public activeRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    public ui: UiService,
+    private ui: UiService,
     public dialog: MatDialog,
-    public httpService: HttpService,
-    public submenuService: SubmenusService,
+    private submenuService: SubmenusService,
+    private appService: AppsService,
   ) {}
 
   ngOnInit(): void {
@@ -54,16 +55,24 @@ export class SubmenuViewComponent implements OnInit {
   }
 
   getData() {
-    this.subSvc = this.submenuService.submenus$.subscribe((submenu: any) => {
-      // this.pages = subResponse.meta.totalPages
-      // this.active_count = subResponse.meta.currentPage
-      console.log(submenu)
+    this.subSbc = this.submenuService.submenus$.subscribe((submenu: any) => {
       this.submenu_data = submenu
       this.submenu_data_name =
         this.lang == 'Esp' ? submenu.name_es : submenu.name_en
-      this.app_list = submenu.apps
+      this.submenu_apps = submenu.apps
       this.loadProject()
     })
+
+    this.appSbc = this.appService.apps$.subscribe((apps: any) => {
+      apps.forEach((app) => {
+        this.submenu_apps.forEach((appsAssoc) => {
+          if (app.id == appsAssoc.id) {
+            this.app_list = [...this.app_list, app]
+          }
+        })
+      })
+    })
+    this.appService.getData()
     this.submenuService.getById(this.submenu_id)
   }
 
@@ -116,39 +125,45 @@ export class SubmenuViewComponent implements OnInit {
 
   updateAppAssoc(app?: any) {
     if (!app) {
-      this.ui.showModal(ModalAppAssoccComponent, '500px', 'auto', null, null)
+      this.ui.showModal(ModalAppAssoccComponent, '500px', 'auto', null, null, {
+        submenu_id: this.submenu_data.id,
+      })
     } else {
       this.ui.showModal(ModalAppAssoccComponent, '500px', 'auto', null, null, {
         app: app,
+        submenu_id: this.submenu_data.id,
       })
     }
   }
 
-  updateAppStatus(toogleStatus: boolean, target: any) {
-    let status
-    if (toogleStatus) {
-      status = 1
-    } else {
-      status = 0
-    }
+  updateAppStatus(target: any) {
+    this.appService.updateStatus(target, 'actualizó', 'updated')
+  }
 
-    // TO DO PUT request
-    this.httpService
-      .put(
-        environment.serverUrl + environment.apps.updateStatusById + target.id,
-      )
-      .subscribe(
-        (response: any) => {
-          this.ui.showLoading()
-          if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
-            window.location.reload()
-          }
-        },
-        (err) => {
-          this.ui.dismissLoading()
-        },
-      )
+  deleteApp(app: any) {
+    let message_es = 'eliminar'
+    let message_en = 'delete'
+
+    const confDialog = this.dialog.open(ModalConfirmationComponent, {
+      id: ModalConfirmationComponent.toString(),
+      disableClose: true,
+      hasBackdrop: true,
+      width: '500px',
+      height: 'auto',
+      data: {
+        project_name: this.lang == 'Esp' ? app.name_es : app.name_en,
+        message_action_es: message_es,
+        message_action_en: message_en,
+      },
+    })
+
+    confDialog.afterClosed().subscribe((result) => {
+      if (result) {
+        message_es = 'eliminó'
+        message_en = 'deleted'
+        this.appService.delete(app, message_es, message_en)
+      }
+    })
   }
 
   showConfirmation(
@@ -157,17 +172,17 @@ export class SubmenuViewComponent implements OnInit {
     message_es: string,
     message_en: string,
   ) {
-    let submenuName = target.name_es
+    let submenuName
     let appName
+
     if (operation == 'updateAppStatus') {
-      appName = target.item_name
-      if (target.active == true) {
+      appName = this.lang == 'Esp' ? target.name_es : target.name_en
+      if (target.status == 1) {
         message_es = 'deshabilitar'
         message_en = 'disable'
       }
-    }
-    if (this.lang == 'Eng') {
-      submenuName = target.name_en
+    } else {
+      submenuName = this.lang == 'Esp' ? target.name_es : target.name_en
     }
 
     const confDialog = this.dialog.open(ModalConfirmationComponent, {
@@ -205,8 +220,11 @@ export class SubmenuViewComponent implements OnInit {
             this.updateSubmenu(target)
           }
         } else if (operation == 'updateAppStatus') {
-          let toogle = !target.active
-          this.updateAppStatus(toogle, target)
+          this.updateAppStatus(target)
+        }
+      } else {
+        if (operation == 'updateAppStatus') {
+          window.location.reload()
         }
       }
     })
