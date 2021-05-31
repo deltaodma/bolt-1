@@ -14,6 +14,14 @@ import { forkJoin, Subscription } from 'rxjs'
 import { RolesService } from 'src/app/services/roles.service'
 import { ProjectsService } from 'src/app/services/projects.service'
 import { MockProjects } from 'src/app/mocks/projects-mock'
+import { ThemePalette } from '@angular/material/core'
+
+export interface Task {
+  name: string
+  completed: boolean
+  color: ThemePalette
+  subtasks?: Task[]
+}
 
 @Component({
   selector: 'app-roles',
@@ -44,6 +52,8 @@ export class RolesComponent implements OnInit {
   public create: boolean = true
   public available_apps: boolean = false
 
+  allComplete: boolean = false
+
   public role_id: string = null
   public message_action_es: string = 'deshabilitar'
   public message_action_en: string = 'disable'
@@ -63,6 +73,17 @@ export class RolesComponent implements OnInit {
       description_en: 'Enter a description in english',
       role_projects: 'Select a least one',
     },
+  }
+
+  task = {
+    name: 'Indeterminate',
+    completed: false,
+    color: 'primary',
+    subtasks: [
+      { name: 'Primary', completed: false, color: 'primary' },
+      { name: 'Accent', completed: false, color: 'accent' },
+      { name: 'Warn', completed: false, color: 'warn' },
+    ],
   }
 
   constructor(
@@ -291,47 +312,70 @@ export class RolesComponent implements OnInit {
     })
   }
 
-  allowSubmenuAccess(checkboxStatus: boolean, submenu: any) {
-    let checkbox
-
-    submenu.apps.forEach((app) => {
-      checkbox = document.getElementById(submenu.id + app.id)
-
-      if (!checkboxStatus) {
-        checkbox.classList.add('display-none')
-      } else {
-        checkbox.classList.remove('display-none')
-      }
+  allowSubmenuAccess(completed: boolean, submenuInserted: any) {
+    // set status value in all apps where submenuinserted id is equal to app.submenu_id
+    this.projects.forEach((project) => {
+      project.submenus.forEach((submenu) => {
+        if (submenu == null) {
+          return
+        }
+        submenu.apps.forEach((app) => {
+          if (submenuInserted.id == app.submenu_id) {
+            completed ? (app.status = 1) : (app.status = 0)
+          }
+        })
+      })
     })
-
-    if (checkboxStatus) {
+    // insert submenu and apps when the father submenu is selected
+    // delete submenu and apps when the father submenu is deselected
+    if (completed) {
       this.allowed_submenus.push({
-        projects_id: submenu.project_id,
-        submenu_id: submenu.id,
-        access: checkboxStatus,
+        projects_id: submenuInserted.project_id,
+        submenu_id: submenuInserted.id,
+        access: completed,
+      })
+      submenuInserted.apps.forEach((app) => {
+        if (submenuInserted.id == app.submenu_id) {
+          this.allowed_apps.push({
+            submenu_id: app.submenu_id,
+            app_id: app.id,
+            access: completed,
+          })
+        }
       })
     } else {
       let indexSub = this.allowed_submenus.indexOf(
-        this.allowed_submenus.find((sub) => sub.submenu_id == submenu.id),
+        this.allowed_submenus.find(
+          (sub) => sub.submenu_id == submenuInserted.id,
+        ),
       )
       this.allowed_submenus.splice(indexSub, 1)
+
+      submenuInserted.apps.forEach(() => {
+        let indexApp = this.allowed_apps.indexOf(
+          this.allowed_apps.find((app) => app.app_id == app.id),
+        )
+        this.allowed_apps.splice(indexApp, 1)
+      })
     }
-    console.log(checkboxStatus)
   }
 
   allowAppAccess(checkboxStatus: boolean, app: any) {
     if (checkboxStatus) {
+      // insert app selected
       this.allowed_apps.push({
         submenu_id: app.submenu_id,
         app_id: app.id,
         access: checkboxStatus,
       })
     } else {
+      // find and delete app selected
       let indexApp = this.allowed_apps.indexOf(
         this.allowed_apps.find((app) => app.app_id == app.id),
       )
       this.allowed_apps.splice(indexApp, 1)
     }
+    console.log(this.allowed_apps)
   }
 
   public getMessageform(controlName: any): string {

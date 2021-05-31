@@ -30,7 +30,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatRadioModule } from '@angular/material/radio'
 import { ServiceWorkerModule } from '@angular/service-worker'
@@ -54,6 +54,8 @@ import { ErrorInterceptor } from './error.interceptor'
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     UtilsModule,
     MatCarouselModule.forRoot(),
     MatCardModule,
@@ -62,7 +64,6 @@ import { ErrorInterceptor } from './error.interceptor'
     MatExpansionModule,
     MatSlideToggleModule,
     MatButtonModule,
-    ReactiveFormsModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
