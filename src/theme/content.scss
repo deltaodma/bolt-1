@@ -128,6 +128,7 @@ mat-divider {
   }
 }
 
+/* snackbar error alerts */
 .snack-alert {
   width: 587px;
   height: 75px;
@@ -145,6 +146,8 @@ mat-divider {
     font-size: 14px;
     line-height: 20px;
     color: #707782;
+    max-height: 50px;
+    overflow-y: auto;
   }
 
   .mat-button-wrapper {

@@ -58,6 +58,9 @@ export class ProjectsService {
     if (!page) {
       page = 1
     }
+    if (!limit) {
+      limit = 10
+    }
     this.httpService
       .get(
         environment.serverUrl +
@@ -100,7 +103,7 @@ export class ProjectsService {
     this.httpService
       .post(environment.serverUrl + environment.projects.post, projectData)
       .subscribe((response: any) => {
-        if (response.status >= 200 && response.status < 300) {
+        if (response.status == 201) {
           fun
         } else {
           this.httpError =
