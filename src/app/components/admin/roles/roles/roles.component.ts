@@ -326,6 +326,8 @@ export class RolesComponent implements OnInit {
         })
       })
     })
+    console.log(this.projects)
+
     // insert submenu and apps when the father submenu is selected
     // delete submenu and apps when the father submenu is deselected
     if (completed) {

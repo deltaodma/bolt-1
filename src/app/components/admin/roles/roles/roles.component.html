@@ -150,6 +150,7 @@
                 <div class="col">
                   <span class="example-list-section">
                     <mat-checkbox
+                      [checked]="submenu.status == 1"
                       (change)="allowSubmenuAccess($event.checked, submenu)"
                     >
                       {{ lang == 'Esp' ? submenu.name_es : submenu.name_en }}
@@ -159,11 +160,13 @@
                     <ul>
                       <li *ngFor="let app of submenu.apps">
                         <mat-checkbox
+                          [disabled]="app.status == 0"
                           [(ngModel)]="app.status"
                           [ngModelOptions]="{ standalone: true }"
                           (change)="allowAppAccess($event.checked, app)"
                         >
                           {{ lang == 'Esp' ? app.name_es : app.name_en }}
+                          {{ submenu.status }}
                         </mat-checkbox>
                       </li>
                     </ul>
