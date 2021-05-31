@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Subject } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { HttpService } from './http.service'
 import { UiService } from './ui.service'
@@ -17,6 +17,12 @@ export class RolesService {
 
   constructor(private httpService: HttpService, private ui: UiService) {}
 
+  getObservableData(page: number): Observable<any> {
+    return this.httpService.get(
+      environment.serverUrl + environment.roles.getAll + '?page=' + page,
+    )
+  }
+
   getData(page?: number) {
     if (!page) {
       page = 1
@@ -25,19 +31,15 @@ export class RolesService {
       .get(environment.serverUrl + environment.roles.getAll + '?page=' + page)
       .subscribe(
         (response: any) => {
-          this.ui.showLoading()
           if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
             this._roles = response.body
             this._rolesSbj.next(this._roles)
           } else {
             // TODO :: logic for error
-            this.ui.dismissLoading()
           }
         },
         (error) => {
           // TODO :: logic for error
-          this.ui.dismissLoading()
         },
       )
   }
@@ -47,7 +49,6 @@ export class RolesService {
       .post(environment.serverUrl + environment.roles.post, roleData)
       .subscribe(
         (response: any) => {
-          this.ui.showLoading()
           if (response.status >= 200 && response.status < 300) {
             this.ui.showModal(
               ModalNotificationComponent,
@@ -64,12 +65,9 @@ export class RolesService {
               window.location.reload()
             }, 3000)
           } else {
-            this.ui.dismissLoading()
           }
         },
-        (err) => {
-          this.ui.dismissLoading()
-        },
+        (err) => {},
       )
   }
 
@@ -102,12 +100,9 @@ export class RolesService {
               window.location.reload()
             }, 3000)
           } else {
-            this.ui.dismissLoading()
           }
         },
-        (err) => {
-          this.ui.dismissLoading()
-        },
+        (err) => {},
       )
   }
 

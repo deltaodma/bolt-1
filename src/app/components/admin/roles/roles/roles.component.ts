@@ -10,7 +10,7 @@ import { MockProjectsByRole } from 'src/app/mocks/projects-by-role-mock'
 import { UiService } from 'src/app/services/ui.service'
 
 import { HttpService } from 'src/app/services/http.service'
-import { Subscription } from 'rxjs'
+import { forkJoin, Subscription } from 'rxjs'
 import { RolesService } from 'src/app/services/roles.service'
 import { ProjectsService } from 'src/app/services/projects.service'
 import { MockProjects } from 'src/app/mocks/projects-mock'
@@ -80,8 +80,7 @@ export class RolesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'Esp'
-    this.getProjectsList()
-    this.getRoles()
+    this.getData(1)
     this.initforms()
   }
 
@@ -112,23 +111,24 @@ export class RolesComponent implements OnInit, OnDestroy {
     })
   }
 
-  getProjectsList() {
-    this.projSubs = this.projectService.fullProjects$.subscribe(
-      (projects: any) => {
-        this.projects = projects.items
-      },
-    )
-    this.projectService.getData(1, 1000)
-  }
-  getRoles(page?: number) {
-    this.rolesSubs = this.rolesService.roles$.subscribe((roles: any) => {
-      this.pages = roles.meta.totalPages
-      this.active_count = roles.meta.currentPage
-      this.current_items = roles.meta.totalItems
-      this.roles = roles.items
+  getData(page: number) {
+    let rolesSubs = this.rolesService.getObservableData(page)
+    let projSubs = this.projectService.getObservableData()
+    this.ui.showLoading()
+    forkJoin({ roles: rolesSubs, projects: projSubs }).subscribe((res: any) => {
+      this.ui.dismissLoading()
+
+      let fetchRoles = res.roles.body
+      this.pages = fetchRoles.meta.totalPages
+      this.active_count = fetchRoles.meta.currentPage
+      this.current_items = fetchRoles.meta.totalItems
+      this.roles = fetchRoles.items
       this.items_length = this.roles.length
+
+      let fetchProjects = res.projects.body.items
+      this.projects = fetchProjects
+      console.log(this.projects)
     })
-    this.rolesService.getData(page)
   }
 
   openForm(open?: boolean) {
@@ -364,7 +364,7 @@ export class RolesComponent implements OnInit, OnDestroy {
     if (page == 'last') {
       this.active_count = this.pages
     }
-    this.getRoles(this.active_count)
+    this.getData(this.active_count)
   }
 
   ngOnDestroy() {

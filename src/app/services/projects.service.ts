@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Subject } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { ModalNotificationComponent } from '../components/utils/pop up/modal-notification/modal-notification.component'
 import { HttpService } from './http.service'
@@ -21,19 +21,19 @@ export class ProjectsService {
 
   constructor(private httpService: HttpService, private ui: UiService) {}
 
-  getAll() {
-    return this._fullProjects
+  getObservableData(): Observable<any> {
+    return this.httpService.get(
+      environment.serverUrl +
+        environment.projects.getAll +
+        '?page=1&limit=10000',
+    )
   }
-
   getSimpleData() {
     this.httpService
       .get(environment.serverUrl + environment.projects.get)
       .subscribe(
         (response: any) => {
-          this.ui.showLoading()
-
           if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
             this._simpleProjects = []
             response.body.forEach((projects) => {
               this._simpleProjects.push(projects)
@@ -43,12 +43,10 @@ export class ProjectsService {
             this._simpleProjectsSbj.next(this._simpleProjects)
           } else {
             // TODO :: logic for error
-            this.ui.dismissLoading()
           }
         },
         (error) => {
           // TODO :: logic for error
-          this.ui.dismissLoading()
         },
       )
   }
@@ -71,21 +69,16 @@ export class ProjectsService {
       )
       .subscribe(
         (response: any) => {
-          this.ui.showLoading()
-
           if (response.status >= 200 && response.status < 300) {
-            this.ui.dismissLoading()
             this._fullProjects = response.body
 
             this._fullProjectsSbj.next(this._fullProjects)
           } else {
             // TODO :: logic for error
-            this.ui.dismissLoading()
           }
         },
         (error) => {
           // TODO :: logic for error
-          this.ui.dismissLoading()
         },
       )
   }

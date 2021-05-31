@@ -45,8 +45,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   getData(page: number) {
+    this.ui.showLoading()
     this.projSubs = this.projectService.fullProjects$.subscribe(
       (projects: any) => {
+        this.ui.dismissLoading()
         this.pages = projects.meta.totalPages
         this.active_count = projects.meta.currentPage
         this.projects = projects.items
