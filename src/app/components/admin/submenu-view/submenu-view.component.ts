@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute } from '@angular/router'
-import { forkJoin, Subscription } from 'rxjs'
+import { forkJoin } from 'rxjs'
 import { AppsService } from 'src/app/services/apps.service'
 import { HttpService } from 'src/app/services/http.service'
 import { SubmenusService } from 'src/app/services/submenus.service'
@@ -16,8 +16,6 @@ import { ModalConfirmationComponent } from '../../utils/pop up/modal-confirmatio
   styleUrls: ['./submenu-view.component.scss'],
 })
 export class SubmenuViewComponent implements OnInit {
-  public subSbc: Subscription
-  public appSbc: Subscription
   public lang: string
   public submenu_data: any
   public submenu_data_name: string

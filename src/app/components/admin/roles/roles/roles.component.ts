@@ -20,10 +20,7 @@ import { MockProjects } from 'src/app/mocks/projects-mock'
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.scss'],
 })
-export class RolesComponent implements OnInit, OnDestroy {
-  private rolesSubs: Subscription
-  private projSubs: Subscription
-
+export class RolesComponent implements OnInit {
   public createRolForm: FormGroup
   public lang: string
 
@@ -365,10 +362,5 @@ export class RolesComponent implements OnInit, OnDestroy {
       this.active_count = this.pages
     }
     this.getData(this.active_count)
-  }
-
-  ngOnDestroy() {
-    this.rolesSubs.unsubscribe()
-    this.projSubs.unsubscribe()
   }
 }
