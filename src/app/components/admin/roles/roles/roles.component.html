@@ -153,13 +153,9 @@
                 </mat-checkbox>
                 <ul *ngFor="let app of submenu.apps; let i = index">
                   <li>
-                    <div
-                      [id]="'blocker' + app.id"
-                      class="blocker-container"
-                    ></div>
                     <mat-checkbox
                       [id]="submenu.id + app.id"
-                      class="check-row-font"
+                      class="check-row-font display-none"
                       (change)="allowAppAccess($event.checked, app)"
                       [checked]="app?.access"
                     >

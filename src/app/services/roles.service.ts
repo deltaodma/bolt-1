@@ -70,7 +70,7 @@ export class RolesService {
               },
             )
             setTimeout(() => {
-              // window.location.reload()
+              window.location.reload()
             }, 3000)
           } else {
             this.ui.dismissLoading()

@@ -45,6 +45,7 @@ export class RolesComponent implements OnInit, OnDestroy {
   public showForm: boolean = false
   public editionActive: boolean = false
   public create: boolean = true
+  public available_apps: boolean = false
 
   public role_id: string = null
   public message_action_es: string = 'deshabilitar'
@@ -295,36 +296,44 @@ export class RolesComponent implements OnInit, OnDestroy {
 
   allowSubmenuAccess(checkboxStatus: boolean, submenu: any) {
     let checkbox
-    let blocker
-    this.allowed_submenus = [
-      ...this.allowed_submenus,
-      {
-        projects_id: submenu.project_id,
-        submenu_id: submenu.id,
-        access: checkboxStatus,
-      },
-    ]
 
     submenu.apps.forEach((app) => {
       checkbox = document.getElementById(submenu.id + app.id)
-      blocker = document.getElementById('blocker' + app.id)
-      checkbox.classList.add('mat-checkbox-disabled')
+
       if (!checkboxStatus) {
-        checkbox.classList.add('mat-checkbox-disabled')
-        blocker.classList.add('big-z-index')
+        checkbox.classList.add('display-none')
       } else {
-        checkbox.classList.remove('mat-checkbox-disabled')
-        blocker.classList.remove('big-z-index')
+        checkbox.classList.remove('display-none')
       }
     })
+
+    if (checkboxStatus) {
+      this.allowed_submenus.push({
+        projects_id: submenu.project_id,
+        submenu_id: submenu.id,
+        access: checkboxStatus,
+      })
+    } else {
+      let indexSub = this.allowed_submenus.indexOf(
+        this.allowed_submenus.find((sub) => sub.submenu_id == submenu.id),
+      )
+      this.allowed_submenus.splice(indexSub, 1)
+    }
+    console.log(checkboxStatus)
   }
 
   allowAppAccess(checkboxStatus: boolean, app: any) {
     if (checkboxStatus) {
-      this.allowed_apps = [
-        ...this.allowed_apps,
-        { submenu_id: app.submenu_id, app_id: app.id, access: checkboxStatus },
-      ]
+      this.allowed_apps.push({
+        submenu_id: app.submenu_id,
+        app_id: app.id,
+        access: checkboxStatus,
+      })
+    } else {
+      let indexApp = this.allowed_apps.indexOf(
+        this.allowed_apps.find((app) => app.app_id == app.id),
+      )
+      this.allowed_apps.splice(indexApp, 1)
     }
   }
 
