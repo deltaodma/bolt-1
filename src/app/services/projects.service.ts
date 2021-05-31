@@ -66,7 +66,7 @@ export class ProjectsService {
           environment.projects.getAll +
           '?page=' +
           page +
-          '?limit=' +
+          '&limit=' +
           limit,
       )
       .subscribe(
