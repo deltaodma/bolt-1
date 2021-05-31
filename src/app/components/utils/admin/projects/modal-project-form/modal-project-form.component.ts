@@ -17,7 +17,6 @@ export interface DialogData {
 })
 export class ModalProjectFormComponent implements OnInit {
   public createProjectForm: FormGroup
-  public httpError: string
   public hide: boolean
   public password: string
   public lang: string

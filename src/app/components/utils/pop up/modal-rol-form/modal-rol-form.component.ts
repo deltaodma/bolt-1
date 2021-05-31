@@ -14,7 +14,6 @@ export class ModalRolFormComponent implements OnInit {
   public userRolForm: FormGroup
   public captchaStatus: boolean
   public restartCaptcha: boolean
-  public httpError: string
   public hide: boolean
   public password: string
   public lang: string
@@ -112,11 +111,6 @@ export class ModalRolFormComponent implements OnInit {
         },
         (err) => {
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
-          console.log(err)
         },
       )
   }

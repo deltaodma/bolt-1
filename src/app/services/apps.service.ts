@@ -10,7 +10,6 @@ import { UiService } from './ui.service'
 })
 export class AppsService {
   public lang: string
-  public httpError: string
 
   private _apps: any[] = []
   private _appsSbj = new Subject<any[]>()
@@ -42,19 +41,11 @@ export class AppsService {
           } else {
             // TODO :: logic for error
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (error) => {
           // TODO :: logic for error
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }
@@ -82,12 +73,7 @@ export class AppsService {
             }, 3000)
           }
         },
-        (e) => {
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
-        },
+        (e) => {},
       )
   }
 

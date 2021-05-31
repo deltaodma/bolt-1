@@ -10,7 +10,6 @@ import { UiService } from './ui.service'
 })
 export class UsersService {
   public lang: string
-  public httpError: string
 
   private _users: any[] = []
   private _userSbj = new Subject<any[]>()
@@ -36,19 +35,11 @@ export class UsersService {
           } else {
             // TODO :: logic for error
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (error) => {
           // TODO :: logic for error
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }
@@ -71,19 +62,11 @@ export class UsersService {
           } else {
             // TODO :: logic for error
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (error) => {
           // TODO :: logic for error
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }
@@ -105,10 +88,7 @@ export class UsersService {
           } else {
             // TODO :: logic for error
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
+
             setTimeout(() => {
               window.location.reload()
             }, 3000)
@@ -117,10 +97,7 @@ export class UsersService {
         (error) => {
           // TODO :: logic for error
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
+
           setTimeout(() => {
             window.location.reload()
           }, 3000)
@@ -159,18 +136,10 @@ export class UsersService {
             }, 3000)
           } else {
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (err) => {
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }

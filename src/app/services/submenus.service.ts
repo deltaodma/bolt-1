@@ -10,7 +10,6 @@ import { UiService } from './ui.service'
 })
 export class SubmenusService {
   public lang: string
-  public httpError: string
 
   private _submenus: any[] = []
   private _submenusSbj = new Subject<any[]>()
@@ -45,19 +44,11 @@ export class SubmenusService {
           } else {
             // TODO :: logic for error
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (error) => {
           // TODO :: logic for error
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }
@@ -76,19 +67,11 @@ export class SubmenusService {
           } else {
             // TODO :: logic for error
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (error) => {
           // TODO :: logic for error
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }
@@ -116,12 +99,7 @@ export class SubmenusService {
             }, 3000)
           }
         },
-        (e) => {
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
-        },
+        (e) => {},
       )
   }
 

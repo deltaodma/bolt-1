@@ -20,7 +20,6 @@ export interface DialogData {
 })
 export class ModalSubmenuFormComponent implements OnInit {
   public createSubMenuForm: FormGroup
-  public httpError: string
   public hide: boolean
   public password: string
   public lang: string

@@ -10,7 +10,6 @@ import { UiService } from './ui.service'
 })
 export class ProjectsService {
   public lang: string
-  public httpError: string
 
   private _fullProjects: any[] = []
   private _fullProjectsSbj = new Subject<any[]>()
@@ -82,19 +81,11 @@ export class ProjectsService {
           } else {
             // TODO :: logic for error
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (error) => {
           // TODO :: logic for error
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }
@@ -106,10 +97,6 @@ export class ProjectsService {
         if (response.status == 201) {
           fun
         } else {
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         }
       })
   }
@@ -124,10 +111,6 @@ export class ProjectsService {
         if (response.status >= 200 && response.status < 300) {
           fun
         } else {
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         }
       })
   }

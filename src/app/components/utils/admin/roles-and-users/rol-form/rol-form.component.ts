@@ -17,7 +17,6 @@ import { UsersService } from 'src/app/services/users.service'
 })
 export class RolFormComponent implements OnInit {
   public addNewRolForm: FormGroup
-  public httpError: string
   public hide: boolean
   public password: string
   public lang: string

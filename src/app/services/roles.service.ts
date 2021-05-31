@@ -10,7 +10,6 @@ import { ModalNotificationComponent } from '../components/utils/pop up/modal-not
 })
 export class RolesService {
   public lang: string
-  public httpError: string
 
   private _roles: any[] = []
   private _rolesSbj = new Subject<any[]>()
@@ -34,19 +33,11 @@ export class RolesService {
           } else {
             // TODO :: logic for error
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (error) => {
           // TODO :: logic for error
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }
@@ -74,18 +65,10 @@ export class RolesService {
             }, 3000)
           } else {
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (err) => {
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }
@@ -120,18 +103,10 @@ export class RolesService {
             }, 3000)
           } else {
             this.ui.dismissLoading()
-            this.httpError =
-              this.lang == 'Esp'
-                ? 'Ha ocurrido un error'
-                : 'An error has accoured'
           }
         },
         (err) => {
           this.ui.dismissLoading()
-          this.httpError =
-            this.lang == 'Esp'
-              ? 'Ha ocurrido un error'
-              : 'An error has accoured'
         },
       )
   }
