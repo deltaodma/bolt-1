@@ -12,6 +12,7 @@ export interface DialogData {
   message_action_es: string
   message_action_en: string
   permission: boolean
+  session: boolean
 }
 
 @Component({

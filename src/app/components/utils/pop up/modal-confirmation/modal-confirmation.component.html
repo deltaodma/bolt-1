@@ -98,6 +98,16 @@
     </p>
   </div>
 
+  <!-- view for re start session -->
+  <div class="dialog-alert__content" *ngIf="data.session">
+    <p *ngSwitchCase="'Esp'">
+      ¿Desea volver a iniciar sesión?
+    </p>
+    <p *ngSwitchCase="'Eng'">
+      Would you like to log in again?
+    </p>
+  </div>
+
   <div class="row">
     <button
       mat-button
