@@ -37,7 +37,7 @@ mat-accordion {
   background: rgba(0, 0, 0, 0.04) !important;
 }
 ::ng-deep .mat-expansion-panel-body {
-  padding-left: 50px !important;
+  padding-left: 57px !important;
 }
 
 ::ng-deep .mat-expansion-panel-header.mat-expanded:focus,
@@ -73,7 +73,7 @@ mat-accordion {
 
 ::ng-deep .mat-menu-panel {
   width: 261px;
-  min-height: 44px;
+  min-height: 50px !important;
   border-radius: 0 !important;
   background: rgba(0, 0, 0, 0.7);
   opacity: 0.91;
@@ -81,7 +81,9 @@ mat-accordion {
   box-shadow: none;
   color: #fff;
 }
-
+::ng-deep .mat-menu-content:not(:empty) {
+  padding: 4px 0 !important;
+}
 .mat-menu-item {
   display: flex !important;
   line-height: 44px;

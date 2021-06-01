@@ -92,7 +92,7 @@ export class SidebarComponent implements OnInit {
     menu.classList.add('highlight-item')
     overlay[0].setAttribute(
       'style',
-      'transform: translateX(218px) translateY(-36px) ;left: 0 !important;',
+      'transform: translateX(211px) translateY(-36px) ;left: 0 !important;',
     )
   }
 
