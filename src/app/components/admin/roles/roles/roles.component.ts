@@ -167,10 +167,15 @@ export class RolesComponent implements OnInit {
   }
 
   updateRole(operation: string) {
-    if (this.createRolForm.invalid) {
+    if (
+      this.createRolForm.invalid ||
+      this.allowed_apps.length == 0 ||
+      this.allowed_submenus.length == 0
+    ) {
       ;(<any>Object).values(this.createRolForm.controls).forEach((control) => {
         control.markAsTouched()
       })
+      this.showError()
       return
     }
     let user_id = localStorage.getItem('userId')
@@ -313,11 +318,16 @@ export class RolesComponent implements OnInit {
   }
 
   allowSubmenuAccess(completed: boolean, submenuInserted: any) {
+    this.showError()
+
     // set status value in all apps where submenuinserted id is equal to app.submenu_id
     this.projects.forEach((project) => {
       project.submenus.forEach((submenu) => {
         if (submenu == null) {
           return
+        }
+        if (submenuInserted.id == submenu.id) {
+          completed ? (submenu.status = 1) : (submenu.status = 0)
         }
         submenu.apps.forEach((app) => {
           if (submenuInserted.id == app.submenu_id) {
@@ -326,11 +336,11 @@ export class RolesComponent implements OnInit {
         })
       })
     })
-    console.log(this.projects)
 
     // insert submenu and apps when the father submenu is selected
     // delete submenu and apps when the father submenu is deselected
     if (completed) {
+      this.allComplete = true
       this.allowed_submenus.push({
         projects_id: submenuInserted.project_id,
         submenu_id: submenuInserted.id,
@@ -346,6 +356,7 @@ export class RolesComponent implements OnInit {
         }
       })
     } else {
+      this.allComplete = false
       let indexSub = this.allowed_submenus.indexOf(
         this.allowed_submenus.find(
           (sub) => sub.submenu_id == submenuInserted.id,
@@ -363,6 +374,7 @@ export class RolesComponent implements OnInit {
   }
 
   allowAppAccess(checkboxStatus: boolean, app: any) {
+    this.showError()
     if (checkboxStatus) {
       // insert app selected
       this.allowed_apps.push({
@@ -377,7 +389,36 @@ export class RolesComponent implements OnInit {
       )
       this.allowed_apps.splice(indexApp, 1)
     }
-    console.log(this.allowed_apps)
+  }
+
+  someSelected(submenu) {
+    let isSomeSelected
+    if (submenu.apps == null) {
+      isSomeSelected = false
+    }
+    isSomeSelected = submenu.apps.filter((a) => a.status).length > 0
+    return isSomeSelected
+  }
+
+  showError() {
+    let message
+    let show = false
+    if (this.allowed_submenus.length == 0 && this.allowed_apps.length == 0) {
+      message =
+        'Selecione como mínimo un sub menú y una aplicación asociada por proyecto'
+      show = true
+    }
+    if (this.allowed_submenus.length > 0 && this.allowed_apps.length == 0) {
+      message = 'Selecione como mínimo una aplicación asociada por sub menú'
+      show = true
+    }
+    if (show) {
+      this.ui.createSnackbar(message, 'x', {
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: 'snack-alert',
+      })
+    }
   }
 
   public getMessageform(controlName: any): string {

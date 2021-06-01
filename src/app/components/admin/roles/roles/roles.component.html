@@ -143,14 +143,11 @@
 
           <div class="row">
             <div class="col row-check" *ngFor="let submenu of project.submenus">
-              <div
-                class="row"
-                *ngIf="submenu.status == 1 && submenu.apps.length > 0"
-              >
+              <div class="row" *ngIf="submenu.apps.length > 0">
                 <div class="col">
                   <span class="example-list-section">
                     <mat-checkbox
-                      [checked]="submenu.status == 1"
+                      [checked]="someSelected(submenu)"
                       (change)="allowSubmenuAccess($event.checked, submenu)"
                     >
                       {{ lang == 'Esp' ? submenu.name_es : submenu.name_en }}
@@ -160,7 +157,7 @@
                     <ul>
                       <li *ngFor="let app of submenu.apps">
                         <mat-checkbox
-                          [disabled]="app.status == 0"
+                          [disabled]="submenu.status == 0"
                           [(ngModel)]="app.status"
                           [ngModelOptions]="{ standalone: true }"
                           (change)="allowAppAccess($event.checked, app)"
