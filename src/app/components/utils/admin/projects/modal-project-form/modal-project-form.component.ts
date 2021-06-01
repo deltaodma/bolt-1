@@ -130,7 +130,7 @@ export class ModalProjectFormComponent implements OnInit {
 
     setTimeout(() => {
       window.location.reload()
-    }, 3000)
+    }, 2000)
   }
 
   public getMessageform(controlName: any): string {

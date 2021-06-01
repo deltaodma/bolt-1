@@ -91,7 +91,7 @@ export class UsersService {
 
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (error) => {
@@ -100,7 +100,7 @@ export class UsersService {
 
           setTimeout(() => {
             window.location.reload()
-          }, 3000)
+          }, 2000)
         },
       )
   }
@@ -133,7 +133,7 @@ export class UsersService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           } else {
             this.ui.dismissLoading()
           }

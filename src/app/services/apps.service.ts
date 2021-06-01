@@ -70,7 +70,7 @@ export class AppsService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (e) => {},
@@ -100,7 +100,7 @@ export class AppsService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {
@@ -130,7 +130,7 @@ export class AppsService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {
@@ -159,7 +159,7 @@ export class AppsService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {

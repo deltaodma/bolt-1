@@ -221,7 +221,7 @@ export class SidebarComponent implements OnInit {
           // show loading and reload page to update data view
           setTimeout(() => {
             window.location.reload()
-          }, 3000)
+          }, 2000)
         } else {
           window.location.reload()
         }
@@ -291,7 +291,7 @@ export class SidebarComponent implements OnInit {
         // show loading and reload page to update data view
         setTimeout(() => {
           window.location.reload()
-        }, 3000)
+        }, 2000)
       } else {
         window.location.reload()
       }

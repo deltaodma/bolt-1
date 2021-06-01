@@ -131,7 +131,7 @@ export class ProjectsService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {
@@ -161,7 +161,7 @@ export class ProjectsService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {

@@ -96,7 +96,7 @@ export class SubmenusService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (e) => {},
@@ -125,7 +125,7 @@ export class SubmenusService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {
@@ -157,7 +157,7 @@ export class SubmenusService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {
@@ -188,7 +188,7 @@ export class SubmenusService {
             )
             setTimeout(() => {
               window.history.back()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {

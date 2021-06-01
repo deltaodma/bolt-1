@@ -63,7 +63,7 @@ export class RolesService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           } else {
           }
         },
@@ -98,7 +98,7 @@ export class RolesService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           } else {
           }
         },
@@ -127,7 +127,7 @@ export class RolesService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {
@@ -155,7 +155,7 @@ export class RolesService {
             )
             setTimeout(() => {
               window.location.reload()
-            }, 3000)
+            }, 2000)
           }
         },
         (err) => {
