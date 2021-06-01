@@ -24,7 +24,7 @@ export class BannersService {
       .subscribe(
         (response: any) => {
           this.ui.showLoading()
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.dismissLoading()
             this._banners = []
             response.body.items.forEach((banner) => {

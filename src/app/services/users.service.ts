@@ -28,7 +28,7 @@ export class UsersService {
         (response: any) => {
           this.ui.showLoading()
 
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.dismissLoading()
             this._users = response.body
             this._userSbj.next(this._users)
@@ -51,7 +51,7 @@ export class UsersService {
         (response: any) => {
           this.ui.showLoading()
 
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.dismissLoading()
             this._users = []
 
@@ -82,7 +82,7 @@ export class UsersService {
         (response: any) => {
           this.ui.showLoading()
 
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.dismissLoading()
             window.location.reload()
           } else {
@@ -117,7 +117,7 @@ export class UsersService {
       .subscribe(
         (response: any) => {
           this.ui.showLoading()
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.dismissLoading()
             fun
             this.ui.showModal(

@@ -23,8 +23,8 @@ export class AuthService {
   }
 
   public getToken() {
-    // return localStorage.getItem('user_token')
-    return (this.token = localStorage.getItem('token'))
+    this.token = localStorage.getItem('token')
+    return this.token
   }
 
   login() {

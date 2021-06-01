@@ -36,7 +36,7 @@ import { MatRadioModule } from '@angular/material/radio'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 import { AuthInterceptor } from './interceptors/auth.interceptor'
-import { ErrorInterceptor } from './error.interceptor'
+import { ErrorInterceptor } from './interceptors/error.interceptor'
 
 @NgModule({
   declarations: [

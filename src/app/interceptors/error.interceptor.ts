@@ -8,10 +8,10 @@ import {
 } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
-import { AuthService } from './services/auth.service'
-import { UiService } from './services/ui.service'
+import { AuthService } from '../services/auth.service'
+import { UiService } from '../services/ui.service'
 import { MatDialog } from '@angular/material/dialog'
-import { ModalConfirmationComponent } from './components/utils/pop up/modal-confirmation/modal-confirmation.component'
+import { ModalConfirmationComponent } from '../components/utils/pop up/modal-confirmation/modal-confirmation.component'
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

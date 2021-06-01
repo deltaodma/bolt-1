@@ -31,7 +31,7 @@ export class RolesService {
       .get(environment.serverUrl + environment.roles.getAll + '?page=' + page)
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this._roles = response.body
             this._rolesSbj.next(this._roles)
           } else {
@@ -49,7 +49,7 @@ export class RolesService {
       .post(environment.serverUrl + environment.roles.post, roleData)
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 201) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',
@@ -84,7 +84,7 @@ export class RolesService {
       )
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',
@@ -113,7 +113,7 @@ export class RolesService {
       )
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',
@@ -141,7 +141,7 @@ export class RolesService {
       .delete(environment.serverUrl + environment.roles.deleteById + target.id)
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',

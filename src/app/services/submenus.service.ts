@@ -111,7 +111,7 @@ export class SubmenusService {
       )
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',
@@ -143,7 +143,7 @@ export class SubmenusService {
       )
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',
@@ -174,7 +174,7 @@ export class SubmenusService {
       .subscribe(
         (response: any) => {
           this.ui.showLoading()
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',

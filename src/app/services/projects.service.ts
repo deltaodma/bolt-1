@@ -33,7 +33,7 @@ export class ProjectsService {
       .get(environment.serverUrl + environment.projects.get)
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this._simpleProjects = []
             response.body.forEach((projects) => {
               this._simpleProjects.push(projects)
@@ -69,7 +69,7 @@ export class ProjectsService {
       )
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this._fullProjects = response.body
 
             this._fullProjectsSbj.next(this._fullProjects)
@@ -101,7 +101,7 @@ export class ProjectsService {
         projectData,
       )
       .subscribe((response: any) => {
-        if (response.status >= 200 && response.status < 300) {
+        if (response.status == 200) {
           fun
         } else {
         }
@@ -117,7 +117,7 @@ export class ProjectsService {
       )
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',
@@ -147,7 +147,7 @@ export class ProjectsService {
       )
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',

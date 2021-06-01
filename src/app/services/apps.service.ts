@@ -85,7 +85,7 @@ export class AppsService {
       )
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             fun
             this.ui.showModal(
               ModalNotificationComponent,
@@ -116,7 +116,7 @@ export class AppsService {
       )
       .subscribe(
         (response: any) => {
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',
@@ -145,7 +145,7 @@ export class AppsService {
       .subscribe(
         (response: any) => {
           this.ui.showLoading()
-          if (response.status >= 200 && response.status < 300) {
+          if (response.status == 200) {
             this.ui.showModal(
               ModalNotificationComponent,
               '500px',

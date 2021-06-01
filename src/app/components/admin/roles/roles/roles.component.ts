@@ -145,7 +145,6 @@ export class RolesComponent implements OnInit {
 
       let fetchProjects = res.projects.body.items
       this.projects = fetchProjects
-      console.log(this.projects)
     })
   }
 
